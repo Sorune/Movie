@@ -11,4 +11,14 @@ public class CommonController {
 	public void LoginCheck(String error, String logout, Model model) {
 		
 	}
+	
+	@GetMapping("/login")
+	public void login() {
+		
+	}
+	
+	@GetMapping("/register")
+	public void register() {
+		
+	}
 }
