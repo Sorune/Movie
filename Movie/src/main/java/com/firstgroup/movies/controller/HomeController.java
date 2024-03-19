@@ -1,4 +1,4 @@
-package com.firstgroup.movies;
+package com.firstgroup.movies.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

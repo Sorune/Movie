@@ -1,4 +1,4 @@
-package com.firstgroup.movies;
+package com.firstgroup.movies.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,5 +20,15 @@ public class CommonController {
 	@GetMapping("/register")
 	public void register() {
 		
+	}
+	
+	@GetMapping("/getMovie")
+	public void getMovie() {
+		
+	}
+	
+	@GetMapping("/test")
+	public void test() {
+		//테스트 페이지용
 	}
 }
