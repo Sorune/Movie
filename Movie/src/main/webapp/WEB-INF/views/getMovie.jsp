@@ -35,13 +35,13 @@ img {
 <div id="carouselExample" class="carousel slide stillcut">
 	<div class="carousel-inner">
 		<div class="carousel-item active" style="background-color: black;">
-			<img src="../resources/img/sources/dune-1.jpg" class="d-block w-100 img-dark" alt="...">
+			<img src="../resources/img/dune-1.jpg" class="d-block w-100 img-dark" alt="...">
 		</div>
 		<div class="carousel-item">
-			<img src="../resources/img/sources/dune-2.jpg" class="d-block w-100 img-dark" alt="...">
+			<img src="../resources/img/dune-2.jpg" class="d-block w-100 img-dark" alt="...">
 		</div>
 		<div class="carousel-item">
-			<img src="../resources/img/sources/dune-3.jpg" class="d-block w-100 img-dark" alt="...">
+			<img src="../resources/img/dune-3.jpg" class="d-block w-100 img-dark" alt="...">
 		</div>
 	</div>
 	<button class="carousel-control-prev" type="button"
@@ -107,11 +107,14 @@ img {
 	<div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp"
 		data-wow-delay="0.1s">
 		<div class="service-item rounded">
-			<div class="service-img rounded-top">
-				<img src="./resources/img/dune-1.jpg"
-					class="img-fluid best-img rounded-top w-100" alt="">
-			</div>
-			<div class="service-content rounded-bottom bg-light p-4">
+			<div class="service-content rounded-top rounded-bottom bg-light p-4">
+				<div class="starts mb-3 d-flex justify-content-center">
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	            </div>
 				<div class="service-content-inner">
 					<h5 class="mb-4">베스트 댓글1</h5>
 					<p class="mb-4">Dolor, sit amet consectetur adipisicing elit.
@@ -126,11 +129,14 @@ img {
 	<div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp"
 		data-wow-delay="0.1s">
 		<div class="service-item rounded">
-			<div class="service-img rounded-top">
-				<img src="./resources/img/dune-1.jpg"
-					class="img-fluid best-img rounded-top w-100" alt="">
-			</div>
-			<div class="service-content rounded-bottom bg-light p-4">
+			<div class="service-content rounded-top rounded-bottom bg-light p-4">
+				<div class="starts mb-3 d-flex justify-content-center">
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	            </div>
 				<div class="service-content-inner">
 					<h5 class="mb-4">베스트 댓글2</h5>
 					<p class="mb-4">Dolor, sit amet consectetur adipisicing elit.
@@ -145,12 +151,15 @@ img {
 	<div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp"
 		data-wow-delay="0.1s">
 		<div class="service-item rounded">
-			<div class="service-img rounded-top">
-				<img src="./resources/img/dune-3.jpg"
-					class="img-fluid best-img rounded-top w-100" alt="">
-			</div>
-			<div class="service-content rounded-bottom bg-light p-4">
-				<div class="service-content-inner">
+			<div class="service-content rounded-top rounded-bottom bg-light p-4">
+				<div class="starts mb-3 d-flex justify-content-center">
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz40"></i>
+	            </div>
+	            <div class="service-content-inner">
 					<h5 class="mb-4">베스트 댓글3</h5>
 					<p class="mb-4">Dolor, sit amet consectetur adipisicing elit.
 						Soluta inventore cum accusamus, dolor qui ullam</p>
@@ -169,40 +178,39 @@ img {
 <br>
 <div class="container-lg">
 	<!-- Content here -->
+	<!-- 코멘트 -->
 	<div class="wow fadeInUp" data-wow-delay="0.1s">
-	
-			<table class="table">
-				<thead class="table-dark">
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">content</th>
-						<th scope="col">name</th>
-						<th scope="col">date</th>
-					</tr>
-				</thead>
-				<tbody class="table-group-divider">
-					<tr>
-						<th scope="row">1</th>
-						<td>Mark</td>
-						<td>Otto</td>
-						<td>2024-03-18</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Jacob</td>
-						<td>Thornton</td>
-						<td>2024-03-18</td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td colspan="2">Larry the Bird</td>
-						<td>2024-03-18</td>
-					</tr>
-				</tbody>
-			</table>
-		
-		<br>
-			<div class="service-content rounded bg-light p-4">
+		<ul class="list-group">
+			<li class="list-group-item border-0">
+				<div class="service-item rounded">
+					<div class="service-content rounded-top rounded-bottom bg-light p-4">
+						<div class="row">
+				            <div class="col d-flex">
+								<h5 class="mb-4">베스트 댓글3</h5>
+				            </div>
+							<div class="col starts mb-3 d-flex">
+				                <i class="fa fa-star fz20"></i>
+				                <i class="fa fa-star fz20"></i>
+				                <i class="fa fa-star fz20"></i>
+				                <i class="fa fa-star fz20"></i>
+				                <i class="fa fa-star fz20"></i>
+				            </div>
+							<div class="col d-flex justify-content-end">
+								<a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">view</a>
+							</div>
+						</div>
+						
+			            <div class="service-content-inner">
+							<p class="mb-4">Dolor, sit amet consectetur adipisicing elit.
+								Soluta inventore cum accusamus, dolor qui ullam</p>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	<!-- ./ 코멘트 -->
+	<!-- 코멘트 입력 -->
+	<div class="service-content rounded bg-light p-4">
 		<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">

@@ -40,10 +40,15 @@
     width: 50%;
 }
 
-.stars {}
+.stars {
+}
 
 .stars .fa {
     font-size: 20px;
+}
+
+.starts li {
+	
 }
 
 .fa-star {
@@ -62,4 +67,9 @@
 /* util css */
 .fz20 {
     font-size: 20px !important;
+}
+
+.fz40{
+	font-size: 40px  !important;
+	margin-right: 0.8rem;
 }
