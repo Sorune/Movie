@@ -24,8 +24,10 @@
 
         <!-- Libraries Stylesheet -->
         <link href="/resources/lib/animate/animate.min.css" rel="stylesheet">
-        <link href="/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+		<link href="/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
+		<!-- owlCarousel -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -49,7 +51,7 @@
         <!-- Navbar & Hero Start -->
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
-                <a href="#" class="navbar-brand p-0">
+                <a href="/home" class="navbar-brand p-0">
                     <h1 class="text-primary m-0"><i class="fas fa-star-of-life me-3"></i>Watchar Peida</h1>
                     <!-- <img src="/resources/img/sources/logo.png" alt="Logo"> -->
                 </a>
@@ -62,22 +64,47 @@
                         <a href="#" class="nav-item nav-link">TV</a>
                         <a href="#" class="nav-item nav-link">책</a>
                         <a href="#" class="nav-item nav-link">웹툰</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">회원정보</a>
-                            <div class="dropdown-menu m-0">
-                                <a href="appointment.html" class="dropdown-item">Appointment</a>
-                                <a href="feature.html" class="dropdown-item">Features</a>
-                                <a href="blog.html" class="dropdown-item">Our Blog</a>
-                                <a href="team.html" class="dropdown-item">Our Team</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div>
-                        <a href="#" class="nav-item nav-link">회원가입</a>
+                        <sec:authorize access="!isAuthenticated()">
+                        	<a href="/loginAuth" class="nav-item nav-link" id="login">로그인</a>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_MEMBER')">
+                        	<div class="nav-item dropdown" id="information">
+	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">회원정보</a>
+	                            <div class="dropdown-menu m-0">
+	                                <a href="#" class="dropdown-item">Appointment</a>
+	                                <a href="#" class="dropdown-item">Features</a>
+	                                <a href="#" class="dropdown-item">Our Blog</a>
+	                                <a href="#" class="dropdown-item">Our Team</a>
+	                                <a href="#" class="dropdown-item">Testimonial</a>
+	                               	<form class="dropdown-item" method="post" action="/home">
+	                               		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+	                               		<button type="submit" class="dropdown-item">LogOut</button>	
+	                               	</form>
+	                            </div>
+	                        </div>
+                        </sec:authorize>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+	                        <div class="nav-item dropdown" id="admin">
+	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">영화관리</a>
+	                            <div class="dropdown-menu m-0">
+	                                <a href="#" class="dropdown-item">Appointment</a>
+	                                <a href="#" class="dropdown-item">Features</a>
+	                                <a href="#" class="dropdown-item">Our Blog</a>
+	                                <a href="#" class="dropdown-item">Our Team</a>
+	                                <a href="#" class="dropdown-item">Testimonial</a>
+	                                <form class="dropdown-item" method="post" action="/home">
+		                               		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
+		                               		<button type="submit" class="dropdown-item">LogOut</button>	
+	                               	</form>
+	                            </div>
+	                        </div>
+                        </sec:authorize>
+                        <sec:authorize access="!isAuthenticated()">
+                        	<a href="/register" class="nav-item nav-link" id="register">회원가입</a>
+                        </sec:authorize>
                     </div>
                     <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">예매하기</a>
                 </div>
             </nav>
         </div>
         <!-- Navbar & Hero End -->
-     

@@ -13,12 +13,12 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 		
 	
 	<security:http>
-		<security:intercept-url pattern="/home" access="hasRole('ROLE_MEMBER')"/>
 		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 		<!-- 접근 거부시 -->
 		<security:access-denied-handler ref="customAccessDenied"/>
 		<!-- 로그인 페이지 인터셉트 경로 -->
 		<security:form-login login-page="/loginAuth"/>
+		<security:logout logout-url="/home" invalidate-session="true" />
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider>
