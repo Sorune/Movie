@@ -12,8 +12,8 @@ public class CommonController {
 		
 	}
 	
-	@GetMapping("/login")
-	public void login() {
+	@GetMapping("/loginAuth")
+	public void loginAuth() {
 		
 	}
 	
@@ -30,5 +30,10 @@ public class CommonController {
 	@GetMapping("/test")
 	public void test() {
 		//테스트 페이지용
+	}
+	
+	@GetMapping("/admin")
+	public void admin() {
+		
 	}
 }

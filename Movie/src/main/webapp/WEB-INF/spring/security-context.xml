@@ -8,15 +8,24 @@ http://www.springframework.org/schema/security/spring-security.xsd
 http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
+	<bean id="customLoginSuccess" class="com.firstgroup.movies.security.CustomLoginSuccessHandler"></bean>
+	<bean id="customAccessDenied" class="com.firstgroup.movies.security.CustomAccessDeniedHandler"></bean>
+		
+	
 	<security:http>
 		<security:intercept-url pattern="/home" access="hasRole('ROLE_MEMBER')"/>
-	
-		<security:form-login login-page="/loginCheck"/>
+		<security:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+		<!-- 접근 거부시 -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+		<!-- 로그인 페이지 인터셉트 경로 -->
+		<security:form-login login-page="/loginAuth"/>
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
-				<security:user name="member" password="member" authorities="ROLE_MEMBER" />
+				<!-- 임시 계정 생성 -->
+				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER" />
+				<security:user name="admin" password="{noop}admin" authorities="ROLE_ADMIN"/>
 			</security:user-service>
 		</security:authentication-provider>
 	</security:authentication-manager>
