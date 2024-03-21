@@ -62,11 +62,6 @@ public class CommonController {
 		
 	}
 	
-	@GetMapping("/getMovie")
-	public void getMovie() {
-		
-	}
-	
 	@GetMapping("/test")
 	public void test() {
 		//테스트 페이지용
@@ -87,16 +82,6 @@ public class CommonController {
 		log.info("logout........");
 	}
 	
-	@GetMapping("/movies/movieList")
-	public void movieList() {
-		
-	}
-	
-	@GetMapping("/movies/movieRegister")
-	public void movieRegister() {
-		
-	}
-	
 	@GetMapping("/uploadest")
 	public void uploadest() {
 		log.info("upload...........");
@@ -108,7 +93,7 @@ public class CommonController {
 		//model.addAttribute("list", service.getList(cri));
 	}
 	@GetMapping("/admin/movieRegister")
-	public void movieRegister2() {
+	public void movieRegister() {
 		//우상제 테스트중
 	}
 	@GetMapping("/admin/movieModify")

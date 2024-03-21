@@ -12,23 +12,30 @@
   select * from tbl_movies where movbno > 0
   </select>
   
-  <!-- 영화 한개 정보 불러오기 -->
-  <select id="get" resultType="com.firstgroup.movies.domain.MoviesVO">
-	select * from tbl_movies where movbno = #{movBno}
-  </select>
+	<!-- 영화 한개 정보 불러오기 -->
+	 <select id="get" resultType="com.firstgroup.movies.domain.MoviesVO">
+		select * from tbl_movies where movbno = #{movBno}
+	 </select>
+	
+
+	<insert id="insert">
+		insert into tbl_movies(movbno, title, content, director, actor, mov_imgNo)
+		values(seq_movies.nextval, #{title}, #{content}, #{director}, #{actor}, #{movImgNo})
+	</insert>
+	
+	<insert id="insertSelectKey">
+
+		<selectKey keyProperty="movBno" order="BEFORE"
+			resultType="long">
+			select seq_board.nextval from dual
+		</selectKey>
+		insert into tbl_movies(movbno, title, content, director, actor)
+		values (#{movBno}, #{title},#{content}, #{director}, #{actor})
+		
+	</insert>
   
-  
-  <insert id="insert">
-  insert into tbl_movies(movbno, title, content, director, actor, mov_imgNo)
-  values(seq_movies.nextval, #{title}, #{content}, #{director}, #{actor}, #{movImgNo})
-  </insert>
-  
-  
-  <!-- 내 댓글 리스트 -->
-  <!-- <select id="commentList">
-  select * from tbl_movies_comment, tbl_member where tbl_movies_comment.membno = tbl_member.membno and tbl_movies_comment.membno = #{membno};
-  </select> -->
-  
-  
+  	<delete id="delete">
+		delete from tbl_board where movbno = #{movBno}
+	</delete>
   
   </mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 
 <style type="text/css">
 img {
@@ -32,7 +33,7 @@ img {
 }
 </style>
 
-<div id="carouselExample" class="carousel slide stillcut">
+<div id="carouselExample" class="carousel slide" style="padding-top: 100px;">
 	<div class="carousel-inner">
 		<div class="carousel-item active" style="background-color: black;">
 			<img src="../resources/img/dune-1.jpg" class="d-block w-100 img-dark" alt="...">
@@ -70,12 +71,9 @@ img {
 			<div class="col-lg-7 wow fadeInRight" data-wow-delay="0.4s">
 				<div class="section-title text-start mb-5">
 					<h4 class="sub-title pe-3 mb-0">Movie Info</h4>
-					<h1 class="display-3 mb-4">DUNE 2</h1>
+					<h1 class="display-3 mb-4"><c:out value="${movie.title }"/></h1>
 					<!-- 평균 별점 들어갈 곳 -->
-					<p class="mb-4">황제의 모략으로 멸문한 가문의 유일한 후계자 폴.(티모시 샬라메) 어머니 레이디
-						제시카(레베카 퍼거슨)와 간신히 목숨만 부지한 채 사막으로 도망친다. 그곳에서 만난 반란군들과 숨어 지내다 그들과 함께
-						황제의 모든 것을 파괴할 전투를 준비한다. 한편 반란군들의 기세가 높아질수록 불안해진 황제와 귀족 가문은 잔혹한 암살자
-						페이드 로타(오스틴 버틀러)를 보내 반란군을 몰살하려 하는데… 운명의 반격이 시작된다!</p>
+					<p class="mb-4"><c:out value="${movie.content }"/></p>
 					<div class="mb-4">
 						<p class="text-secondary">
 							<i class="fa fa-check text-primary me-2"></i> 쿠키있음
@@ -98,22 +96,17 @@ img {
 
 
 <!-- 베스트 댓글  -->
-<div class="container-sm">
-	<h4>Comment</h4>
-	<br>
-</div>
-
 <div class="row g-4 justify-content-center">
 	<div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp"
 		data-wow-delay="0.1s">
-		<div class="service-item rounded">
+		<div class="service-item rounded shadow-lg">
 			<div class="service-content rounded-top rounded-bottom bg-light p-4">
 				<div class="starts mb-3 d-flex justify-content-center">
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
 	            </div>
 				<div class="service-content-inner">
 					<h5 class="mb-4">베스트 댓글1</h5>
@@ -128,14 +121,14 @@ img {
 
 	<div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp"
 		data-wow-delay="0.1s">
-		<div class="service-item rounded">
+		<div class="service-item rounded shadow-lg">
 			<div class="service-content rounded-top rounded-bottom bg-light p-4">
 				<div class="starts mb-3 d-flex justify-content-center">
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
 	            </div>
 				<div class="service-content-inner">
 					<h5 class="mb-4">베스트 댓글2</h5>
@@ -150,14 +143,14 @@ img {
 
 	<div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp"
 		data-wow-delay="0.1s">
-		<div class="service-item rounded">
+		<div class="service-item rounded shadow-lg">
 			<div class="service-content rounded-top rounded-bottom bg-light p-4">
 				<div class="starts mb-3 d-flex justify-content-center">
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
-	                <i class="fa fa-star fz40"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
+	                <i class="fa fa-star fz20"></i>
 	            </div>
 	            <div class="service-content-inner">
 					<h5 class="mb-4">베스트 댓글3</h5>
@@ -174,43 +167,58 @@ img {
 
 
 
-
 <br>
-<div class="container-lg">
+<div class="container-sm">
 	<!-- Content here -->
 	<!-- 코멘트 -->
+	<div class="container-xs">
+	<div class="container py-5">
+		<h4>Comments</h4>
 	<div class="wow fadeInUp" data-wow-delay="0.1s">
-		<ul class="list-group">
-			<li class="list-group-item border-0">
-				<div class="service-item rounded">
-					<div class="service-content rounded-top rounded-bottom bg-light p-4">
-						<div class="row">
-				            <div class="col d-flex">
-								<h5 class="mb-4">베스트 댓글3</h5>
-				            </div>
-							<div class="col starts mb-3 d-flex">
-				                <i class="fa fa-star fz20"></i>
-				                <i class="fa fa-star fz20"></i>
-				                <i class="fa fa-star fz20"></i>
-				                <i class="fa fa-star fz20"></i>
-				                <i class="fa fa-star fz20"></i>
-				            </div>
-							<div class="col d-flex justify-content-end">
-								<a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">view</a>
+	<div class="col-lg-12">
+		
+		
+			<div class="row">
+			<c:forEach items="${comments}" var="comments">
+			<div class="col-6 col-md-6">
+				<ul class="list-group">
+					<li class="list-group-item border-0">
+						<div class="service-item rounded shadow-sm">
+							<div class="service-content rounded-top rounded-bottom bg-light p-4">
+								<div class="row">
+						            <div class="col d-flex">
+										<p class="mb-4"><%-- <c:out value="${comment. }" /> --%><strong>작성자</strong> </p>
+						            </div>
+								
+									<div class="col d-flex justify-content-end">
+									
+											<%-- <c:choose>
+												<c:forEach items="${comments }" var='star'  varStatus="i" begin="0" end="4" step="1">
+													<div class="col starts mb-3 d-flex" style="margin-right: 0; justify-content: flex-end;">
+														<i class="fa fa-star fz20"> <c:out value="${star.stars }"/> </i>
+						           					</div>
+												</c:forEach>
+											</c:choose> --%>
+									</div>
+								</div>
+								
+					            <div class="service-content-inner">
+									<p class="mb-4"><c:out value="${comments.content }"></c:out></p>
+								</div>
 							</div>
 						</div>
-						
-			            <div class="service-content-inner">
-							<p class="mb-4">Dolor, sit amet consectetur adipisicing elit.
-								Soluta inventore cum accusamus, dolor qui ullam</p>
-						</div>
-					</div>
-				</div>
-			</li>
-		</ul>
+					</li>
+				</ul>
+			</div>
+			</c:forEach>
+			</div>
+			
+		</div>
+		</div>
 	<!-- ./ 코멘트 -->
 	<!-- 코멘트 입력 -->
-	<div class="service-content rounded bg-light p-4">
+	
+	<div class="service-content rounded bg-light p-4 mt-3">
 		<div class="row">
 				<div class="col-lg-12">
 					<div class="panel panel-default">
@@ -219,12 +227,18 @@ img {
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 
-							<form role="form" action="/board/register" method="post">
+							<form role="form" action="/getMovie/comment" method="post">
 
 								<%--     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>           --%>
 
 								<div class="form-group">
-									<label>Title</label> <input class="form-control" name='title'>
+									<div class="col starts mb-3 d-flex" style="margin-right: 0; justify-content: flex-end;">
+						                <i class="fa fa-star fz40"><input type="hidden"></i>
+						                <i class="fa fa-star fz40"></i>
+						                <i class="fa fa-star fz40"></i>
+						                <i class="fa fa-star fz40"></i>
+						                <i class="fa fa-star fz40"></i>
+						            </div>
 								</div><br>
 
 								<div class="form-group">
@@ -260,7 +274,25 @@ img {
 	</div>
 	<!-- /div.wow fadeInUp -->
 </div>
+
+</div>
 <br>
+
+<!-- 
+   <div>
+        <span class="star">
+            기존 별
+            ★★★★★
+            체크하면 나타날 별
+            <span>★★★★★</span>
+            별점 체크를 위한 input(hidden)
+            <input id="inputVal" type="range" oninput="checkStar(this)" value="0.0" step="0.5" min="0" max="5">
+        </span>
+        <div class="avg-txt">
+            평점 : <span id="score">0.0</span> / 5.0
+            평점 숫자 출력되는 부분
+        </div>
+    </div> -->
 
 	
 	
@@ -303,9 +335,4 @@ img {
 
 
 
-<!-- <script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-	crossorigin="anonymous"></script>
- -->
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
