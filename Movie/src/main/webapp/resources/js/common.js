@@ -84,15 +84,15 @@ dropArea.addEventListener("dragleave", () => {
 });
 
 dropArea.addEventListener("drop", (e) => {
+	const dataTranster = new DataTransfer();
+	const inputFile = document.querySelector("#file-input");
     e.preventDefault();
     dropArea.style.backgroundColor = "#fff";
     const files = e.dataTransfer.files;
     let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
     for(var i = 0 ; i < nodes.length ; i ++){
-		console.log(nodes[i]);	
 		nodes[i].remove();
 	};
-    console.log(files);
     for(let i = 0; i < files.length ; i++){
 		const carouselInner = document.createElement("div");
 		if ( i == 0){
@@ -100,13 +100,10 @@ dropArea.addEventListener("drop", (e) => {
 		} else {
 			carouselInner.className = "carousel-item";
 		}
-		console.log(carouselInner);
 		const img = document.createElement("img");
 		let file = files[i];
-		console.log(file);
 		if (file && file.type.startsWith("image")) {
         	displayImage(file, img);
-    		console.log(img);
         	carouselInner.appendChild(img);
         	uploadedImages.appendChild(carouselInner);
         	dataTranster.items.add(file);
@@ -117,8 +114,10 @@ dropArea.addEventListener("drop", (e) => {
 	console.log(inputFile);
 });
 
+
 // 파일 입력 필드 변경 이벤트 처리
-fileInput.addEventListener("change", () => {
+fileInput.addEventListener("change", (e) => {
+	console.log(e);
     const files = fileInput.files;
     let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
     for(var i = 0 ; i < nodes.length ; i ++){
@@ -179,30 +178,41 @@ function displayImage(file, caroucel) {
 
 // ajax file upload method
 $("#uploadBtn").on("click", (e) => {
+	var csrfHeader = '${_csrf.headerName}';
+	var csrfToken = "${_csrf.token}";
 	var formData = new FormData();
-	var inputFile = $("input[name='uploadFile']");
-	var files = inputFile[0].files;
+	var inputFile = document.querySelector("#file-input");
+	var files = inputFile.files;
 	console.log(files);
 	for(var i = 0 ; i< files.length;i++){
 		//if(!checkExtension(files[i].name, files[i].size)){
 			//console.log(!checkExtension(files[i].name, files[i].size));
 		//	return false;
 		//}
-		formData.append("uploadFile",files[i]);
+		console.log(i+files[i]+files[i].name);
+		formData.append("uploadFile",files[i],files[i].name);
 	};
-	console.log(formData);
+	for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+            }
+
 	$.ajax({
 		url : '/uploadAjaxAction',
+		type : 'POST',
 		processData : false,
 		contentType : false,
 		beforeSend : function(xhr){
 			xhr.setRequestHeader(csrfHeader,csrfToken);
 		},
 		data : formData,
-		type : 'POST',
+		enctype : "multipart/form-data",
 		success : function(result) {
 			console.log(result);
 			alert("uploaded");
+		},
+		error : function(result){
+			alert(result.responseText);
+			console.log(result);
 		}
 	}); // $.ajax
 });                

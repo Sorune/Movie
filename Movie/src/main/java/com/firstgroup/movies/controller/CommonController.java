@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.firstgroup.movies.domain.Criteria;
@@ -19,8 +22,9 @@ import lombok.extern.log4j.Log4j2;
 public class CommonController {
 		
 	// jsp 파일 업로드용 매핑
+	@ResponseBody
 	@PostMapping("/uploadAjaxAction")
-	public void uploadAjaxPost(MultipartFile[] uploadFile, HttpServletRequest request) throws Exception {
+	public void uploadAjaxPost(MultipartFile[] uploadFile){
 		log.info("update ajax post.......");
 		
 		String uploadFolder = "D://upload";
@@ -47,58 +51,5 @@ public class CommonController {
 		} // end for
 	}
 
-	@GetMapping("/loginCheck")
-	public void LoginCheck(String error, String logout, Model model) {
-		
-	}
-	
-	@GetMapping("/loginAuth")
-	public void loginAuth() {
-		
-	}
-	
-	@GetMapping("/register")
-	public void register() {
-		
-	}
-	
-	@GetMapping("/test")
-	public void test() {
-		//테스트 페이지용
-	}
-	
-	@GetMapping("/admin")
-	public void admin() {
-		
-	}
-	
-	@GetMapping("/home")
-	public void home() {
-		
-	}
-	
-	@GetMapping("/logout")
-	public void logout() {
-		log.info("logout........");
-	}
-	
-	@GetMapping("/uploadest")
-	public void uploadest() {
-		log.info("upload...........");
-	}
-	
-	@GetMapping("/admin/movieList")
-	public void movieList(Criteria cri, Model model) {
-		//우상제 테스트중
-		//model.addAttribute("list", service.getList(cri));
-	}
-	@GetMapping("/admin/movieRegister")
-	public void movieRegister() {
-		//우상제 테스트중
-	}
-	@GetMapping("/admin/movieModify")
-	public void movieModify() {
-		//우상제 테스트중
-	}
 
 }
