@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
+import com.firstgroup.movies.mapper.MemberMapper;
 import com.firstgroup.movies.mapper.MoviesCommentMapper;
 import com.firstgroup.movies.mapper.MoviesMapper;
 
@@ -25,6 +27,9 @@ public class MoviesServiceImpl implements MoviesService{
 	@Setter(onMethod_ = @Autowired)
 	private MoviesCommentMapper comMapper;
 	
+	@Setter(onMethod_ = @Autowired)
+	private MemberMapper memMapper;
+	
 	@Override
 	public MoviesVO get(Long movbno) {
 		
@@ -41,6 +46,15 @@ public class MoviesServiceImpl implements MoviesService{
 		
 		return comMapper.commentList(movbno);
 	}
+
+
+	@Override
+	public List<MemberVO> getCommentWriter(Long movbno) {
+		
+		return comMapper.getCommentWriter(movbno);
+	}
+
+
 
 	
 	

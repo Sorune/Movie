@@ -61,7 +61,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="#" class="nav-item nav-link active">영화</a>
+                        <a href="#" class="nav-item nav-link">영화</a>
                         <a href="#" class="nav-item nav-link">TV</a>
                         <a href="#" class="nav-item nav-link">책</a>
                         <a href="#" class="nav-item nav-link">웹툰</a>

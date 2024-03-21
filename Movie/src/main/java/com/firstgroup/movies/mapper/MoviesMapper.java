@@ -13,5 +13,4 @@ public interface MoviesMapper {
 	
 	public void insert(MoviesVO vo);
 	
-	public List<MoviesCommentVO> getList(); // 댓글 객체를 리스트에 담아 리턴
 }

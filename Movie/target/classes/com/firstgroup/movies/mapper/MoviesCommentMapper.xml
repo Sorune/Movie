@@ -9,6 +9,16 @@
   select * from tbl_movies_comment where movbno = #{movBno}
   </select>
   
+  <select id="getCommentWriter" resultType="com.firstgroup.movies.domain.MemberVO">
+  
+  <![CDATA[ 
+	SELECT 
+  		mem.id, mem.name, mem.nickname, mem.mem_imgno
+		FROM 
+  		tbl_member mem LEFT OUTER JOIN tbl_movies_comment com on mem.membno = com.membno
+		WHERE com.movbno = #{movbno}
+	]]>
+  </select>
   
   
   

@@ -1,5 +1,8 @@
 package com.firstgroup.movies.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,5 +26,14 @@ public class MoviesController {
 		log.info("get.........");
 		model.addAttribute("movie", movService.get(movbno));
 		model.addAttribute("comments", movService.commentList(movbno));
+		model.addAttribute("user", movService.getCommentWriter(movbno));
+		
+		HashMap<String, Object> mapData = new HashMap<>();
+		mapData.put("comments", movService.commentList(movbno));
+		mapData.put("user", movService.getCommentWriter(movbno));
+		
+		model.addAttribute("map",mapData);
+		
+		
 	}
 }

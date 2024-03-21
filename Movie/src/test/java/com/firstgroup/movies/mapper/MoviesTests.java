@@ -48,6 +48,13 @@ public class MoviesTests {
 		
 		log.info(vo);
 		
+	}
+	
+	@Test
+	public void getWriter() {
+		
+		Long movbno = 2L;
+		
 		
 	}
 

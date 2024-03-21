@@ -44,6 +44,9 @@ WHERE mem.id = ('kkk');
 	values (seq_member.nextval ,'aaa' , 'aaa' , 'aaa','월','수원시','01011111114');
 	
 select * from TBL_MEMBER;
+select * from TBL_MOVIES_COMMENT;
+
+
 drop table TBL_MEMBER; 
 
 
@@ -183,8 +186,7 @@ select * from tbl_movies_comment;
 
 -- 멤버테이블과 연결
 alter table tbl_movies_comment add constraint comment_mem_fk foreign key(membno) references tbl_member(membno); 
--- 영화 테이블과 연결
-alter table tbl_movies_comment add constraint comment_mem_fk foreign key(membno) references tbl_member(membno); 
+
 -------------------------------------------------------------
 drop table tbl_member;
 
@@ -210,5 +212,11 @@ drop table tbl_attach;
 drop table TBL_REPLY;
 drop table TBL_board;
 drop table TBL_MEMBER;
+
+SELECT 
+  		mem.id, mem.name, mem.nickname, mem.mem_imgno
+		FROM 
+  		tbl_member mem LEFT OUTER JOIN tbl_movies_comment com on mem.membno = com.membno
+		WHERE com.movbno = 1
 
 

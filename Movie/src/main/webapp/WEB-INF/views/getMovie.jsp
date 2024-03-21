@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<%-- <%@ taglib uri="http://www.springframework.org/security/tags"  prefix="sec"%> --%>
+
 
 <style type="text/css">
 img {
@@ -179,7 +181,9 @@ img {
 		
 		
 			<div class="row">
-			<c:forEach items="${comments}" var="comments">
+			<c:forEach items="${map}" var="comments" >
+				<c:set var="user" value="${map.user }"/>
+				<c:set var="comment" value="${map.comments }"/>
 			<div class="col-6 col-md-6">
 				<ul class="list-group">
 					<li class="list-group-item border-0">
@@ -187,7 +191,7 @@ img {
 							<div class="service-content rounded-top rounded-bottom bg-light p-4">
 								<div class="row">
 						            <div class="col d-flex">
-										<p class="mb-4"><%-- <c:out value="${comment. }" /> --%><strong>작성자</strong> </p>
+										<p class="mb-4"><strong><c:out value="${user[nickname]}" /></strong> </p>
 						            </div>
 								
 									<div class="col d-flex justify-content-end">
@@ -203,7 +207,7 @@ img {
 								</div>
 								
 					            <div class="service-content-inner">
-									<p class="mb-4"><c:out value="${comments.content }"></c:out></p>
+									<p class="mb-4"><c:out value="${comment}"></c:out></p> 
 								</div>
 							</div>
 						</div>
@@ -231,18 +235,17 @@ img {
 
 								<%--     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>           --%>
 
-								<div class="form-group">
+								<div class="form-group" >
 									<div class="col starts mb-3 d-flex" style="margin-right: 0; justify-content: flex-end;">
-						                <i class="fa fa-star fz40"><input type="hidden"></i>
-						                <i class="fa fa-star fz40"></i>
-						                <i class="fa fa-star fz40"></i>
-						                <i class="fa fa-star fz40"></i>
-						                <i class="fa fa-star fz40"></i>
+						                <i class="fa fa-star fz20"><input type="hidden"></i>
+						                <i class="fa fa-star fz20"></i>
+						                <i class="fa fa-star fz20"></i>
+						                <i class="fa fa-star fz20"></i>
+						                <i class="fa fa-star fz20"></i>
 						            </div>
 								</div><br>
 
 								<div class="form-group">
-									<label>Text area</label>
 									<textarea class="form-control" rows="3" name='content'></textarea>
 								</div><br>
 								
