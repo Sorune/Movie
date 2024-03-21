@@ -73,3 +73,31 @@
 	font-size: 40px  !important;
 	margin-right: 0.8rem;
 }
+
+/* 이미지 업로드용 */
+ #drop-area {
+     border: 2px dashed #ccc;
+     width: 300px;
+     height: 200px;
+     text-align: center;
+     padding: 10px;
+     margin: 10px auto;
+     transition: background-color 0.3s ease-in-out;
+ }
+ #drop-area:hover {
+     background-color: #eee;
+ }
+ #image-preview {
+     margin: 10px auto;
+     border: 2px dashed #ccc;
+     width: 300px;
+     height: 200px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+ #image-preview-img {
+ 	width: 100px;
+ 	height: 100px;
+ 	border: 1px solid black;
+ }

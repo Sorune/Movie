@@ -1,4 +1,6 @@
-
+// 스프링 시큐리티용
+const csrfHeader = "${_csrf.headerName}";
+const csrfToken = "${_csrf.token}";
 // ver1 star
 
 const checkStar = function (target) { // hidden  처리된 input에 값이 들어올 시 이벤트 처리 메서드를 변수에 저장한다(매개값 : this) 
@@ -64,37 +66,143 @@ $('.fa-star').on("click", function () {             // 별 아이콘을 누르�
 
 });
 
-// 로그인 체크
-function isLogin() {
+// file upload drag 
+const dropArea = document.getElementById("drop-area");
+const fileInput = document.getElementById("file-input");
+const imagePreview = document.getElementById("image-preview");
+const dataTranster = new DataTransfer();
+const uploadedImages = document.getElementById("uploadedImages");
+const inputFile = $("input[name='uploadFile']");
+// 드래그 앤 드롭 이벤트 처리
+dropArea.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropArea.style.backgroundColor = "#eee";
+});
 
-                // 로컬 스토리지에 저장된 정보 가져오기
-                const userLoginInfo = JSON.parse(localStorage.getItem("userInfo"));
-                // 내용을 변경해야 할 로그인 버튼
-                const logBtn = document.getElementById("loginBtn");
-                // 로그인시 숨겨야할 메뉴버튼(회원가입)
-                const registerBtn = document.getElementById("register");
-                // 꼼수로 값을 받아서 넣을 input 태그(숨겨짐)
-                const userInfoID =  document.getElementById("loginID");
-                const userInfoPW =  document.getElementById("loginID");
-                // input 태그에 로컬스토리지의 정보 저장
-                userInfoID.value = userLoginInfo.id;
-                userInfoPW.value = userLoginInfo.pw;
+dropArea.addEventListener("dragleave", () => {
+    dropArea.style.backgroundColor = "#fff";
+});
 
-                // 콘솔에 값 출력 테스트
-                console.log(userInfoID.value);
-                console.log(userInfoPW.value);
+dropArea.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropArea.style.backgroundColor = "#fff";
+    const files = e.dataTransfer.files;
+    let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
+    for(var i = 0 ; i < nodes.length ; i ++){
+		console.log(nodes[i]);	
+		nodes[i].remove();
+	};
+    console.log(files);
+    for(let i = 0; i < files.length ; i++){
+		const carouselInner = document.createElement("div");
+		if ( i == 0){
+			carouselInner.className = "carousel-item active";
+		} else {
+			carouselInner.className = "carousel-item";
+		}
+		console.log(carouselInner);
+		const img = document.createElement("img");
+		let file = files[i];
+		console.log(file);
+		if (file && file.type.startsWith("image")) {
+        	displayImage(file, img);
+    		console.log(img);
+        	carouselInner.appendChild(img);
+        	uploadedImages.appendChild(carouselInner);
+        	dataTranster.items.add(file);
+    	}
+	};
+	console.log(uploadedImages);
+	inputFile.files = dataTranster.files;
+	console.log(inputFile);
+});
 
-                // 
+// 파일 입력 필드 변경 이벤트 처리
+fileInput.addEventListener("change", () => {
+    const files = fileInput.files;
+    let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
+    for(var i = 0 ; i < nodes.length ; i ++){
+		console.log(nodes[i]);	
+		nodes[i].remove();
+	};
+    console.log(files);
+    for(let i = 0; i < files.length ; i++){
+		const carouselInner = document.createElement("div");
+		if ( i == 0){
+			carouselInner.className = "carousel-item active";
+		} else {
+			carouselInner.className = "carousel-item";
+		}
+		console.log(carouselInner);
+		const img = document.createElement("img");
+		let file = files[i];
+		console.log(file);
+		if (file && file.type.startsWith("image")) {
+        	displayImage(file, img);
+    		console.log(img);
+        	carouselInner.appendChild(img);
+        	uploadedImages.appendChild(carouselInner);
+        	dataTranster.items.add(file);
+    	}
+	};
+	console.log(uploadedImages);
+	inputFile.files = dataTranster.files;
+	console.log(inputFile);
+});
 
-                if(userInfoID != null && userInfoPW != null) {
-                    logBtn.innerText = "로그아웃"; // 일단은 텍스트 변경만
-                    // 기능을 되니 로그인을 기준으로 버튼을 숨겨지고 보여주도록 해야함
-                    registerBtn.style.display = "none";
+// 클릭 이벤트 처리
+dropArea.addEventListener("click", () => {
+    fileInput.click();
+});
 
-                }else {
-                    alert("로그인을 해주세요!");
-                    logBtn.innerText = "로그인";
-                    registerBtn.style.display = "block";
-                }
+// 이미지 표시 메서드
+function displayImage(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+		
+        imagePreview.src = reader.result;
+        imagePreview.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+}
 
-            }
+function displayImage(file, caroucel) {
+    const reader = new FileReader();
+    reader.onload = () => {
+		caroucel.className = "d-block w-100"; 
+		caroucel.style.objectFit = "cover";
+        caroucel.src = reader.result;
+        caroucel.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+}
+
+// ajax file upload method
+$("#uploadBtn").on("click", (e) => {
+	var formData = new FormData();
+	var inputFile = $("input[name='uploadFile']");
+	var files = inputFile[0].files;
+	console.log(files);
+	for(var i = 0 ; i< files.length;i++){
+		//if(!checkExtension(files[i].name, files[i].size)){
+			//console.log(!checkExtension(files[i].name, files[i].size));
+		//	return false;
+		//}
+		formData.append("uploadFile",files[i]);
+	};
+	console.log(formData);
+	$.ajax({
+		url : '/uploadAjaxAction',
+		processData : false,
+		contentType : false,
+		beforeSend : function(xhr){
+			xhr.setRequestHeader(csrfHeader,csrfToken);
+		},
+		data : formData,
+		type : 'POST',
+		success : function(result) {
+			console.log(result);
+			alert("uploaded");
+		}
+	}); // $.ajax
+});                

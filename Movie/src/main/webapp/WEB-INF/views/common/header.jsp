@@ -7,6 +7,7 @@
 <html lang="kr">
 
     <head>
+    	<link rel="shortcut icon" href="#">
         <meta charset="utf-8">
         <title>Terapia - Physical Therapy Website Template</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -15,7 +16,7 @@
 
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">  
 
         <!-- Icon Font Stylesheet -->
@@ -27,7 +28,7 @@
 		<link href="/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
 		<!-- owlCarousel -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css"/>
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="/resources/css/bootstrap.min.css" rel="stylesheet">

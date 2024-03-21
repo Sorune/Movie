@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<div class="container">
+<div class="custom-container">
 	<!-- Outer Row -->
 	<div class="row justify-content-center">
 		<div class="col-xl-10 col-lg-12 col-md-9">

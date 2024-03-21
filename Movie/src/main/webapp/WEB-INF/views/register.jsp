@@ -53,7 +53,7 @@
                                 회원가입
                             </button>
 	                        <div class="col-sm-6 text-center">
-	                            <a class="small" href="login.html">로그인으로 돌아가기</a>
+	                            <a class="small" href="/loginAuth">로그인으로 돌아가기</a>
 	                        </div>
 						</div>
 					</form>
