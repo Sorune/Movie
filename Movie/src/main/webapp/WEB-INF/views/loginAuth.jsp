@@ -18,10 +18,10 @@
 								<form class="user" method="post" action="/login">
 									<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 									<div class="form-group">
-										<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="username" placeholder="Enter Your Id...">
+										<input type="text" class="form-control form-control-user" id="exampleInputEmail" name="id" placeholder="Enter Your Id...">
 									</div>
 									<div class="form-group">
-										<input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="Password">
+										<input type="password" class="form-control form-control-user" id="exampleInputPassword" name="pw" placeholder="Password">
 									</div>
 									<div class="form-group">
 										<div class="custom-control custom-checkbox small">

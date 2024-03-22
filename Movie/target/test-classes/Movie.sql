@@ -45,13 +45,15 @@ alter table tbl_member_auth rename column username to id;
 
 select * from tbl_member_auth;
 
+insert into tbl_member_auth values('바보','ROLE_MEMBER');
+
 insert into tbl_member_auth values('sss','ROLE_ADMIN');
 
 	SELECT 
-  mem.id,pw, name,nickname,adress,phone,regdate, mem_imgno
+  mem.id,pw, name,nickname,adress,phone,regdate, auth
 FROM 
   tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id 
-WHERE mem.id = ('kkk'); 
+WHERE mem.id = ('바보'); 
 	
 	
 	insert into tbl_member (membno, id , pw , name,nickname,adress,phone) 

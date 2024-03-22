@@ -60,8 +60,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/loginAuth")
-	public void loginAuth() {
-		
+	public void loginAuth(Model model) {
+		log.info(model);
 	}
 	
 	@GetMapping("/register")
@@ -99,8 +99,8 @@ public class HomeController {
 	}
 	
 	@GetMapping("/home")
-	public void home() {
-		
+	public void home(Model model) {
+		log.info(model);
 	}
 	
 	@GetMapping("/logout")
