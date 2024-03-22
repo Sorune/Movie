@@ -28,8 +28,9 @@
 	</beans:bean>
 	
 	<!-- FileUpload -->
-	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" /> -->
-	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.MultipartResolver"></beans:bean> -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver" />
+	<!-- <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> -->
 	<!-- component-scan -->
 	<context:component-scan base-package="com.firstgroup.movies.controller" />
 	<context:component-scan base-package="com.firstgroup.movies.security" />

@@ -25,6 +25,28 @@ create table tbl_member_auth (
      constraint fk_member_auth foreign key(id) references tbl_member(id)
 );
 
+ALTER TABLE tbl_member RENAME COLUMN id TO username;
+alter table tbl_member rename column pw to password;
+ALTER TABLE tbl_member RENAME COLUMN username TO id;
+alter table tbl_member rename column password to pw;
+
+ALTER TABLE tbl_member MODIFY enabled char(1);
+
+ALTER TABLE tbl_member ADD enabled VARCHAR(1) DEFAULT '1' NOT NULL;
+ALTER TABLE tbl_member modify pw nvarchar2(100);
+update tbl_member set enabled='1';
+
+select * from tbl_member;
+
+select id , pw from tbl_member where id = 'kkk';
+
+alter table tbl_member_auth rename column id to username;
+alter table tbl_member_auth rename column username to id;
+
+select * from tbl_member_auth;
+
+insert into tbl_member_auth values('sss','ROLE_ADMIN');
+
 	SELECT 
   mem.id,pw, name,nickname,adress,phone,regdate, mem_imgno
 FROM 

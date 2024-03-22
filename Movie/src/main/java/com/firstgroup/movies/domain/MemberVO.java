@@ -12,11 +12,11 @@ public class MemberVO {
 	private String id;
 	private String pw;
 	private String name;
-	private String nickname;
+	private String nickName;
 	private String adress;
 	private String phone;
 	private Date regdate;
-	private Long mem_imgno;
+	private Long memImgno;
 	
 	
 

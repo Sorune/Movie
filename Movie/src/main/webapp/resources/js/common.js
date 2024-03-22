@@ -178,8 +178,9 @@ function displayImage(file, caroucel) {
 
 // ajax file upload method
 $("#uploadBtn").on("click", (e) => {
-	var csrfHeader = '${_csrf.headerName}';
-	var csrfToken = "${_csrf.token}";
+	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+	console.log(csrfHeader+" : "+csrfToken);
 	var formData = new FormData();
 	var inputFile = document.querySelector("#file-input");
 	var files = inputFile.files;
@@ -197,22 +198,20 @@ $("#uploadBtn").on("click", (e) => {
             }
 
 	$.ajax({
-		url : '/uploadAjaxAction',
-		type : 'POST',
-		processData : false,
-		contentType : false,
-		beforeSend : function(xhr){
-			xhr.setRequestHeader(csrfHeader,csrfToken);
-		},
-		data : formData,
-		enctype : "multipart/form-data",
-		success : function(result) {
-			console.log(result);
-			alert("uploaded");
-		},
-		error : function(result){
-			alert(result.responseText);
-			console.log(result);
-		}
-	}); // $.ajax
+				url : '/uploadAjaxAction',
+				processData : false,
+				contentType : false,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeader,csrfToken);
+				},
+				data : formData,
+				type : 'POST',
+				success : function(result) {
+					console.log(result);
+				},
+				error: function(result){
+					alert("uploadFail");
+					console.log(result);
+				}
+			}); //$.ajax
 });                
