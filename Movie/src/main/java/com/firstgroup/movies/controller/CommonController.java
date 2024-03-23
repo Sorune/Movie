@@ -7,13 +7,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,7 +37,7 @@ public class CommonController {
 		uploadAjaxPost(MultipartFile[] uploadFile){
 			
 			List<MoviesAttachVO> list = new ArrayList<>();
-			String uploadFolder = "D://upload"; 
+			String uploadFolder = "D://upload/"; 
 			
 			String uploadFolderPath = getFolder();
 			
@@ -69,6 +68,8 @@ public class CommonController {
 				log.info("---------------------------------");
 				log.info("Upload File Name : " + multipartFile.getOriginalFilename()); // 업로드된 파일의 이름
 				log.info("Upload File Size : " + multipartFile.getSize());	// 업로드 된 파일의 크기(용량)
+				log.info("Upload Full File Name : "+uploadFileName);
+				log.info("Upload Full Path File Name : "+ uploadPath+"/"+uploadFileName);
 				
 				// File saveFile = new File(uploadFolder, uploadFileName);
 				
@@ -79,7 +80,7 @@ public class CommonController {
 					attachDTO.setUuid(uuid.toString());
 					attachDTO.setUploadPath(uploadFolderPath);
 					attachDTO.setMovBno(1L);
-					attachMapper.insert(attachDTO);
+//					attachMapper.insert(attachDTO);
 					// add to List
 					list.add(attachDTO);
 					

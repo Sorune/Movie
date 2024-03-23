@@ -42,6 +42,16 @@ public class MoviesServiceImpl implements MoviesService{
 		return comMapper.commentList(movbno);
 	}
 
+
+	@Override
+	public MoviesVO registerMovies(MoviesVO mov) {
+		log.info("영화 등록...........");
+		mov.setMovBno(movMapper.insertSelectKey(mov)); 
+		
+		return mov;
+		
+	}
+
 	
 	
 	

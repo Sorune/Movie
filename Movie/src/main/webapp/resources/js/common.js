@@ -73,6 +73,7 @@ const imagePreview = document.getElementById("image-preview");
 const dataTranster = new DataTransfer();
 const uploadedImages = document.getElementById("uploadedImages");
 const inputFile = $("input[name='uploadFile']");
+
 // 드래그 앤 드롭 이벤트 처리
 dropArea.addEventListener("dragover", (e) => {
     e.preventDefault();
@@ -83,77 +84,130 @@ dropArea.addEventListener("dragleave", () => {
     dropArea.style.backgroundColor = "#fff";
 });
 
+function createCarouselInner(fileList){
+    let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
+    for(var i = 0 ; i < nodes.length ; i ++){
+		nodes[i].remove();
+	};
+	$(fileList).each(function(i,obj){
+		const carouselInner = document.createElement("div");
+		if ( i == 0){
+			carouselInner.className = "carousel-item active";
+		} else {
+			carouselInner.className = "carousel-item";
+		}
+		const img = document.createElement("img");
+		var fileCallPath = encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName);
+		console.log(fileCallPath);
+		img.src = "/download?fileName="+fileCallPath;
+		img.setAttribute('uploadPath',obj.uploadPath);
+		img.setAttribute('uuid',obj.uuid);
+		img.setAttribute('fileName',obj.fileName);
+    	carouselInner.appendChild(img);
+    	uploadedImages.appendChild(carouselInner);
+	});
+	console.log(uploadedImages);
+};
+
 dropArea.addEventListener("drop", (e) => {
 	const dataTranster = new DataTransfer();
 	const inputFile = document.querySelector("#file-input");
     e.preventDefault();
     dropArea.style.backgroundColor = "#fff";
     const files = e.dataTransfer.files;
-    let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
-    for(var i = 0 ; i < nodes.length ; i ++){
-		nodes[i].remove();
-	};
     for(let i = 0; i < files.length ; i++){
-		const carouselInner = document.createElement("div");
-		if ( i == 0){
-			carouselInner.className = "carousel-item active";
-		} else {
-			carouselInner.className = "carousel-item";
-		}
-		const img = document.createElement("img");
 		let file = files[i];
 		if (file && file.type.startsWith("image")) {
-        	displayImage(file, img);
-        	carouselInner.appendChild(img);
-        	uploadedImages.appendChild(carouselInner);
         	dataTranster.items.add(file);
     	}
 	};
-	console.log(uploadedImages);
 	inputFile.files = dataTranster.files;
 	console.log(inputFile);
+	imgUpload(inputFile.files);
 });
 
 
 // 파일 입력 필드 변경 이벤트 처리
-fileInput.addEventListener("change", (e) => {
-	console.log(e);
-    const files = fileInput.files;
-    let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
-    for(var i = 0 ; i < nodes.length ; i ++){
-		console.log(nodes[i]);	
-		nodes[i].remove();
+fileInput.addEventListener("change", function(event){
+	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+	console.log(csrfHeader+" : "+csrfToken);
+	var formData = new FormData();
+	var files = inputFile.files;
+	console.log(files);
+	for(var i = 0 ; i< files.length;i++){
+		//if(!checkExtension(files[i].name, files[i].size)){
+			//console.log(!checkExtension(files[i].name, files[i].size));
+		//	return false;
+		//}
+		console.log(i+files[i]+files[i].name);
+		formData.append("uploadFile",files[i],files[i].name);
 	};
-    console.log(files);
-    for(let i = 0; i < files.length ; i++){
-		const carouselInner = document.createElement("div");
-		if ( i == 0){
-			carouselInner.className = "carousel-item active";
-		} else {
-			carouselInner.className = "carousel-item";
-		}
-		console.log(carouselInner);
-		const img = document.createElement("img");
-		let file = files[i];
-		console.log(file);
-		if (file && file.type.startsWith("image")) {
-        	displayImage(file, img);
-    		console.log(img);
-        	carouselInner.appendChild(img);
-        	uploadedImages.appendChild(carouselInner);
-        	dataTranster.items.add(file);
-    	}
-	};
-	console.log(uploadedImages);
-	inputFile.files = dataTranster.files;
-	console.log(inputFile);
+	for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+            }
+
+	$.ajax({
+				url : '/uploadAjaxAction',
+				processData : false,
+				contentType : false,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeader,csrfToken);
+				},
+				data : formData,
+				type : 'POST',
+				success : function(result) {
+					console.log(result);
+					createCarouselInner(result);
+				},
+				error: function(result){
+					alert("uploadFail");
+					createCarouselInner(result);
+					console.log(result);
+				}
+			}); //$.ajax
 });
 
 // 클릭 이벤트 처리
 dropArea.addEventListener("click", () => {
     fileInput.click();
 });
+function imgUpload(files){
+	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	var csrfToken = $("meta[name='_csrf']").attr("content");
+	var formData = new FormData();
+	console.log(files);
+	for(var i = 0 ; i< files.length;i++){
+		//if(!checkExtension(files[i].name, files[i].size)){
+			//console.log(!checkExtension(files[i].name, files[i].size));
+		//	return false;
+		//}
+		console.log(i+files[i]+files[i].name);
+		formData.append("uploadFile",files[i],files[i].name);
+	};
+	for (var pair of formData.entries()) {
+                console.log(pair[0]+ ', ' + pair[1]); 
+            }
 
+	$.ajax({
+				url : '/uploadAjaxAction',
+				processData : false,
+				contentType : false,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(csrfHeader,csrfToken);
+				},
+				data : formData,
+				type : 'POST',
+				success : function(result) {
+					console.log(result);
+					createCarouselInner(result);
+				},
+				error: function(result){
+					alert("uploadFail");
+					console.log(result);
+				}
+			}); //$.ajax
+}
 // 이미지 표시 메서드
 function displayImage(file) {
     const reader = new FileReader();

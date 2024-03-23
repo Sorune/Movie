@@ -10,4 +10,6 @@ public interface MoviesService {
 	public MoviesVO get(Long movno);
 	
 	public List<MoviesCommentVO> commentList(Long movbno);
+	
+	public MoviesVO registerMovies(MoviesVO mov);
 }

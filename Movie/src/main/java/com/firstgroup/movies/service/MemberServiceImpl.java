@@ -39,7 +39,6 @@ public class MemberServiceImpl implements MemberService {
 			
 			memVo.setPw(passwordEncoder.encode(memVo.getPw()));
 			memberMapper.insertMember(memVo);
-			authMapper.insertAuth(memVO,'ROLE_MEMBER');
 		}
 		
 	}

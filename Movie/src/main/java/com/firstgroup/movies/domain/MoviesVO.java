@@ -20,4 +20,6 @@ public class MoviesVO {
 	private int recommend;			// 추천수
 	private Long  movImgNo;			// 영화 포스터 식별번호
 	
+	private List<ImgVO> imgList;
+	
 }

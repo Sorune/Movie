@@ -49,15 +49,16 @@ ul>li {
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 
-					<form role="form" action="/board/register" method="post">
+					<form role="form" action="/admin/register" method="post">
+						<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
+						<input type="file" name="imgList" id="imgList" accept="image/*" multiple>
 						<div class="form-group">
 							<label>제목</label> <input class="form-control" name='title'>
 						</div>
 						<div class="form-group ">
 							<label>개봉일</label>
 							<div class=" form-control " name='releaseDate'>
-								 <input type="date"
-									id="date" max="2024-03-20" min="1850-06-05" value="2024-03-20">
+								 <input type="date" id="date" max="2024-03-20" min="1850-06-05" value="2024-03-20">
 								</label>
 							</div>
 						</div>
@@ -172,7 +173,7 @@ ul>li {
 								<ul>
 									<li class="row" style="width: 230px; height: 76px">
 										<div class="col">
-											<img src="../resources/img/dune-1.jp" alt="갤러리 이미지"
+											<img src="/resources/img/dune-1.jpg" alt="갤러리 이미지"
 												class="border">
 										</div>
 									</li>

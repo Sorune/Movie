@@ -2,8 +2,11 @@ package com.firstgroup.movies.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.firstgroup.movies.domain.MemberVO;
 
+@Mapper
 public interface MemberMapper {
 	List<MemberVO> getMemList();
 	void insertMember(MemberVO memVo); //회원가입

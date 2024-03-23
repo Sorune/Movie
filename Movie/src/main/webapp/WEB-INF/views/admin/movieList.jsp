@@ -37,8 +37,8 @@
 			<div class="">
 				<div class=" color00b0f0">
 					<h4 class="color00b0f0">영화 목록</h4>
-					<button type="button" class="float-right">
-						영화 추가</button>
+					<a type="button" href="/admin/register" class="btn btn-primary float-right">
+						영화 추가</a>
 				</div>
 
 				<!-- /.panel-heading -->

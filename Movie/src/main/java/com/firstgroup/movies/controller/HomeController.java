@@ -14,13 +14,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.domain.MoviesVO;
 import com.firstgroup.movies.service.MemberServiceImpl;
+import com.firstgroup.movies.service.MoviesServiceImpl;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -34,6 +39,9 @@ public class HomeController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberServiceImpl memberService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MoviesServiceImpl moviesService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -115,13 +123,23 @@ public class HomeController {
 	
 	@GetMapping("/admin/movieList")
 	public void movieList(Criteria cri, Model model) {
-		//우상제 테스트중
-		//model.addAttribute("list", service.getList(cri));
+		
 	}
-	@GetMapping("/admin/movieRegister")
+	
+	@GetMapping("/admin/register")
 	public void movieRegister() {
-		//우상제 테스트중
+		log.info("movie register........");
 	}
+	
+	@PostMapping("/admin/register")
+	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model,@RequestParam("imgList") MultipartFile[] multiFile) {
+		log.info("movie register action..............");
+		log.info(mov);
+		log.info(multiFile);
+		moviesService.registerMovies(mov);
+		log.info(model);
+	}
+	
 	@GetMapping("/admin/movieModify")
 	public void movieModify() {
 		//우상제 테스트중
