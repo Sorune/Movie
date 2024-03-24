@@ -7,9 +7,9 @@
 			<div class="row justify-content-center">
 				<div class="row justify-content-center">
 					<div class="col-lg-12">
-						<h4 class="color00b0f0">영화정보수정</h4>
+						<h4 class="color00b0f0">배우 등록</h4>
 						<div class="row justify-content-center">
-							<form role="form" action="/admin/register" method="post">
+							<form role="form" action="/actor/register" method="post">
 								<div class="row justify-content-center">
 									<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
 									<div class="col-4">
@@ -32,67 +32,16 @@
 							        </div>
 							        <div class="col-8">
 						        		<div class="form-group">
-								        	<div class="row">
-													<label>제목</label><input class="form-control" name='title'>
+								        	<div class="row row-cols-2 pt-1">
+												<label class="col-sm-2 text-align-center">이름</label>
+												<div class="col-sm-10">
+													<input class="form-control" name='name'>
+												</div>
 											</div>
-											<div class="row d-flex align-items-center">
-												<div class="row d-flex align-items-center">
-													<div class="col-4">
-														<label>개봉일</label>
-													</div>
-													<div class="col-4">
-														<label>시청자의 권장 연령 등급</label>
-													</div>
-													<div class="col-4">
-														<label>쿠키 유무</label>
-													</div>
-												</div>
-												<div class="row d-flex align-items-center">
-													<div class="col-4">
-														<div class="form-group">
-															<input type="date" class="form-control" id="date" max="2024-03-20" min="1850-06-05" value="2024-03-20">
-														</div>
-													</div>
-													<div class="col-4">
-														<div class="form-group">
-															<select class="form-select">
-																<option value="all">전체 이용가</option>
-																<option value="7">7세 이상 시청가</option>
-																<option value="12">12세 이상 시청가</option>
-																<option value="15">15세 이상 시청가</option>
-																<option value="19">19세 이상 시청가</option>
-															</select>
-														</div>
-													</div>
-													<div class="col-4">
-														<div class="form-group">
-															<div >
-																<input type="checkbox"class="form-check-input" name="major" id="cookies" value="drama"></input>
-																<label class="form-check-label" for="cookies">쿠키 유무</label>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row d-flex align-items-center">
-													<label>장르 <span style="color: red">*</span> <span style="font-size: 12px">3개이상 6개이하 체크</span></label>
-													<div class="row row-cols-6 d-flex align-items-center">
-														<input type="checkbox" class="form-check-input" name="" id="drama" value="drama" />
-														<label class="form-check-label" for="drama">드라마</label>
-														<input type="checkbox" class="form-check-input" name="" id="fantasy" value="drama" />
-														<label class="form-check-label" for="fantasy">판타지</label>
-														<input type="checkbox" class="form-check-input" name="" id="romance" value="drama" />
-														<label class="form-check-label" for="romance">로맨스</label>
-														<input type="checkbox" class="form-check-input" name="" id="jap" value="drama" />
-														<label class="form-check-label" for="jap">일본</label>
-														<input type="checkbox" class="form-check-input" name="" id="kor" value="drama" />
-														<label class="form-check-label" for="kor">한국</label>
-														<input type="checkbox" class="form-check-input" name="" id="us" value="drama" />
-														<label class="form-check-label" for="us">미국</label>
-														<input type="checkbox" class="form-check-input" name="" id="ani" value="drama" />
-														<label class="form-check-label" for="ani">애니메이션</label>
-														<input type="checkbox" class="form-check-input" name="" id="mov" value="drama" />
-														<label class="form-check-label" for="mov">영화</label>
-													</div>
+											<div class="row row-cols-2 pt-1">
+												<label class="col-sm-2 text-align-center">나이</label>
+												<div class="col-sm-10">
+													<input class="form-control" name='age'>
 												</div>
 											</div>
 										</div>
@@ -161,7 +110,7 @@
 											<ul>
 												<li class="row" style="width: 230px; height: 76px">
 													<div class="col">
-														<img src="/resources/img/dune-1.jpg" alt="갤러리 이미지"
+														<img src="" alt="갤러리 이미지"
 															class="border">
 													</div>
 												</li>

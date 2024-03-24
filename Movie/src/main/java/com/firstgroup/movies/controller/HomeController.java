@@ -132,11 +132,10 @@ public class HomeController {
 	}
 	
 	@PostMapping("/admin/register")
-	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model,@RequestParam("imgList") MultipartFile[] multiFile) {
+	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model, MultipartFile[] uploadFile) {
 		log.info("movie register action..............");
 		log.info(mov);
-		log.info(multiFile);
-		moviesService.registerMovies(mov);
+		mov = moviesService.registerMovies(mov);
 		log.info(model);
 	}
 	
@@ -144,5 +143,14 @@ public class HomeController {
 	public void movieModify() {
 		//우상제 테스트중
 	}
-
+	
+	@GetMapping("/actor/actorList")
+	public void actorList() {
+		log.info("actorList...............");
+	}
+	
+	@GetMapping("/actor/register")
+	public void actorRegister() {
+		log.info("actor register..............");
+	}
 }

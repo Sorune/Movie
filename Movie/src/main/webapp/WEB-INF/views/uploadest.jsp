@@ -47,7 +47,9 @@
 <%-- 	        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
 	        		<input type="file" name="uploadFile" id="file-input" accept="image/*" style="display: none;" multiple>
 	        	</div>
-	        	<div id="uploadedImages" class="carousel slide" data-bs-ride="carousel">
+	        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
+	        		<div class="carousel-inner" style="width:100%;height:auto;">
+	        		</div>
 	        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages" data-bs-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="visually-hidden">Previous</span>

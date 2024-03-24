@@ -1,6 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
+<style>
+	.red {
+		border: 1px solid red;
+	}
+	.top-block{
+	height:148px;
+	}
+	.color00b0f0{
+		color:#00b0f0;
+	}
+	.float-right{
+		float:right;
+	}
+	.img-small{/* 임시  */
+		width:50px;
+		height:auto;
+	}
+</style>
+
+
 <div class="container ">
 	<div class="top-block"><!-- 상단 안보이는걸 막기위한 div 미디어쿼리 넣어야한다.--></div>
 	
@@ -17,8 +37,8 @@
 			<div class="">
 				<div class=" color00b0f0">
 					<h4 class="color00b0f0">영화 목록</h4>
-					<a type="button" href="/admin/register" class="btn btn-primary float-right">
-						영화 추가</a>
+					<button type="button" class="float-right">
+						영화 추가</button>
 				</div>
 
 				<!-- /.panel-heading -->
@@ -98,6 +118,21 @@
 
 					<div class='pull-right'>
 						<ul class="pagination">
+
+							<%--             <c:if test="${pageMaker.prev}">
+              <li class="paginate_button previous"><a href="#">Previous</a>
+              </li>
+            </c:if>
+
+            <c:forEach var="num" begin="${pageMaker.startPage}"
+              end="${pageMaker.endPage}">
+              <li class="paginate_button"><a href="#">${num}</a></li>
+            </c:forEach>
+
+            <c:if test="${pageMaker.next}">
+              <li class="paginate_button next"><a href="#">Next</a></li>
+            </c:if> --%>
+
 							<c:if test="${pageMaker.prev}">
 								<li class="paginate_button previous"><a
 									href="${pageMaker.startPage -1}">Previous</a></li>

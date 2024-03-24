@@ -71,21 +71,30 @@ const dropArea = document.getElementById("drop-area");
 const fileInput = document.getElementById("file-input");
 const imagePreview = document.getElementById("image-preview");
 const dataTranster = new DataTransfer();
-const uploadedImages = document.getElementById("uploadedImages");
+const uploadedImages = document.getElementById("uploadedImages").querySelector("div");
+console.log(uploadedImages);
 const inputFile = $("input[name='uploadFile']");
 
-// 드래그 앤 드롭 이벤트 처리
-dropArea.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    dropArea.style.backgroundColor = "#eee";
-});
+function createUploadFileInput(form){
+	let nodes = document.querySelector("#uploadedImages").querySelectorAll("img");
+	$(nodes).each(function(i,obj){
+		console.log(obj.getAttribute("uploadPath"));
+		console.log(obj.getAttribute("uuid"));
+		console.log(obj.getAttribute("fileName"));
+		let inputFile =  document.createElement("input");
+		inputFile.type = "hidden";
+		inputFile.setAttribute('name',"imgList["+i+"]");
+		inputFile.setAttribute('uploadPath',obj.getAttribute("uploadPath"));
+		inputFile.setAttribute('uuid',obj.getAttribute("uuid"));
+		inputFile.setAttribute('fileName',obj.getAttribute("fileName"));
+		console.log(inputFile);
+		//form.appendChild(inputFile);
+	});
+}
 
-dropArea.addEventListener("dragleave", () => {
-    dropArea.style.backgroundColor = "#fff";
-});
 
 function createCarouselInner(fileList){
-    let nodes = document.querySelector("#uploadedImages").querySelectorAll("div");
+    let nodes = document.querySelector("#uploadedImages").querySelector("div").querySelectorAll("div");
     for(var i = 0 ; i < nodes.length ; i ++){
 		nodes[i].remove();
 	};
@@ -100,6 +109,9 @@ function createCarouselInner(fileList){
 		var fileCallPath = encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName);
 		console.log(fileCallPath);
 		img.src = "/download?fileName="+fileCallPath;
+		img.setAttribute('width',"100%");
+		img.setAttribute('height',"auto");
+		img.setAttribute('class',"d-block w-100");
 		img.setAttribute('uploadPath',obj.uploadPath);
 		img.setAttribute('uuid',obj.uuid);
 		img.setAttribute('fileName',obj.fileName);
@@ -109,69 +121,84 @@ function createCarouselInner(fileList){
 	console.log(uploadedImages);
 };
 
-dropArea.addEventListener("drop", (e) => {
-	const dataTranster = new DataTransfer();
-	const inputFile = document.querySelector("#file-input");
-    e.preventDefault();
-    dropArea.style.backgroundColor = "#fff";
-    const files = e.dataTransfer.files;
-    for(let i = 0; i < files.length ; i++){
-		let file = files[i];
-		if (file && file.type.startsWith("image")) {
-        	dataTranster.items.add(file);
-    	}
-	};
-	inputFile.files = dataTranster.files;
-	console.log(inputFile);
-	imgUpload(inputFile.files);
-});
+if(!(dropArea==null)){
+	// 드래그 앤 드롭 이벤트 처리
+	dropArea.addEventListener("dragover", (e) => {
+	    e.preventDefault();
+	    dropArea.style.backgroundColor = "#eee";
+	});
+	
+	dropArea.addEventListener("dragleave", () => {
+	    dropArea.style.backgroundColor = "#fff";
+	});
+
+	dropArea.addEventListener("drop", (e) => {
+		const dataTranster = new DataTransfer();
+		const inputFile = document.querySelector("#file-input");
+	    e.preventDefault();
+	    dropArea.style.backgroundColor = "#fff";
+	    const files = e.dataTransfer.files;
+	    for(let i = 0; i < files.length ; i++){
+			let file = files[i];
+			if (file && file.type.startsWith("image")) {
+	        	dataTranster.items.add(file);
+	    	}
+		};
+		inputFile.files = dataTranster.files;
+		console.log(inputFile);
+		imgUpload(inputFile.files);
+	});
 
 
-// 파일 입력 필드 변경 이벤트 처리
-fileInput.addEventListener("change", function(event){
-	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
-	var csrfToken = $("meta[name='_csrf']").attr("content");
-	console.log(csrfHeader+" : "+csrfToken);
-	var formData = new FormData();
-	var files = inputFile.files;
-	console.log(files);
-	for(var i = 0 ; i< files.length;i++){
-		//if(!checkExtension(files[i].name, files[i].size)){
-			//console.log(!checkExtension(files[i].name, files[i].size));
-		//	return false;
-		//}
-		console.log(i+files[i]+files[i].name);
-		formData.append("uploadFile",files[i],files[i].name);
-	};
-	for (var pair of formData.entries()) {
-                console.log(pair[0]+ ', ' + pair[1]); 
-            }
+	// 파일 입력 필드 변경 이벤트 처리
+	fileInput.addEventListener("change", function(e){
+		var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+		var csrfToken = $("meta[name='_csrf']").attr("content");
+		console.log(csrfHeader+" : "+csrfToken);
+		var inputFile = document.querySelector("#file-input");
+		var formData = new FormData();
+		var files = inputFile.files;
+		console.log(files);
+		for(var i = 0 ; i< files.length;i++){
+			//if(!checkExtension(files[i].name, files[i].size)){
+				//console.log(!checkExtension(files[i].name, files[i].size));
+			//	return false;
+			//}
+			console.log(i+files[i]+files[i].name);
+			formData.append("uploadFile",files[i],files[i].name);
+		};
+		for (var pair of formData.entries()) {
+	                console.log(pair[0]+ ', ' + pair[1]); 
+	            }
+	
+		$.ajax({
+					url : '/uploadAjaxAction',
+					processData : false,
+					contentType : false,
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(csrfHeader,csrfToken);
+					},
+					data : formData,
+					type : 'POST',
+					success : function(result) {
+						console.log(result);
+						createCarouselInner(result);
+					},
+					error: function(result){
+						alert("uploadFail");
+						createCarouselInner(result);
+						console.log(result);
+					}
+				}); //$.ajax
+	});
+	
+	// 클릭 이벤트 처리
+	dropArea.addEventListener("click", () => {
+	    fileInput.click();
+	});
+}
 
-	$.ajax({
-				url : '/uploadAjaxAction',
-				processData : false,
-				contentType : false,
-				beforeSend : function(xhr){
-					xhr.setRequestHeader(csrfHeader,csrfToken);
-				},
-				data : formData,
-				type : 'POST',
-				success : function(result) {
-					console.log(result);
-					createCarouselInner(result);
-				},
-				error: function(result){
-					alert("uploadFail");
-					createCarouselInner(result);
-					console.log(result);
-				}
-			}); //$.ajax
-});
 
-// 클릭 이벤트 처리
-dropArea.addEventListener("click", () => {
-    fileInput.click();
-});
 function imgUpload(files){
 	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 	var csrfToken = $("meta[name='_csrf']").attr("content");

@@ -2,19 +2,19 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<div class="container">
+<div class="container pt-6">
     <div class="card o-hidden border-0 shadow-lg my-3">
         <div class="card-body p-2">
             <!-- Nested Row within Card Body -->
          
-               <div class="col-lg-7">
-                   <div class="p-5">
+               <div class="row justify-content-center">
+                   <div class="col-lg-7 p-5">
                        <div class="text-center">
                            <h1 class="h4 text-gray-900 mb-4">회원가입을 해보자 !</h1>
                        </div>
                        <form class="user" action="/register" method="post">
-                       	<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
-                           <div class="form-group">
+							<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
+							<div class="form-group">
                                <div class="col-sm-6 mb-3 mb-sm-1">
                                    <input type="text" class="form-control form-control-user" id="ID" name="id" placeholder="아이디">
                                </div>

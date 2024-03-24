@@ -26,10 +26,10 @@
 	<insert id="insertSelectKey" parameterType="com.firstgroup.movies.domain.MoviesVO" useGeneratedKeys="true" keyProperty="movbno">
 
 		<selectKey keyProperty="movBno" order="BEFORE" resultType="long">
-			select seq_board.nextval from dual
+			select seq_movies.nextval from dual
 		</selectKey>
-		insert into tbl_movies(movbno, title, content, director, actor)
-		values (#{movBno}, #{title},#{content}, #{director}, #{actor})
+		insert into tbl_movies(movbno, title, content<!-- , director, actor -->)
+		values (#{movBno}, #{title},#{content}<!-- , #{director}, #{actor} -->)
 		
 	</insert>
   

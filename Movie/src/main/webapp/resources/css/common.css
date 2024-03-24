@@ -1,5 +1,9 @@
 /* star css ver1 */
 /* 별점 체크용 */
+.pt-6 {
+	padding-top: 100px;
+}
+
 .star {
     position: relative;
     font-size: 2rem;
