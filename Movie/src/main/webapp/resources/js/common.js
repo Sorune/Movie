@@ -68,11 +68,13 @@ $('.fa-star').on("click", function () {             // 별 아이콘을 누르�
 
 // file upload drag 
 const dropArea = document.getElementById("drop-area");
-const fileInput = document.getElementById("file-input");
+var fileInput = document.getElementById("file-input");
 const imagePreview = document.getElementById("image-preview");
 const dataTranster = new DataTransfer();
-const uploadedImages = document.getElementById("uploadedImages").querySelector("div");
-console.log(uploadedImages);
+var uploadedImages = document.getElementById("uploadedImages");
+if(!(uploadedImages==null)){
+	uploadedImages = uploadedImages.querySelector("div");
+}
 const inputFile = $("input[name='uploadFile']");
 
 function createUploadFileInput(form){
@@ -150,6 +152,14 @@ if(!(dropArea==null)){
 	});
 
 
+	
+	// 클릭 이벤트 처리
+	dropArea.addEventListener("click", () => {
+	    fileInput.click();
+	});
+};
+
+if(!(fileInput==null)){
 	// 파일 입력 필드 변경 이벤트 처리
 	fileInput.addEventListener("change", function(e){
 		var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -192,12 +202,7 @@ if(!(dropArea==null)){
 				}); //$.ajax
 	});
 	
-	// 클릭 이벤트 처리
-	dropArea.addEventListener("click", () => {
-	    fileInput.click();
-	});
-}
-
+};
 
 function imgUpload(files){
 	var csrfHeader = $("meta[name='_csrf_header']").attr("content");

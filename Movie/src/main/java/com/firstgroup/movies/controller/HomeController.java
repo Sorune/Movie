@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.firstgroup.movies.domain.ActorVO;
 import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesVO;
+import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
 import com.firstgroup.movies.service.MoviesServiceImpl;
 
@@ -42,6 +44,9 @@ public class HomeController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MoviesServiceImpl moviesService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ActorServiceImpl actorService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -152,5 +157,12 @@ public class HomeController {
 	@GetMapping("/actor/register")
 	public void actorRegister() {
 		log.info("actor register..............");
+	}
+	
+	@PostMapping("/actor/register")
+	public void actorRegister(@ModelAttribute("ActorVO") ActorVO act, Model model) {
+		log.info("post actor register...........");
+		log.info(act);
+		log.info(model);
 	}
 }

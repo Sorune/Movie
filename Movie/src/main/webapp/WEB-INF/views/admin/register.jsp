@@ -171,7 +171,7 @@
 			
 									<div class="row row-cols-3">
 										<button type="submit" id="submit" class="border btn btn-default">추가하기</button>
-										<button type="reset" class="border btn btn-default">돌아가기</button>
+										<button type="reset" class="border btn btn-default">초기화</button>
 										<a href="/admin/movieList" class="border btn btn-default">돌아가기</a>
 									</div>
 								</div>

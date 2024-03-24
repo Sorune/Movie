@@ -29,8 +29,6 @@ public class MoviesTests {
 		
 		vo.setTitle("돌쇠와 서준");
 		vo.setContent("조선시대 배경으로 돌쇠와 서준의 로맨스를 담은 BL물...");
-		vo.setDirector("양지웅");
-		vo.setActor("킹서준");
 		vo.setMovImgNo(2L);
 		
 		mapper.insert(vo);
