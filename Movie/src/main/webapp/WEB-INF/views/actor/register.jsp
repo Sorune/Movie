@@ -11,8 +11,8 @@
 						<div class="row justify-content-center">
 							<input type="file" name="imgList" id="file-input" accept="image/*" style="display: none;" multiple>
 							<form role="form" action="/actor/register" method="post">
+								<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
 								<div class="row justify-content-center">
-									<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
 									<div class="col-4">
 							        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
 							        		<div class="carousel-inner" style="width:100%;height:auto;">
@@ -32,7 +32,7 @@
 												<span class="bi bi-file-plus fz20" aria-hidden="true"></span>
 												<span class="visually-hidden">Add</span>
 											</button>
-											<button type="button" class="carousel-control-remove" data-bs-target="#uploadedImages">
+											<button type="button" class="carousel-control-remove" id="deleteImage" data-bs-target="#uploadedImages">
 												<span class="bi bi-file-x fz20" aria-hidden="true"></span>
 												<span class="visually-hidden">Remove</span>
 											</button>
@@ -63,7 +63,7 @@
 													<input type="date" class="form-control" id="date" max="2024-03-20" min="1850-06-05" value="2024-03-20">
 												</div>
 												<div class="form-group p-3">
-													<input type="date" class="form-control" id="date" max="2024-03-20" min="1850-06-05" value="">
+													<input type="date" class="form-control" id="date" value="">
 												</div>
 											</div>
 										</div>
@@ -72,8 +72,12 @@
 								<div class="row row-cols-3">
 									<button type="submit" id="submit" class="btn btn-primary">추가하기</button>
 									<button type="reset" class="btn btn-primary">초기화</button>
-									<a href="/admin/movieList" class="btn btn-primary">돌아가기</a>
+									<a href="/movie/movieList" class="btn btn-primary">돌아가기</a>
 								</div>
+								
+								
+								
+								
 							</form>
 						</div>
 					</div>

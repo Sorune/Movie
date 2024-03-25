@@ -1,6 +1,8 @@
 package com.firstgroup.movies.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,7 +93,37 @@ public class CommonController {
 			
 			return new ResponseEntity<>(list, HttpStatus.OK);
 		}
-
+		
+		@PostMapping("/deleteFile")
+		@ResponseBody
+		public ResponseEntity<String> deleteFile(String fileName, String type){
+			log.info("deleteFile : "+fileName);
+			
+			File file;
+			
+			try {
+				file = new File("D:\\upload\\"+URLDecoder.decode(fileName,"UTF-8"));
+				
+				file.delete();
+				
+				if(type!=null&&type.equals("image")) {
+					String largeFileName = file.getAbsolutePath().replace("s_","");
+					
+					log.info(largeFileName);
+					
+					file = new File(largeFileName);
+					
+					file.delete();
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			}
+			
+			return new ResponseEntity<String>("deleted",HttpStatus.OK);
+		}
+		
 		// 중복된 이름의 첨부파일 처리
 		private String getFolder() {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 포멧 생성
