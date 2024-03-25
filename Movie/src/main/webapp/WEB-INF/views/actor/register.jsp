@@ -9,16 +9,16 @@
 					<div class="col-lg-12">
 						<h4 class="color00b0f0">배우 등록</h4>
 						<div class="row justify-content-center">
+							<input type="file" name="imgList" id="file-input" accept="image/*" style="display: none;" multiple>
 							<form role="form" action="/actor/register" method="post">
 								<div class="row justify-content-center">
 									<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
 									<div class="col-4">
-										<div id="drop-area">
-											<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
-											<!-- <input type="file" name="imgList" id="file-input" accept="image/*" style="display: none;" multiple> -->
-							        	</div>
 							        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
 							        		<div class="carousel-inner" style="width:100%;height:auto;">
+												<div id="drop-area" style="width:100%;">
+													<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+									        	</div>
 							        		</div>
 							        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages" data-bs-slide="prev">
 												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -27,6 +27,14 @@
 											<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages" data-bs-slide="next">
 												<span class="carousel-control-next-icon" aria-hidden="true"></span>
 												<span class="visually-hidden">Next</span>
+											</button>
+											<button type="button" class="carousel-control-add" id="uploadImage" data-bs-target="#uploadedImages">
+												<span class="bi bi-file-plus fz20" aria-hidden="true"></span>
+												<span class="visually-hidden">Add</span>
+											</button>
+											<button type="button" class="carousel-control-remove" data-bs-target="#uploadedImages">
+												<span class="bi bi-file-x fz20" aria-hidden="true"></span>
+												<span class="visually-hidden">Remove</span>
 											</button>
 							        	</div>
 							        </div>

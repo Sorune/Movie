@@ -67,15 +67,20 @@ $('.fa-star').on("click", function () {             // 별 아이콘을 누르�
 });
 
 // file upload drag 
-const dropArea = document.getElementById("drop-area");
+const dropArea = document.getElementById("uploadedImages");
 var fileInput = document.getElementById("file-input");
 const imagePreview = document.getElementById("image-preview");
 const dataTranster = new DataTransfer();
 var uploadedImages = document.getElementById("uploadedImages");
+var uploadImageButton = document.getElementById("uploadImage");
 if(!(uploadedImages==null)){
 	uploadedImages = uploadedImages.querySelector("div");
 }
 const inputFile = $("input[name='uploadFile']");
+
+function onClickFunction(){
+	fileInput.click();
+}
 
 function createUploadFileInput(form){
 	let nodes = document.querySelector("#uploadedImages").querySelectorAll("img");
@@ -93,7 +98,6 @@ function createUploadFileInput(form){
 		//form.appendChild(inputFile);
 	});
 }
-
 
 function createCarouselInner(fileList){
     let nodes = document.querySelector("#uploadedImages").querySelector("div").querySelectorAll("div");
@@ -119,9 +123,31 @@ function createCarouselInner(fileList){
 		img.setAttribute('fileName',obj.fileName);
     	carouselInner.appendChild(img);
     	uploadedImages.appendChild(carouselInner);
+    	
 	});
 	console.log(uploadedImages);
+	dropArea.removeAttribute('eventList');	
+	dropArea.removeEventListener("click", onClickFunction);
+	console.log("event remove");
+	
+	let nodeList = document.querySelector("#uploadedImages").querySelector("div").querySelectorAll("div");
+	console.log(nodeList);
+	if(nodeList.length==0){
+		var emptyNode = document.createElement("div");
+		var emptyP = document.createElement("p");
+		emptyNode.setAttribute("id","drop-area");
+		emptyNode.setAttribute("style","width:100%;");
+		emptyP.innerText = "이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.";
+		emptyNode.appendChild(emptyP);
+		document.querySelector("#uploadedImages").querySelector("div").appendChild(emptyNode);
+		
+		dropArea.setAttribute('eventList','click');
+		dropArea.addEventListener("click",onClickFunction);
+		console.log("event set");
+	}
+	
 };
+
 
 if(!(dropArea==null)){
 	// 드래그 앤 드롭 이벤트 처리
@@ -154,11 +180,30 @@ if(!(dropArea==null)){
 
 	
 	// 클릭 이벤트 처리
-	dropArea.addEventListener("click", () => {
-	    fileInput.click();
+	uploadImageButton.addEventListener("click",function(){
+    	fileInput.click();
 	});
+	
 };
 
+console.log(!(document.getElementById("drop-area")==null));
+
+console.log(dropArea.dispatchEvent);
+if(!(document.getElementById("drop-area")==null)){
+	
+		dropArea.setAttribute('eventList','click');
+		dropArea.addEventListener("click",onClickFunction);
+		console.log("event set");
+} else {
+	if(document.getElementById("drop-area")==null){
+		if((!dropArea.getAttribute('eventList')==null)){
+			dropArea.removeAttribute('eventList');	
+			dropArea.removeEventListener("click",onClickFunction);
+			console.log("event remove");
+		}
+	}
+}
+	
 if(!(fileInput==null)){
 	// 파일 입력 필드 변경 이벤트 처리
 	fileInput.addEventListener("change", function(e){
@@ -220,9 +265,10 @@ function imgUpload(files){
 	for (var pair of formData.entries()) {
                 console.log(pair[0]+ ', ' + pair[1]); 
             }
-
+	//var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';
+	
 	$.ajax({
-				url : '/uploadAjaxAction',
+				url : /* urlString */'/uploadAjaxAction',
 				processData : false,
 				contentType : false,
 				beforeSend : function(xhr){

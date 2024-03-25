@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.firstgroup.movies.domain.Criteria;
+import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
+import com.firstgroup.movies.mapper.MemberMapper;
 import com.firstgroup.movies.mapper.MoviesCommentMapper;
 import com.firstgroup.movies.mapper.MoviesMapper;
 
@@ -25,6 +28,9 @@ public class MoviesServiceImpl implements MoviesService{
 	@Setter(onMethod_ = @Autowired)
 	private MoviesCommentMapper comMapper;
 	
+	@Setter(onMethod_ = @Autowired)
+	private MemberMapper memMapper;
+	
 	@Override
 	public MoviesVO get(Long movbno) {
 		
@@ -33,13 +39,13 @@ public class MoviesServiceImpl implements MoviesService{
 		return movMapper.get(movbno);
 	}
 
-	
+
 	@Override
-	public List<MoviesCommentVO> commentList(Long movbno) {
-		
-		log.info("댓글리스트 불러오는 중......  ");
-		
-		return comMapper.commentList(movbno);
+	public int insertComment(MoviesCommentVO vo) {
+
+		log.info("들어온 객체 확인========"+vo);
+		int result = comMapper.insertComment(vo);
+		return result;
 	}
 
 
@@ -51,6 +57,54 @@ public class MoviesServiceImpl implements MoviesService{
 		return mov;
 		
 	}
+
+
+	@Override
+	public List<MoviesCommentVO> getCommentList(Long movbno) {
+		
+		return comMapper.getCommentList(movbno);
+	}
+
+
+	@Override
+	public int removeComment(Long combno) {
+		
+		MoviesCommentVO vo = comMapper.getComment(combno);
+		
+		return comMapper.removeComment(vo.getComBno());
+		
+	}
+
+
+	@Override
+	public MoviesCommentVO getComment(Long combno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	public int remove(Long rno) {
+//		log.info("삭제 할 댓글 번호 : "+ rno);
+//		
+//		ReplyVO vo = mapper.read(rno); // 삭제 할 댓글의 번호를 불러옴
+//		
+//		boardMapper.updateReplyCnt(vo.getBno(), -1); // 가져온 게시물의 댓글 카운트를 -1
+//		
+//		return mapper.delete(rno);
+//	}
+
+//	@Override
+//	public List<MoviesCommentVO> getList(Criteria cri, Long bno) {
+//		return null;
+//	}
+//
+//
+//	@Override
+//	public CommentPageDTO getListPage(Criteria cri, Long bno) {
+//		return null;
+//	}
+
+
+
 
 	
 	

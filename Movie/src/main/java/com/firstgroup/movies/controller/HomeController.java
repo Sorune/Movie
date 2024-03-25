@@ -106,11 +106,6 @@ public class HomeController {
 		//테스트 페이지용
 	}
 	
-	@GetMapping("/admin")
-	public void admin() {
-		
-	}
-	
 	@GetMapping("/home")
 	public void home(Model model) {
 		log.info(model);
@@ -126,17 +121,17 @@ public class HomeController {
 		log.info("upload...........");
 	}
 	
-	@GetMapping("/admin/movieList")
+	@GetMapping("/movie/movieList")
 	public void movieList(Criteria cri, Model model) {
 		
 	}
 	
-	@GetMapping("/admin/register")
+	@GetMapping("/movie/register")
 	public void movieRegister() {
 		log.info("movie register........");
 	}
 	
-	@PostMapping("/admin/register")
+	@PostMapping("/movie/register")
 	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model, MultipartFile[] uploadFile) {
 		log.info("movie register action..............");
 		log.info(mov);
@@ -144,7 +139,7 @@ public class HomeController {
 		log.info(model);
 	}
 	
-	@GetMapping("/admin/movieModify")
+	@GetMapping("/movie/movieModify")
 	public void movieModify() {
 		//우상제 테스트중
 	}

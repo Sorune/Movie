@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utility {
-	public List<Integer> parseToList(String listString){
-		List<Integer> parsingIntList = new ArrayList<Integer>();
+	public List<Long> parseToList(String listString){
+		List<Long> parsingIntList = new ArrayList<Long>();
 		String[] valueList = listString.replace(" ","").split(",");
 		for(String value : valueList) {
-			parsingIntList.add(Integer.parseInt(value));
+			parsingIntList.add(Long.parseLong(value));
 		}
-		return parsingIntList;
+		return parsingIntList; 
 	}
 	
-	public int[] listToIntList(List<Integer> list) {
-		return list.stream().mapToInt(Integer::intValue).toArray();
+	public long[] listToIntList(List<Long> list) {
+		return list.stream().mapToLong(Long::longValue).toArray();
 	}
 }

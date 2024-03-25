@@ -62,10 +62,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="#" class="nav-item nav-link active">영화</a>
-                        <a href="#" class="nav-item nav-link">TV</a>
-                        <a href="#" class="nav-item nav-link">책</a>
-                        <a href="#" class="nav-item nav-link">웹툰</a>
+                        <a href="/movie/movieList" class="nav-item nav-link">영화</a>
+                        <a href="/actor/actorList" class="nav-item nav-link">배우</a>
+                        <a href="#" class="nav-item nav-link">감독</a>
                         <sec:authorize access="!isAuthenticated()">
                         	<a href="/loginAuth" class="nav-item nav-link" id="login">로그인</a>
                         </sec:authorize>
@@ -105,7 +104,7 @@
                         	<a href="/register" class="nav-item nav-link" id="register">회원가입</a>
                         </sec:authorize>
                     </div>
-                    <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">예매하기</a>
+                    <!-- <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">예매하기</a> -->
                 </div>
             </nav>
         </div>
