@@ -19,18 +19,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.firstgroup.movies.domain.ImgVO;
-import com.firstgroup.movies.domain.MoviesVO;
+import com.firstgroup.movies.domain.MoviesAttachVO;
 import com.firstgroup.movies.service.ActorServiceImpl;
-import com.firstgroup.movies.service.ImgService;
+import com.firstgroup.movies.service.ImgServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
-import com.firstgroup.movies.service.MoviesService;
 import com.firstgroup.movies.service.MoviesServiceImpl;
 
 import lombok.Setter;
@@ -41,8 +38,7 @@ import lombok.extern.log4j.Log4j2;
 public class CommonRESTController {
 	
 	@Setter(onMethod_ = @Autowired)
-	private ImgService imgService;
-	
+	private ImgServiceImpl imgService;
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberServiceImpl memberService;
@@ -75,31 +71,17 @@ public class CommonRESTController {
 		
 		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
 	}
+
 	
-	// jsp 파일 업로드용 매핑
-	@GetMapping(value="/getMovie/{movbno}")
-	public ModelAndView getMovie(@PathVariable Long movbno, Model model){
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/getMovie");
-		mv.addObject("movie", moviesService.get(movbno));
-		
-		return mv;
-	}
-	
-	//@PostMapping(value = "/{tableName}/uploadAjaxAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE,MediaType.APPLICATION_XML_VALUE})
-	//@ResponseBody
+	@PostMapping(value = "/{tableName}/uploadAjaxAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE,MediaType.APPLICATION_XML_VALUE})
+	@ResponseBody
 	public ResponseEntity<List<?>> uploadAjaxPost(MultipartFile[] uploadFile,@PathVariable String tableName){
-		/* ResponseEntity<? extends ImgVO > result = null; */
-		String table = String.format("tbl_%s_img", tableName);
-		log.info(table);
-		/* List<? extends ImgVO> list = new ArrayList<ImgVO>(); */
-		List<ImgVO> list = new ArrayList<ImgVO>();
+		log.info(tableName);
+		List<MoviesAttachVO> list = new ArrayList<>();
+		String uploadFolder = "D://upload/"; 
 		
-		String uploadFolder = String.format("/resources/img/%s", tableName); 
-		uploadFolder = uploadFolder.replace("/", File.separator);
 		String uploadFolderPath = getFolder();
-		log.info(uploadFolder);
-		log.info(uploadFolderPath);
+		
 		// 날짜별 폴더생성 준비 ------------
 		File uploadPath = new File(uploadFolder, getFolder()); // 날짜타입 지정 메서드(getFolder()) 파라미터 값 전달
 		
@@ -112,14 +94,14 @@ public class CommonRESTController {
 		
 		for(MultipartFile multipartFile : uploadFile) {
 			
-			ImgVO imgVO = new ImgVO();
+			MoviesAttachVO attachDTO = new MoviesAttachVO();
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
 			// IE has file Path
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 			log.info("only file name : " + uploadFileName); // 업로드된 파일이름 로그 출력
-			imgVO.setFileName(uploadFileName);
+			attachDTO.setFileName(uploadFileName);
 			
 			UUID uuid = UUID.randomUUID(); // 랜덤한 문자생성
 			uploadFileName = uuid.toString() + "_" + uploadFileName; // 랜덤한 문자를 String parsing후 변수에 저장
@@ -127,6 +109,8 @@ public class CommonRESTController {
 			log.info("---------------------------------");
 			log.info("Upload File Name : " + multipartFile.getOriginalFilename()); // 업로드된 파일의 이름
 			log.info("Upload File Size : " + multipartFile.getSize());	// 업로드 된 파일의 크기(용량)
+			log.info("Upload Full File Name : "+uploadFileName);
+			log.info("Upload Full Path File Name : "+ uploadPath+"/"+uploadFileName);
 			
 			// File saveFile = new File(uploadFolder, uploadFileName);
 			
@@ -134,12 +118,12 @@ public class CommonRESTController {
 				File saveFile = new File(uploadPath, uploadFileName);
 				multipartFile.transferTo(saveFile);
 				
-				imgVO.setUuid(uuid.toString());
-				imgVO.setUploadPath(uploadFolderPath);
-				imgVO.setMovBno(1L);
-				imgService.insert(table,imgVO);
+				attachDTO.setUuid(uuid.toString());
+				attachDTO.setUploadPath(uploadFolderPath);
+				attachDTO.setMovBno(1L);
+//					attachMapper.insert(attachDTO);
 				// add to List
-				list.add(imgVO);
+				list.add(attachDTO);
 				
 			} catch (Exception e) {
 				log.error(e.getMessage());
@@ -148,7 +132,7 @@ public class CommonRESTController {
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-
+	
 	// 중복된 이름의 첨부파일 처리
 	private String getFolder() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 포멧 생성

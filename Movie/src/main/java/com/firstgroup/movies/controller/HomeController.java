@@ -116,7 +116,7 @@ public class HomeController {
 		log.info(model);
 		MemberVO memVo = memberService.getMember(member.getId());
 		log.info(memVo);
-		//model.addAttribute("user",memVo);
+		model.addAttribute("user",memVo);
 		return "editPage";
 	
 	}
@@ -164,29 +164,4 @@ public class HomeController {
 		mov = moviesService.registerMovies(mov);
 		log.info(model);
 	}
-	
-	@GetMapping("/movie/movieModify")
-	public void movieModify() {
-		//우상제 테스트중
-	}
-	
-	@GetMapping("/actor/actorList")
-	public void actorList() {
-		log.info("actorList...............");
-	}
-	
-	@GetMapping("/actor/register")
-	public void actorRegister() {
-		log.info("actor register..............");
-	}
-	
-	@PostMapping("/actor/register")
-	public String actorRegister(@ModelAttribute("ActorVO") ActorVO act, Model model) {
-		log.info("post actor register...........");
-		log.info(act);
-		log.info(model);
-		
-		return "redirect:/actor/actorList"; 
-	}
-	
 }

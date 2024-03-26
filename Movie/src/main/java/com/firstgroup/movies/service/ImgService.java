@@ -5,7 +5,7 @@ import java.util.List;
 import com.firstgroup.movies.domain.ImgVO;
 
 public interface ImgService {
-	public ImgVO get(Long imgno);
+	public ImgVO get(String tblName, Long imgno);
 	
 	public void insert(String tblName, ImgVO vo); // create
 	

@@ -319,10 +319,10 @@ function imgUpload(files) {
 	for (var pair of formData.entries()) {
 		console.log(pair[0] + ', ' + pair[1]);
 	}																	//폼 데이타 파일 출력 코드
-	//var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';		//REST방식, 주소 파싱하여 해당 테이블로 전송하기 위한 URI 생성
-
+	var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';		//REST방식, 주소 파싱하여 해당 테이블로 전송하기 위한 URI 생성
+	console.log(urlString);
 	$.ajax({
-		url: /* urlString */'/uploadAjaxAction',
+		url: urlString/*'/uploadAjaxAction'*/,
 		processData: false,
 		contentType: false,
 		beforeSend: function(xhr) {
@@ -365,6 +365,7 @@ function displayImage(file, caroucel) {
 
 var formObj=$('form[role="form"]');					//폼 선택 jquery
 
+/*
 $("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
 	e.preventDefault();								//기본 동작 막기
 	console.log("submit clicked");
@@ -394,7 +395,7 @@ $("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
 	var newForm = document.createElement("form");									//새 폼 생성
 	newForm.setAttribute("charset", "UTF-8");
 
- 	newForm.setAttribute("method", "Post");  //Post 방식
+ 	newForm.setAttribute("method", "POST");  //Post 방식
 
  	newForm.setAttribute("action", "/actor/register"); //요청 보낼 주소
 
@@ -408,7 +409,61 @@ $("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
 	console.log(newForm);
 	newForm.submit();																//폼 전송
 });
+*/
+$("button[type='submit']").on("click", function(e) {
+    e.preventDefault(); // 기본 동작 막기
+    console.log("submit clicked");
 
+    var form = $('form[role="form"]');  
+    var formData = new FormData(form[0]); // 폼 데이터 수집
+
+    // 이미지 태그들을 선택하고 각각의 데이터를 hidden input 태그로 추가
+    var nodes = document.querySelectorAll("#uploadedImages img");
+    nodes.forEach(function(img, index) {
+        // hidden input 태그 생성
+        var inputFileName = document.createElement("input");
+        inputFileName.type = "hidden";
+        inputFileName.name = "imgList[" + index + "].fileName";
+        inputFileName.value = img.getAttribute("fileName");
+
+        var inputUploadPath = document.createElement("input");
+        inputUploadPath.type = "hidden";
+        inputUploadPath.name = "imgList[" + index + "].uploadPath";
+        inputUploadPath.value = img.getAttribute("uploadPath");
+
+        var inputUuid = document.createElement("input");
+        inputUuid.type = "hidden";
+        inputUuid.name = "imgList[" + index + "].uuid";
+        inputUuid.value = img.getAttribute("uuid");
+
+        // hidden input 태그를 폼에 추가
+        form.append(inputFileName);
+        form.append(inputUploadPath);
+        form.append(inputUuid);
+    });
+
+    // AJAX 요청 보내기
+    $.ajax({
+        type: "POST", // POST 방식 설정
+        url: "/actor/register", // 요청 보낼 URL 설정
+        data: formData, // FormData 객체를 전송
+        processData: false, // 데이터 처리 방식 설정 (false로 설정해야 formData가 자동으로 처리되지 않음)
+        contentType: false, // 요청의 컨텐츠 타입 설정 (multipart/form-data로 설정됨)
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 추가
+        },
+        success: function(response) {
+            console.log("Success:", response);
+            // 성공했을 때 실행할 코드 작성
+        },
+        error: function(xhr, status, error) {
+			console.error(xhr);
+			console.error(status);
+            console.error("Error:", error);
+            // 오류 발생 시 실행할 코드 작성
+        }
+    });
+});
 // ajax file upload method
 $("#uploadBtn").on("click", (e) => {
 	var csrfHeader = $("meta[name='_csrf_header']").attr("content");

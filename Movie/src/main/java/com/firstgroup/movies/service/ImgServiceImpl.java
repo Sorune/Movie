@@ -1,6 +1,8 @@
 package com.firstgroup.movies.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +20,21 @@ public class ImgServiceImpl implements ImgService {
 	
 	@Setter(onMethod_ = @Autowired)
 	private ImgMapper mapper;
-
+	
 	@Override
-	public ImgVO get(Long imgno) {
+	public ImgVO get(String tblName, Long imgno) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void insert(String tblName, ImgVO vo) {
-		// TODO Auto-generated method stub
+		log.info("tblName : "+tblName);
+		Map<String, Object> data = new HashMap<String, Object>();
+		data.put("tblName", tblName);
+		data.put("ImgVO",vo);
+		log.info(data);
+		mapper.insert(data);
 		
 	}
 

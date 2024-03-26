@@ -14,11 +14,6 @@
                        </div>
                        <form class="user" action="/update" method="post">
 							<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
-							<div class="form-group">
-                               <div class="col-sm-6 mb-3 mb-sm-1">
-                                   <input type="text" class="form-control form-control-user" id="ID" name="id" placeholder="아이디">
-                               </div>
-                           </div>
                            <div class="form-group">
                                <div class="mb-sm-1">
                                	<input type="password" class="form-control form-control-user" id="pw" name="pw" placeholder="비밀번호">
@@ -26,10 +21,10 @@
                         	</div>
                            <div class="form-group row">
                                <div class="col-sm-6 mb-3 mb-sm-5">
-                                   <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="이름">
+                                   <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="이름" value="${user.name }">
                                </div>
                                <div class="col-sm-6 ">
-                                   <input type="text" class="form-control form-control-user"id="Nickname" name="nickName" placeholder="닉네임">
+                                   <input type="text" class="form-control form-control-user"id="Nickname" name="nickName" placeholder="닉네임" value="${ user.nickName }">
                                </div>
                            </div>
 							 <div class="form-group">
