@@ -438,12 +438,14 @@ $("button[type='submit']").on("click", function(e) {
         type: "POST", // POST 방식 설정
         url: "/actor/register", // 요청 보낼 URL 설정
         data: JSON.stringify(formData), // JSON 형식으로 데이터 변환
-        contentType: "application/json", // 요청의 컨텐츠 타입 설정
+        contentType: "application/json; charset=UTF-8", // 요청의 컨텐츠 타입 설정
         beforeSend: function(xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 추가
         },
         success: function(response) {
             console.log("Success:", response);
+			alert("Register Success!!!");
+			location.replace("/actor/actorList");
             // 성공했을 때 실행할 코드 작성
         },
         error: function(xhr, status, error) {

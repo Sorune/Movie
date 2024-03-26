@@ -63,4 +63,4 @@ select * from tbl_movies_comment;
 -- actor 테이블 조회
 select * from tbl_actor;
 
-
+select * from TBL_ACTOR_IMG;

@@ -28,13 +28,8 @@ public class ImgServiceImpl implements ImgService {
 	}
 
 	@Override
-	public void insert(String tblName, ImgVO vo) {
-		log.info("tblName : "+tblName);
-		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("tblName", tblName);
-		data.put("ImgVO",vo);
-		log.info(data);
-		mapper.insert(data);
+	public void insert(ImgVO vo) {
+		mapper.insert(vo);
 		
 	}
 

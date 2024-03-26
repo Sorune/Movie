@@ -24,9 +24,12 @@
   	</select>
   	
   	<!-- actor insert -->
-	<insert id="insertActor">
+	<insert id="insertActor" useGeneratedKeys="true" keyProperty="actbno">
+		<selectKey keyProperty="actbno" order="BEFORE" resultType="long">
+	    		select seq_actor.nextval from dual
+    	</selectKey>
 		insert into tbl_actor(actbno, name, age, b_date)
-		values(seq_actor.nextval, #{name}, #{age}, #{bDate})
+		values(#{actbno}, #{name}, #{age}, #{bDate})
 	</insert>
 	
 	<!-- 전체 배우정보 불러오기 -->

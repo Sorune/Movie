@@ -13,8 +13,8 @@
 	</resultMap>
 	<!-- create -->
   	<insert id="insert" parameterType="map">
-		insert into ${tableName} (uuid, uploadPath, fileName, fileType, movBno)
-		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{movBno})
+		insert into ${tblName} (uuid, uploadPath, fileName, fileType, bno)
+		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{bno})
 	</insert>
   	<!-- delete -->
   	<delete id="delete" parameterType="map">

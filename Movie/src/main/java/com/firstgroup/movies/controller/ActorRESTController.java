@@ -1,9 +1,16 @@
 package com.firstgroup.movies.controller;
 
 
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,8 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.firstgroup.movies.domain.ActorVO;
+import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.service.ActorServiceImpl;
+import com.firstgroup.movies.service.ImgServiceImpl;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -29,6 +39,8 @@ public class ActorRESTController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private ActorServiceImpl service;
+	@Setter(onMethod_ = @Autowired)
+	private ImgServiceImpl imgService;
 	
 	@GetMapping("/actorList") // actor 리스트
 	public ModelAndView actorList(Model model) {
@@ -48,21 +60,26 @@ public class ActorRESTController {
 		return mv;
 	}
 	
-	@PostMapping("/register") // register
-	public String register(@RequestBody ActorVO atv, Model model) {
+	
+	@PostMapping(value="/register",produces = "application/text; charset=UTF-8") // register
+	public String register(@RequestBody ActorVO atv, Model model, RedirectAttributes rttr) throws Exception{
 		
 		log.info("register : " + atv);
 		
 		log.info(model);
 		
 		service.insertActor(atv);
-		
+		log.info(atv);
 		// 처리 결과에 따른 응답 데이터 설정
-        String message = "Actor " + atv.getName() + " registered successfully!";
+        for(ImgVO img : atv.getImgList()) {
+        	img.setBno(atv.getActbno());
+        	img.setTblName("tbl_Actor_img");
+        	log.info(img);
+            imgService.insert(img);
+        }
         
         // 처리 결과를 리다이렉트할 페이지로 전달
-        model.addAttribute("message", message);
-		return "redirect:/actor/actorList";
+		return atv.getName();
 	}
 	
 	@GetMapping("/get") // actor 조회
