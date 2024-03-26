@@ -414,41 +414,31 @@ $("button[type='submit']").on("click", function(e) {
     e.preventDefault(); // 기본 동작 막기
     console.log("submit clicked");
 
-    var form = $('form[role="form"]');  
-    var formData = new FormData(form[0]); // 폼 데이터 수집
+    var formData = {}; // 빈 객체 생성
 
-    // 이미지 태그들을 선택하고 각각의 데이터를 hidden input 태그로 추가
+    // 각 input의 값을 formData 객체에 추가
+    $('form[role="form"] input').each(function(index, element) {
+        formData[element.name] = element.value;
+    });
+
+    // 이미지 태그들을 선택하고 각각의 데이터를 formData 객체에 추가
     var nodes = document.querySelectorAll("#uploadedImages img");
+    formData.imgList = [];
     nodes.forEach(function(img, index) {
-        // hidden input 태그 생성
-        var inputFileName = document.createElement("input");
-        inputFileName.type = "hidden";
-        inputFileName.name = "imgList[" + index + "].fileName";
-        inputFileName.value = img.getAttribute("fileName");
-
-        var inputUploadPath = document.createElement("input");
-        inputUploadPath.type = "hidden";
-        inputUploadPath.name = "imgList[" + index + "].uploadPath";
-        inputUploadPath.value = img.getAttribute("uploadPath");
-
-        var inputUuid = document.createElement("input");
-        inputUuid.type = "hidden";
-        inputUuid.name = "imgList[" + index + "].uuid";
-        inputUuid.value = img.getAttribute("uuid");
-
-        // hidden input 태그를 폼에 추가
-        form.append(inputFileName);
-        form.append(inputUploadPath);
-        form.append(inputUuid);
+        var imageObj = {
+            fileName: img.getAttribute("fileName"),
+            uploadPath: img.getAttribute("uploadPath"),
+            uuid: img.getAttribute("uuid")
+        };
+        formData.imgList.push(imageObj);
     });
 
     // AJAX 요청 보내기
     $.ajax({
         type: "POST", // POST 방식 설정
         url: "/actor/register", // 요청 보낼 URL 설정
-        data: formData, // FormData 객체를 전송
-        processData: false, // 데이터 처리 방식 설정 (false로 설정해야 formData가 자동으로 처리되지 않음)
-        contentType: false, // 요청의 컨텐츠 타입 설정 (multipart/form-data로 설정됨)
+        data: JSON.stringify(formData), // JSON 형식으로 데이터 변환
+        contentType: "application/json", // 요청의 컨텐츠 타입 설정
         beforeSend: function(xhr) {
             xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 추가
         },
@@ -457,8 +447,8 @@ $("button[type='submit']").on("click", function(e) {
             // 성공했을 때 실행할 코드 작성
         },
         error: function(xhr, status, error) {
-			console.error(xhr);
-			console.error(status);
+            console.error(xhr);
+            console.error(status);
             console.error("Error:", error);
             // 오류 발생 시 실행할 코드 작성
         }

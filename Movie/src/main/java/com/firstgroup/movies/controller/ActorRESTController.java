@@ -49,14 +49,19 @@ public class ActorRESTController {
 	}
 	
 	@PostMapping("/register") // register
-	public String register(@ModelAttribute ActorVO atv, Model model,@RequestParam("file") MultipartFile file) {
+	public String register(@RequestBody ActorVO atv, Model model) {
 		
 		log.info("register : " + atv);
 		
+		log.info(model);
+		
 		service.insertActor(atv);
 		
-		model.addAttribute("result", atv.getActbno());
-		
+		// 처리 결과에 따른 응답 데이터 설정
+        String message = "Actor " + atv.getName() + " registered successfully!";
+        
+        // 처리 결과를 리다이렉트할 페이지로 전달
+        model.addAttribute("message", message);
 		return "redirect:/actor/actorList";
 	}
 	
