@@ -27,6 +27,13 @@ create table tbl_member_auth (
      constraint fk_member_auth foreign key(id) references tbl_member(id)
 );
 
+create table persistent_logins (
+	username varchar(64) not null,
+	series varchar(64) primary key,
+	token varchar(64) not null,
+	last_used timestamp not null
+);
+
 create table tbl_member_img(
 	UUID varchar2(100)constraint mem_img_pk primary key,
 	uploadpath nvarchar2(200) not null,

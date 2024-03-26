@@ -240,13 +240,13 @@ img {
 	<!-- 코멘트 -->
 	<div class="container-xs">
 	<div class="container py-5">
-		<h4>Comments</h4>
+		<h4>movie.comment</h4>
 	<div class="wow fadeInUp" data-wow-delay="0.1s">
 	<div class="col-lg-12">
 		
 		
 			<div class="row">
-			<c:forEach items="${comments}" var="comment" >
+			<c:forEach items="${movie.comment}" var="comment" >
 		<div class="col-6 col-md-6">
 				<ul class="list-group">
 					<li class="list-group-item border-0">
@@ -264,7 +264,7 @@ img {
 										<button type="button" class="btn btn-outline-danger btn-sm" style="height: 30px; text-align: center;" id="removeComBtn"><small>삭제</small></button>
 										
 									
-												<%-- <c:forEach items="${comments}" var='star'  varStatus="i" begin="0" end="4" step="1">
+												<%-- <c:forEach items="${movie.comment}" var='star'  varStatus="i" begin="0" end="4" step="1">
 													<div class="col starts mb-3 d-flex" style="margin-right: 0; justify-content: flex-end;">
 														<i class="fa fa-star fz20"> <c:out value="${star.stars }"/> </i>
 						           					</div>
@@ -299,7 +299,7 @@ img {
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							
-								<c:set value="${comments}" var="user"/> <!-- 모델 영역의 객체 변수화 -->
+								<c:set value="${movie.comment}" var="user"/> <!-- 모델 영역의 객체 변수화 -->
 								
 							<form role="form" action="/regComment" method="post">
 

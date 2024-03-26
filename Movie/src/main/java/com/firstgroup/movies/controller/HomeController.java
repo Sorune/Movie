@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,7 @@ import com.firstgroup.movies.domain.ActorVO;
 import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesVO;
+import com.firstgroup.movies.security.domain.CustomUser;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
 import com.firstgroup.movies.service.MoviesServiceImpl;
@@ -90,7 +94,8 @@ public class HomeController {
 	@PostMapping("/register")
 	public String register(MemberVO memVo) {
 		try {
-			memberService.register(memVo);			
+			memberService.register(memVo);
+			//Auth
 		}	catch (DuplicateKeyException e) {
 				return " redirect:register?error_code=-1";
 		}	catch(Exception e) {
@@ -100,6 +105,27 @@ public class HomeController {
 		return "redirect:/loginAuth";
 	}
 	
+	@GetMapping("/update") //회원 정보 수정 페이지
+	public String editPage(@AuthenticationPrincipal Model model) {
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		log.info(user);
+		MemberVO member = user.getMember();
+		log.info(member);
+		String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		log.info(id);
+		log.info(model);
+		MemberVO memVo = memberService.getMember(member.getId());
+		log.info(memVo);
+		//model.addAttribute("user",memVo);
+		return "editPage";
+	
+	}
+	/*
+	 * @PostMapping("/update") public String edit(MemberVO memVo) { //회원 정보 수정
+	 * String id
+	 * =(String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(
+	 * ); memVo.setId(id); memberService.edit(memVo); return"redirect:/"; }
+	 */
 	
 	@GetMapping("/test")
 	public void test() {
@@ -155,9 +181,12 @@ public class HomeController {
 	}
 	
 	@PostMapping("/actor/register")
-	public void actorRegister(@ModelAttribute("ActorVO") ActorVO act, Model model) {
+	public String actorRegister(@ModelAttribute("ActorVO") ActorVO act, Model model) {
 		log.info("post actor register...........");
 		log.info(act);
 		log.info(model);
+		
+		return "redirect:/actor/actorList"; 
 	}
+	
 }

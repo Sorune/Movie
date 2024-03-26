@@ -8,7 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.firstgroup.movies.domain.AuthVO;
 import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.mapper.AuthMapper;
 import com.firstgroup.movies.mapper.MemberMapper;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +25,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberMapper memberMapper;
+	private AuthMapper authMapper;
 	
 	private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	
@@ -39,6 +42,11 @@ public class MemberServiceImpl implements MemberService {
 			
 			memVo.setPw(passwordEncoder.encode(memVo.getPw()));
 			memberMapper.insertMember(memVo);
+			
+			AuthVO authVo = new AuthVO();
+			authVo.setId(memVo.getId());
+			authVo.setAuth("ROLE_MEMBER");
+			authMapper.insertAuth(authVo);
 		}
 		
 	}
@@ -46,12 +54,11 @@ public class MemberServiceImpl implements MemberService {
 		////password는 암호화해서 db에 저장
 		memVo.setPw(passwordEncoder.encode(memVo.getPw()));
 		memberMapper.updateMember(memVo);
-		
 	}
 	public void withdraw(String id) {
 		memberMapper.deleterMember(id);
 	}
-	public PasswordEncoder passwordEncoder() { //  passwordEncoder2 말고 1이 왜 안되는지
+	public PasswordEncoder passwordEncoder() {
 		return this.passwordEncoder();
 	}
 }

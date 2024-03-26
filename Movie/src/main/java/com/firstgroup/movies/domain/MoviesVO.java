@@ -18,6 +18,8 @@ public class MoviesVO {
 	private int recommend;			// 추천수
 	private Long  movImgNo;			// 영화 포스터 식별번호
 	
+	private List<MoviesCommentVO> comment;
+	
 	private String actListString; 	//배우 배열 파싱용
 	private List<ActorVO> actList;	//배우 배열
 	

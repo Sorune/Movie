@@ -14,12 +14,13 @@ import com.firstgroup.movies.mapper.MoviesCommentMapper;
 import com.firstgroup.movies.mapper.MoviesMapper;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
-@AllArgsConstructor
+@NoArgsConstructor
 public class MoviesServiceImpl implements MoviesService{
 
 	@Setter(onMethod_ = @Autowired)
@@ -36,7 +37,10 @@ public class MoviesServiceImpl implements MoviesService{
 		
 		log.info("불러올 영화 식별 번호 : " + movbno);
 		
-		return movMapper.get(movbno);
+		MoviesVO vo = movMapper.get(movbno);
+		vo.setComment(comMapper.getCommentList(movbno));
+		
+		return vo;
 	}
 
 

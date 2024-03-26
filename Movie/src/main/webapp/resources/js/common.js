@@ -309,17 +309,17 @@ function imgUpload(files) {
 	var formData = new FormData();
 	console.log(files);
 	for (var i = 0; i < files.length; i++) {
-		//if(!checkExtension(files[i].name, files[i].size)){
+		//if(!checkExtension(files[i].name, files[i].size)){			//파일 사이즈 검증 로직, 우선 막음
 		//console.log(!checkExtension(files[i].name, files[i].size));
 		//	return false;
 		//}
 		console.log(i + files[i] + files[i].name);
-		formData.append("uploadFile", files[i], files[i].name);
+		formData.append("uploadFile", files[i], files[i].name);			//폼에 파일 데이터 추가
 	};
 	for (var pair of formData.entries()) {
 		console.log(pair[0] + ', ' + pair[1]);
-	}
-	//var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';
+	}																	//폼 데이타 파일 출력 코드
+	//var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';		//REST방식, 주소 파싱하여 해당 테이블로 전송하기 위한 URI 생성
 
 	$.ajax({
 		url: /* urlString */'/uploadAjaxAction',
@@ -373,18 +373,18 @@ $("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
 	let nodes = document.querySelector("#uploadedImages").querySelectorAll("img");	//캐러셀 이미지들 호출
 	let inputString = "";
 	$(nodes).each(function(i, obj) {												//캐러셀 이미지들을 input태그에 담기
-		let inputFileName = document.createElement("input");
+		let inputFileName = document.createElement("input");						//input 태그 생성
 		let inputFilePath = document.createElement("input");
 		let inputFileUuid = document.createElement("input");
 		inputFileName.type = "hidden";
-		inputFileName.setAttribute('name', "imgList[" + i + "].fileName");
-		inputFileName.setAttribute('value', obj.getAttribute("fileName"));
+		inputFileName.setAttribute('name', "imgList[" + i + "].fileName");			//imgList List로 보내기 위해 imgList[i]로 전송
+		inputFileName.setAttribute('value', obj.getAttribute("fileName"));			//imgList[0].filename = value
 		inputFilePath.type = "hidden";
 		inputFilePath.setAttribute('name', "imgList[" + i + "].uploadPath");
-		inputFilePath.setAttribute('value', obj.getAttribute("uploadPath"));
+		inputFilePath.setAttribute('value', obj.getAttribute("uploadPath"));		//imgList[0].uploadPath = value
 		inputFileUuid.type = "hidden";
 		inputFileUuid.setAttribute('name', "imgList[" + i + "].uuid");
-		inputFileUuid.setAttribute('value', obj.getAttribute("uuid"));
+		inputFileUuid.setAttribute('value', obj.getAttribute("uuid"));				//imgList[0].uuid = value
 		inputString += inputFileName.outerHTML+inputFilePath.outerHTML+inputFileUuid.outerHTML;
 	});
 	console.log(inputString);

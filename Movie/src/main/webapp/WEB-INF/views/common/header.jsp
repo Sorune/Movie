@@ -72,7 +72,7 @@
                         	<div class="nav-item dropdown" id="information">
 	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">회원정보</a>
 	                            <div class="dropdown-menu m-0">
-	                                <a href="#" class="dropdown-item">Appointment</a>
+	                                <a href="#" class="dropdown-item">회원 정보 수정</a>
 	                                <a href="#" class="dropdown-item">Features</a>
 	                                <a href="#" class="dropdown-item">Our Blog</a>
 	                                <a href="#" class="dropdown-item">Our Team</a>

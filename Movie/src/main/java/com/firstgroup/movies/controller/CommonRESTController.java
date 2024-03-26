@@ -15,15 +15,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.firstgroup.movies.domain.ImgVO;
+import com.firstgroup.movies.domain.MoviesVO;
+import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.ImgService;
+import com.firstgroup.movies.service.MemberServiceImpl;
+import com.firstgroup.movies.service.MoviesService;
+import com.firstgroup.movies.service.MoviesServiceImpl;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -34,6 +42,16 @@ public class CommonRESTController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private ImgService imgService;
+	
+	
+	@Setter(onMethod_ = @Autowired)
+	private MemberServiceImpl memberService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private MoviesServiceImpl moviesService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ActorServiceImpl actorService;
 	
 	@GetMapping(value="/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	@ResponseBody
@@ -59,6 +77,15 @@ public class CommonRESTController {
 	}
 	
 	// jsp 파일 업로드용 매핑
+	@GetMapping(value="/getMovie/{movbno}")
+	public ModelAndView getMovie(@PathVariable Long movbno, Model model){
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/getMovie");
+		mv.addObject("movie", moviesService.get(movbno));
+		
+		return mv;
+	}
+	
 	//@PostMapping(value = "/{tableName}/uploadAjaxAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE,MediaType.APPLICATION_XML_VALUE})
 	//@ResponseBody
 	public ResponseEntity<List<?>> uploadAjaxPost(MultipartFile[] uploadFile,@PathVariable String tableName){

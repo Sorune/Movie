@@ -38,15 +38,14 @@
 		]]>
 	</insert>
 
-  <!-- 회원 정보 가져오기 -->
-	<!-- 아이디로 불러오고싶은데 id 가 이미 선언되어있어서 mapper에서 다시해도될지 -->
-<!--  <select id = "getMember" resultType="memberMap"> 
+  <!-- 회원 id 정보 가져오기 -->
+ <select id = "getMember" resultType="com.firstgroup.movies.domain.MemberVO">  <!-- "memberMap" -->
 	    <![CDATA[
 	
-		select * from tbl_member where Phone = #{phone}
+		select * from tbl_member where id = #{id}
 		
 		 ]]>
-	</select>-->
+	</select>
 	
 	<!-- 회원정보 수정 -->
 	<update id="updateMem">
