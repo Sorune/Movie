@@ -1,6 +1,7 @@
 package com.firstgroup.movies.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -12,12 +13,12 @@ public class MemberVO {
 	private String id;
 	private String pw;
 	private String name;
-	private String nickname;
+	private String nickName;
 	private String adress;
 	private String phone;
 	private Date regdate;
-	private Long mem_imgno;
+	private Long memImgno;
 	
-	
+	private List<AuthVO> authList;
 
 }

@@ -4,34 +4,65 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.firstgroup.movies.mapper.MemberMapper">
 
-  <resultMap type="com.firstgroup.movies.domain.MemberVO" id="memberMap">
-    <id property="id" column="id"/>
-    <result property="membno" column="membno"/>
-    <result property="id" column="id"/>
-    <result property="pw" column="pw"/>
-    <result property="name" column="name"/>
-    <result property="nickname" column="nickname"/>
-    <result property="adress" column="adress"/>
-    <result property="phone" column="phone"/>
-    <result property="regdate" column="regdate"/>
-    <result property="mem_imgno" column="mem_imgno"/>
-    <collection property="authList" resultMap="authMap"/>
-  </resultMap>
+	<resultMap type="com.firstgroup.movies.domain.MemberVO" id="memberMap">
+		<id property="id" column="id"/>
+		<result property="membno" column="membno"/>
+		<result property="id" column="id"/>
+		<result property="pw" column="pw"/>
+		<result property="name" column="name"/>
+		<result property="nickName" column="nickName"/>
+		<result property="adress" column="adress"/>
+		<result property="phone" column="phone"/>
+		<result property="regdate" column="regdate"/>
+		<result property="memImgno" column="memImgno"/>
+		<collection property="authList" resultMap="authMap"/>
+	</resultMap>
   
-<resultMap type="com.firstgroup.movies.domain.AuthVO" id="authMap">
-    <result property="id" column="id"/>
-    <result property="auth" column="auth"/>
-  </resultMap>
+	<resultMap type="com.firstgroup.movies.domain.AuthVO" id="authMap">
+	    <result property="id" column="id"/>
+	    <result property="auth" column="auth"/>
+	</resultMap>
   
-  <select id="read" resultMap="memberMap">
+	<select id="read" resultMap="memberMap">
+		<![CDATA[ 
+			SELECT 
+			mem.id,pw, name, nickName,adress,phone,regdate, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id WHERE mem.id = #{id}
+		]]>
+	</select>
+<!-- 회원가입 -->
   
-  <![CDATA[ 
-	SELECT 
-  		mem.id,pw, name,nickname,adress,phone,regdate, mem_imgno
-		FROM 
-  		tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id 
-		WHERE mem.id = #{id}
-	]]>
-  </select>
+	<insert id ="insertMember">
+		<![CDATA[ 
+		insert into tbl_member (membno, id,pw, name,nickName,phone, adress)
+		values (seq_member.NEXTVAL,#{id},#{pw},#{name},#{nickName},#{phone},${adress})
+		]]>
+	</insert>
 
+  <!-- 회원 id 정보 가져오기 -->
+ <select id = "getMember" resultType="com.firstgroup.movies.domain.MemberVO">  <!-- "memberMap" -->
+	    <![CDATA[
+	
+		select * from tbl_member where id = #{id}
+		
+		 ]]>
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id="updateMem">
+		 <![CDATA[
+			update tbl_member
+				set	name = #{name},
+					nickName = #{nickName},	
+					adress = #{adress},
+					phone = #{phone},
+					memImgno = #{memImgno},
+					update_date = sysdate
+				where id=#{id}	
+		 ]]>
+	</update>
+	<!-- 탈퇴 -->
+	<delete id="deleteMember">
+		delete from Member where id = #{id}
+	</delete>
+	
 </mapper>

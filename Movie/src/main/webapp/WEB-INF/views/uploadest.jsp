@@ -40,25 +40,31 @@
 
 <div class="container text-center">
 	<h5>파일 업로드 테스트</h5>
-		<div style="display: flex;">
-			<div id="drop-area">
-        		<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
-            	<input type="file" name="uploadFile" id="file-input" accept="image/*" style="display: none;" multiple>
-        	</div>
-        	<div id="uploadedImages" class="carousel slide" data-bs-ride="carousel">
-        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
-        	</div>
-        	<img id="image-preview" src="" alt="업로드된 이미지">
-		</div>	
+<!-- 		<form method="post" enctype="multipart/form-data" action="/uploadAjaxAction"> -->
+			<div style="display: flex;">
+				<div id="drop-area">
+	        		<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+<%-- 	        		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
+	        		<input type="file" name="uploadFile" id="file-input" accept="image/*" style="display: none;" multiple>
+	        	</div>
+	        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
+	        		<div class="carousel-inner" style="width:100%;height:auto;">
+	        		</div>
+	        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+	        	</div>
+	        	<img id="image-preview" src="" alt="업로드된 이미지">
+			</div>
+			
+			<button type="submit" id="uploadBtn">submit!</button>
+<!-- 		</form>	 -->
 		<hr>
-		<button id="uploadBtn">submit!</button>
 </div>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

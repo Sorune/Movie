@@ -1,5 +1,35 @@
+/* 상단바 레이아웃 패딩값 부여 */
+.pt-6 {
+	padding-top: 100px;
+}
+
 /* star css ver1 */
+/* carousel add button */
+.carousel-control-add {
+    top: 0;
+}
+.carousel-control-remove {
+    bottom: 0;
+}
+ .carousel-control-add, .carousel-control-remove{
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+    background: none;
+    border: 0;
+    opacity: .5;
+    transition: opacity .15s ease;
+}
+
+
 /* 별점 체크용 */
+
 .star {
     position: relative;
     font-size: 2rem;

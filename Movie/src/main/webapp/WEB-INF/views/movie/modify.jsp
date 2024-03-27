@@ -44,7 +44,7 @@ ul>li {
 			<div class="panel panel-default">
 
 
-				<h4 class="color00b0f0">영화정보수정</h4>
+				<h4 class="color00b0f0">영화정보입력</h4>
 
 				<!-- /.panel-heading -->
 				<div class="panel-body">
@@ -181,7 +181,7 @@ ul>li {
 						</div><!-- form-group -->
 
 
-						<button type="submit" class="border btn btn-default">추가하기</button>
+						<button type="submit" class="border btn btn-default">저장하기</button>
 						<button type="reset" class="border btn btn-default">돌아가기</button>
 					</form>
 

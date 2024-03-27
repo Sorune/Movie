@@ -5,20 +5,44 @@
   <mapper namespace="com.firstgroup.movies.mapper.MoviesCommentMapper">
   
   <!-- 댓글리스트 전체 불러오기 -->
-  <select id="commentList" resultType="com.firstgroup.movies.domain.MoviesCommentVO">
-  select * from tbl_movies_comment where movbno = #{movBno}
-  </select>
-  
-  <select id="getCommentWriter" resultType="com.firstgroup.movies.domain.MemberVO">
+  <select id="getCommentList" resultType="com.firstgroup.movies.domain.MoviesCommentVO">
   
   <![CDATA[ 
-	SELECT 
-  		mem.id, mem.name, mem.nickname, mem.mem_imgno
+select mem.membno, mem.name, mem.nickname, mem.mem_imgno, com.content, com.stars, com.recommend, com.regdate, com.up_date, com.movbno, com.combno
 		FROM 
-  		tbl_member mem LEFT OUTER JOIN tbl_movies_comment com on mem.membno = com.membno
-		WHERE com.movbno = #{movbno}
+  		tbl_movies_comment com INNER JOIN tbl_member mem on com.membno = mem.membno
+		WHERE com.movbno = #{movbno} 
 	]]>
   </select>
+  
+<select id="getListPage" resultType="com.firstgroup.movies.domain.MoviesCommentVO">
+	<![CDATA[
+	select *
+	from
+	(
+	select /*+INDEX(tbl_movies_comment idx_reply*/
+	rownum rn, rno, bno,  reply, replyer, replydate, updatedate
+	from tbl_movies_comment
+	where bno = #{bno} 
+	and rno > 0 
+	and rownum <= #{cri.pageNum} * #{cri.amount} 
+	) where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+	]]>
+</select>
+
+<insert id="insertComment"  >
+	insert into tbl_movies_comment (combno, movbno, content, membno, stars, regdate)
+	values(seq_comment.nextval, #{movBno}, #{content}, #{memBno}, #{stars}, sysdate)
+</insert>
+
+<delete id="removeComment">
+	delete from tbl_movies_comment where combno = #{combno}
+</delete>
+
+<update id="like">
+	update from tbl_movies_comment set stars=stars+1 where combno = #{comBno}
+</update>
+  
   
   
   
