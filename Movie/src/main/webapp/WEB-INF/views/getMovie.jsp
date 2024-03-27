@@ -277,9 +277,10 @@ img {
 								</div>
 										<hr>
 										<input type="hidden" id ="comBno" value="<c:out value="${comment.comBno }"></c:out>" />
-										<button class="border-0" id="like_btn" value="1">
+										<button class="border-0" name ='like_btn' id="like_btn" value="1"  onclick="likeAction(event)">
 										<i class="bi bi-heart-fill" style="color: white; border-color: #faf9fb;"></i>
 										</button>
+										
 							</div>
 						</div>
 					</li>
@@ -337,19 +338,18 @@ img {
 								</div><br>
 								 <sec:authorize access="isAuthenticated()">
 								<div class="form-group">
-									<label>작성자</label> <input class="form-control"  
-										 value='<sec:authentication property="principal.username"/>' readonly="readonly">
-										 <input type="hidden" value='<c:out value="${user.membno }"/>' id='memBno'/> 
+									<label>작성자</label> <input class="form-control" name="writer" value='<sec:authentication property="principal.username"/>' readonly="readonly">
+										 <input type="hidden" name='memBno' value='<c:out value="${user.membno }"/>' id='memBno'/> 
 								</div><br>
 										</sec:authorize>
 								 <sec:authorize access="isAnonymous()">
 								<div class="form-group">
-									<label>작성자</label> <input class="form-control"  />
+									<label>작성자</label> <input type="text" class="form-control" name="writer" readonly />
 								</div><br>
 										</sec:authorize>
 								
 							
-								<input type="hidden" value="<c:out value="${movie.movBno }"/>" id='movBno'/>
+								<input type="hidden" name='movBno' value="<c:out value="${movie.movBno }"/>" id='movBno'/>
 								
 
 								

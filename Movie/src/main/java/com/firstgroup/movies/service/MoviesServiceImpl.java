@@ -64,7 +64,7 @@ public class MoviesServiceImpl implements MoviesService{
 
 
 	@Override
-	public List<MoviesCommentVO> getCommentList(Long movbno) {
+	public List<MoviesCommentVO> getCommentList(Long movbno, Criteria cri) {
 		
 		return comMapper.getCommentList(movbno);
 	}
@@ -85,23 +85,6 @@ public class MoviesServiceImpl implements MoviesService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-	@Override
-	public int like(Long combno) {
-		log.info("좋아요 한 댓글 번호 : " + combno);
-		return comMapper.like(combno);
-	}
-
-
-	@Override
-	public List<MoviesVO> getMovieList() {
-		// 영화 전체 목록 불러오기
-		return movMapper.movieList();
-	}
-
-
-
 
 //	public int remove(Long rno) {
 //		log.info("삭제 할 댓글 번호 : "+ rno);

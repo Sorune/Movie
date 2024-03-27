@@ -20,10 +20,10 @@ select mem.membno, mem.name, mem.nickname, mem.mem_imgno, com.content, com.stars
 	select *
 	from
 	(
-	select /*+INDEX(tbl_movies_comment idx_reply*/
-	rownum rn, rno, bno,  reply, replyer, replydate, updatedate
+	select /*+INDEX(tbl_movies_comment idx_comment*/
+	rownum rn, combno, content, membno , stars, recommend, regdate, up_date
 	from tbl_movies_comment
-	where bno = #{bno} 
+	where movbno = #{movbno} 
 	and rno > 0 
 	and rownum <= #{cri.pageNum} * #{cri.amount} 
 	) where rn > (#{cri.pageNum} - 1) * #{cri.amount}
@@ -31,19 +31,13 @@ select mem.membno, mem.name, mem.nickname, mem.mem_imgno, com.content, com.stars
 </select>
 
 <insert id="insertComment"  >
-	insert into tbl_movies_comment (combno, movbno, content, membno, stars, regdate)
-	values(seq_comment.nextval, #{movBno}, #{content}, #{memBno}, #{stars}, sysdate)
+	insert into tbl_movies_comment (combno, movbno, content, membno, regdate, stars)
+	values(seq_comment.nextval, #{movBno}, #{content}, #{memBno}, sysdate, #{stars})
 </insert>
 
 <delete id="removeComment">
 	delete from tbl_movies_comment where combno = #{combno}
 </delete>
-
-<update id="like">
-	update from tbl_movies_comment set stars=stars+1 where combno = #{comBno}
-</update>
-  
-  
   
   
   </mapper>

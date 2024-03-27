@@ -1,8 +1,8 @@
 package com.firstgroup.movies.controller;
 
-import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.security.domain.CustomUser;
@@ -26,15 +25,17 @@ import com.firstgroup.movies.service.MemberService;
 import com.firstgroup.movies.service.MoviesService;
 
 import lombok.AllArgsConstructor;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
-@Controller
+@RestController
 @Log4j2
 @AllArgsConstructor
 public class MoviesController {
-
-	private MoviesService movService; // 영화 정보
 	
+	@Setter(onMethod_ = @Autowired)
+	private MoviesService movService; // 영화 정보
+	@Setter(onMethod_ = @Autowired)
 	private MemberService memService; // 유저 정보
 	
 
@@ -50,23 +51,41 @@ public class MoviesController {
 	
 	
 	
-	@PostMapping(value = "/regComment", produces = MediaType.TEXT_PLAIN_VALUE) 
-	public ResponseEntity<String> insertComment(MoviesCommentVO vo) {
-		
-		
-		log.info("---------------댓글 작성 객체 확인 : "+vo.getContent());
-		log.info("---------------댓글 작성 객체 확인 : "+vo.getMemBno());
-		log.info("---------------댓글 작성 객체 확인 : "+vo.getMovBno());
-		log.info("---------------댓글 작성 객체 확인 : "+vo.getStars());
+	/*
+	 * @PostMapping(value = "/regComment", consumes =
+	 * MediaType.APPLICATION_JSON_VALUE) public ResponseEntity<String>
+	 * insertComment(@RequestBody(required = false) MoviesCommentVO vo) {
+	 * log.info(vo);
+	 * 
+	 * log.info("---------------댓글 작성 객체 확인 : "+vo.getContent());
+	 * log.info("---------------댓글 작성 객체 확인 : "+vo.getMemBno());
+	 * log.info("---------------댓글 작성 객체 확인 : "+vo.getMovBno());
+	 * log.info("---------------댓글 작성 객체 확인 : "+vo.getStars());
+	 * 
+	 * return movService.insertComment(vo) == 1? new ResponseEntity<>("success",
+	 * HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	 * 
+	 * 
+	 * }
+	 */
+	@PostMapping(value = "/regComment") 
+	public ResponseEntity<String> insertComment(@RequestParam Map<String,String> formData) {
+	    MoviesCommentVO vo = new MoviesCommentVO();
+	    vo.setMemBno(Long.parseLong(formData.get("memBno")));
+	    vo.setMovBno(Long.parseLong(formData.get("movBno")));
+	    vo.setContent(formData.get("content"));
+	    vo.setStars(Integer.parseInt(formData.get("stars")));
 
-		return movService.insertComment(vo) == 1? new ResponseEntity<>("success", HttpStatus.OK)
-				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-	
+	    log.info("---------------댓글 작성 객체 확인 : "+vo.getContent());
+	    log.info("---------------댓글 작성 객체 확인 : "+vo.getMemBno());
+	    log.info("---------------댓글 작성 객체 확인 : "+vo.getMovBno());
+	    log.info("---------------댓글 작성 객체 확인 : "+vo.getStars());
+
+	    return movService.insertComment(vo) == 1? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
 	// jsp 파일 업로드용 매핑
 	@GetMapping(value="/getMovie/{movbno}")
-	public ModelAndView getMovie(@PathVariable Long movbno, Model model){
+	public ModelAndView getMovie(@PathVariable Long movbno,@AuthenticationPrincipal Model model){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/getMovie");
 		mv.addObject("movie", movService.get(movbno));
