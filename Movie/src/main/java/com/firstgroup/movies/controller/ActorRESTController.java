@@ -48,6 +48,9 @@ public class ActorRESTController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/actor/actorList");
 		List<ActorVO> actList = service.actorList();
+		for(ActorVO atv : actList) {
+			atv.setImgList(imgService.findByBno("tbl_actor_img", atv.getActbno()));
+		}
 		log.info(actList);
 		mv.addObject("actorList", actList);
 		return mv;

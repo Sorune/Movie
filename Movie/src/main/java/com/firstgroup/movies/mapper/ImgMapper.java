@@ -17,5 +17,5 @@ public interface ImgMapper {
 	
 	public void delete(Map<String, Object> data); // delete
 	
-	public List<MoviesAttachVO> findByBno (Map<String, Object> data); // select
+	public List<ImgVO> findByBno (Map<String, Object> data); // select
 }

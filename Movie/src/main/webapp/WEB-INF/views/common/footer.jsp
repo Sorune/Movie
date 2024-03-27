@@ -88,6 +88,7 @@
         <!-- Template Javascript -->
         <script src="/resources/js/main.js"></script>
         <script src="/resources/js/common.js"></script>
+        <script src="/resources/js/getMovie.js"></script>
     </body>
 
 </html>

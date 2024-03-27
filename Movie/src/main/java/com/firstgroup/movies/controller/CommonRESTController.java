@@ -71,6 +71,29 @@ public class CommonRESTController {
 		
 		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
 	}
+	
+	@GetMapping(value="/{tblName}/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	@ResponseBody
+	public ResponseEntity<Resource> downloadFileByPath(@PathVariable String tblName ,String fileName){
+		log.info("download file : "+fileName);
+		
+		Resource resource = new FileSystemResource("D://upload//"+tblName+"//" + fileName);
+		
+		log.info("resource : "+resource);
+		
+		String resourceName = resource.getFilename();
+		
+		HttpHeaders headers = new HttpHeaders();
+
+		try {
+			headers.add("Content-Disposition","attachment; filename="+new String(resourceName.getBytes("UTF-8"),"ISO-8859-1"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		
+		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
+	}
 
 	
 	@PostMapping(value = "/{tableName}/uploadAjaxAction", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE,MediaType.APPLICATION_XML_VALUE})
@@ -78,7 +101,7 @@ public class CommonRESTController {
 	public ResponseEntity<List<?>> uploadAjaxPost(MultipartFile[] uploadFile,@PathVariable String tableName){
 		log.info(tableName);
 		List<MoviesAttachVO> list = new ArrayList<>();
-		String uploadFolder = "D://upload/"; 
+		String uploadFolder = "D://upload//"+tableName+"//"; 
 		
 		String uploadFolderPath = getFolder();
 		
@@ -138,6 +161,6 @@ public class CommonRESTController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // 날짜 포멧 생성
 		Date date = new Date(); // java.util의 날짜 생성
 		String str = sdf.format(date); // String 타입으로 포멧팅된 날짜 저장
-		return str.replace("-", File.separator); // 날짜형식 맞춰서 파일 이름 지정
+		return str.replace("-", "/"); // 날짜형식 맞춰서 파일 이름 지정
 	}
 }

@@ -11,7 +11,7 @@ public interface ImgService {
 	
 	public void delete(String tblName, String uuid); // delete
 	
-	public List<? extends ImgVO>  findByBno(String tblName, Long bno); // select
+	public List<ImgVO>  findByBno(String tblName, Long bno); // select
 	
 	public List<? extends ImgVO> commentList(String tblName, Long imgno);
 }

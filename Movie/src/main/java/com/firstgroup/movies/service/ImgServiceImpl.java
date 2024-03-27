@@ -40,9 +40,11 @@ public class ImgServiceImpl implements ImgService {
 	}
 
 	@Override
-	public List<? extends ImgVO> findByBno(String tblName, Long bno) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ImgVO> findByBno(String tblName, Long bno) {
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("tableName",tblName);
+		map.put("bno", bno);
+		return mapper.findByBno(map);
 	}
 
 	@Override

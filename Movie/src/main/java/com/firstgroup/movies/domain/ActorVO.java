@@ -17,6 +17,8 @@ public class ActorVO {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date bDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dDate;
 	private List<ImgVO> imgList;
 }

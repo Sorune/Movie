@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="kr">
 
@@ -62,7 +63,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="/movie/movieList" class="nav-item nav-link">영화</a>
+                        <a href="/movies/movieList" class="nav-item nav-link">영화</a>
                         <a href="/actor/actorList" class="nav-item nav-link">배우</a>
                         <a href="#" class="nav-item nav-link">감독</a>
                         <sec:authorize access="!isAuthenticated()">

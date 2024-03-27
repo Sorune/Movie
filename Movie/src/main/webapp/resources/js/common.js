@@ -119,13 +119,14 @@ function createCarouselInner(fileList) {	//업로드된 이미지를 캐러셀�
 			carouselInner.className = "carousel-item";
 		}
 		const img = document.createElement("img");				//img 태그 생성
-		var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+		var urlString = '/'+ window.location.pathname.split("/")[1];
+		var fileCallPath = encodeURIComponent(urlString+"/"+obj.uploadPath.replaceAll('\\','/') + "/" + obj.uuid + "_" + obj.fileName);
 		console.log(fileCallPath);
 		img.src = "/download?fileName=" + fileCallPath;
 		img.setAttribute('width', "100%");
 		img.setAttribute('height', "auto");
 		img.setAttribute('class', "d-block w-100");
-		img.setAttribute('uploadPath', obj.uploadPath);
+		img.setAttribute('uploadPath', obj.uploadPath.replaceAll('\\','/'));
 		img.setAttribute('uuid', obj.uuid);
 		img.setAttribute('fileName', obj.fileName);				//img태그에 데이터 등록
 		carouselInner.appendChild(img);							//img태그를 div에 등록

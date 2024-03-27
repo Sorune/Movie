@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-<%-- <%@ taglib uri="http://www.springframework.org/security/tags"  prefix="sec"%> --%>
+<%@ taglib uri="http://www.springframework.org/security/tags"  prefix="sec"%>
 
 
 <style type="text/css">
@@ -220,7 +220,7 @@ img {
 	                <i class="fa fa-star fz20"></i>
 	            </div>
 	            <div class="service-content-inner">
-					<h5 class="mb-4">베스트 댓글3</h5>
+					<h5 class="mb-4"><c:out value="${user.membno }"/></h5>
 					<p class="mb-4">Dolor, sit amet consectetur adipisicing elit.
 						Soluta inventore cum accusamus, dolor qui ullam</p>
 					<a href="#"
@@ -240,7 +240,7 @@ img {
 	<!-- 코멘트 -->
 	<div class="container-xs">
 	<div class="container py-5">
-		<h4>movie.comment</h4>
+		<h4>Comment</h4>
 	<div class="wow fadeInUp" data-wow-delay="0.1s">
 	<div class="col-lg-12">
 		
@@ -260,8 +260,8 @@ img {
 								            </div>
 									<div class="col d-flex justify-content-end">
 										
-										<button type="button" class="btn btn-outline-info btn-sm" style="height: 30px; text-align: center; margin-right: 10px;"><small>수정</small></button>
-										<button type="button" class="btn btn-outline-danger btn-sm" style="height: 30px; text-align: center;" id="removeComBtn"><small>삭제</small></button>
+										<button type="button" class="btn btn-outline-info btn-sm" style="height: 30px; text-align: center;"><small>수정</small></button>
+										<!-- <button type="button" class="btn btn-outline-danger btn-sm" style="height: 30px; text-align: center;" id="removeComBtn"><small>삭제</small></button> -->
 										
 									
 												<%-- <c:forEach items="${movie.comment}" var='star'  varStatus="i" begin="0" end="4" step="1">
@@ -276,7 +276,10 @@ img {
 									<p class="mb-4"><c:out value="${comment.content}"></c:out></p> 
 								</div>
 										<hr>
-										추천수 <c:out value="${comment.recommend }"></c:out>
+										<input type="hidden" id ="comBno" value="<c:out value="${comment.comBno }"></c:out>" />
+										<button class="border-0" id="like_btn" value="1">
+										<i class="bi bi-heart-fill" style="color: white; border-color: #faf9fb;"></i>
+										</button>
 							</div>
 						</div>
 					</li>
@@ -299,8 +302,8 @@ img {
 						<!-- /.panel-heading -->
 						<div class="panel-body">
 							
-								<c:set value="${movie.comment}" var="user"/> <!-- 모델 영역의 객체 변수화 -->
-								
+<%-- 								<c:set value="${movie.comment}" var="writer"/> <!-- 모델 영역의 객체 변수화 -->
+ --%>								
 							<form role="form" action="/regComment" method="post">
 
 							     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>      
@@ -330,21 +333,28 @@ img {
 
 
 								<div class="form-group">
-									<textarea class="form-control" rows="3" name='content'></textarea>
+									<textarea class="form-control" rows="3" name='content' id='content'></textarea>
 								</div><br>
-								
+								 <sec:authorize access="isAuthenticated()">
 								<div class="form-group">
-									<label>작성자</label> <input class="form-control" name='writer' 
-										 <%-- value='<sec:authentication property="principal.username"/>' --%> readonly="readonly">
+									<label>작성자</label> <input class="form-control" name="writer" value='<sec:authentication property="principal.username"/>' readonly="readonly">
+										 <input type="hidden" name='memBno' value='<c:out value="${user.membno }"/>' id='memBno'/> 
 								</div><br>
+										</sec:authorize>
+								 <sec:authorize access="isAnonymous()">
+								<div class="form-group">
+									<label>작성자</label> <input type="text" class="form-control" name="writer" readonly />
+								</div><br>
+										</sec:authorize>
 								
 							
-								<input type="hidden" value="${movie.movBno }" name='movBno'/>
-								<input type="hidden" value="1" name='memBno'/><!-- 나중에 security 이용 -->
+								<input type="hidden" name='movBno' value="<c:out value="${movie.movBno }"/>" id='movBno'/>
+								
 
-
-								<button type="submit" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Submit
+								
+								<button type="submit" id="commentBtn" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Submit
 									Button</button>
+						
 								<button type="reset" class="btn btn-danger rounded-pill px-3">Reset
 									Button</button>
 							</form>
@@ -410,89 +420,8 @@ img {
       </div>
       <!-- /.modal -->
       
-      
-      
-      
-
-
-<script type="text/javascript">
-
-$(document).ready(function(e){
-	
-	var formObj = $("form[role='form']");
-	  
-	  $("button[type='submit']").on("click", function(e){
-	    
-	    e.preventDefault();
-	    
-	    console.log("submit clicked");
-	    
-	    var str = "";
-		
-	    $.ajax({
-		      url: '/regComment',
-		      processData: false, 
-		      contentType: false,
-		     
-		      data:formData,
-		      type: 'POST',
-		      dataType:'json',
-		        success: function(result){
-		          console.log(result); 
-				  alert("댓글 작성 성공!")
-		
-		      }
-		    }); //$.ajax
-	  }
-	    
-		var removeComBtn = $("#removeComBtn");
-	
-		removeComBtn.on("click", function (e){
-	     	  
-	     	  var combno = ${comment.combno}
-
-	     	  console.log("combno: " + combno);
-	     	  
-	     	  if(!replyer){
-	     		  alert("로그인후 삭제가 가능합니다.");
-	     		  return;
-	     	  }
-	     	  
-	     	/*   var originalReplyer = modalInputReplyer.val();
-	     	  
-	     	  console.log("Original Replyer: " + originalReplyer);
-	     	  
-	     	  if(replyer  != originalReplyer){
-	     		  
-	     		  alert("자신이 작성한 댓글만 삭제가 가능합니다.");
-	     		  return;
-	     		  
-	     	  }
-	 */
-	     	  MoviesService.remove(combno, function(result){
-	       	      alert(result);
-	       	  });
-	       	  
-	       	});
-	
-	
-}
-</script>
-
 <script>
 
-// 아이콘 바꿔 별점주기 start
-   const addStar = function (target) { // hidden  처리된 input에 값이 들어올 시 이벤트 처리 메서드를 변수에 저장한다(매개값 : this) 
-       document.querySelector(`.starAdd span`).style.width = `${target.value * 20}%`; // 요소의 클래스네임이 star 안의 span 태그의 css 속성을 주고 너비는 hidden된 input의 값 x 20%를 너비로 준다
-       // 두개의 별5개를 포지션상으로 겹친 후, 색이들어올 별5개의 초기값은 너비가 0이고 input의 값 x 20% 만큼씩 누르면 배경색이 채워지면 반개씩 별을 채운다
-       var targetValue = document.getElementById("inputs").value; // targetValue : hidden된 input의 값을 변수에 담는다
-       document.getElementById("scores").innerText = targetValue; // className이 print인 태그안의 className이 score인 요소의 text를 값을 담은 변수 targetValue를 넣는다.
-       var valInput = document.getElementById("scores").innerText;
-       document.getElementById("starVal").value = valInput;
-       console.log(starVal.value);
-   }
-
 </script>
-
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -21,7 +21,7 @@
   		delete from ${tableName} where uuid = #{uuid}
   	</delete>
   	<!-- read -->
-  	<select id="select" parameterType="map" resultType="com.firstgroup.movies.domain.MoviesAttachVO">
-  		select * from ${tableName} where movBno = #{movBno}
+  	<select id="findByBno" parameterType="map" resultType="com.firstgroup.movies.domain.ImgVO">
+  		select * from ${tableName} where Bno = #{bno}
   	</select>
 </mapper>

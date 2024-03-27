@@ -147,17 +147,17 @@ public class HomeController {
 		log.info("upload...........");
 	}
 	
-	@GetMapping("/movie/movieList")
+	@GetMapping("/movies/movieList")
 	public void movieList(Criteria cri, Model model) {
 		
 	}
 	
-	@GetMapping("/movie/register")
+	@GetMapping("/movies/register")
 	public void movieRegister() {
 		log.info("movie register........");
 	}
 	
-	@PostMapping("/movie/register")
+	@PostMapping("/movies/register")
 	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model, MultipartFile[] uploadFile) {
 		log.info("movie register action..............");
 		log.info(mov);
