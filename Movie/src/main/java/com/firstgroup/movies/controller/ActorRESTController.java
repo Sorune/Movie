@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ import com.firstgroup.movies.domain.ActorVO;
 import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.ImgServiceImpl;
+import com.firstgroup.movies.service.MemberServiceImpl;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -41,6 +43,14 @@ public class ActorRESTController {
 	private ActorServiceImpl service;
 	@Setter(onMethod_ = @Autowired)
 	private ImgServiceImpl imgService;
+	/*
+	 * @Setter(onMethod_ = @Autowired) private MemberServiceImpl memService;
+	 */
+	
+	/*
+	 * @GetMapping("/delete/{membno}") public void deleteMember(@PathVariable long
+	 * membno) { memService.delete(membno); }
+	 */
 	
 	@GetMapping("/actorList") // actor 리스트
 	public ModelAndView actorList(Model model) {

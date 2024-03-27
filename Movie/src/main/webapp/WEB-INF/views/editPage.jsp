@@ -29,12 +29,12 @@
                            </div>
 							 <div class="form-group">
                                <div class="col-sm-6 mb-3 mb-sm-1">
-                                   <input type="text" class="form-control form-control-user" id="phone" name="phone" placeholder="핸드폰번호">
+                                   <input type="text" class="form-control form-control-user" id="phone" name="phone" placeholder="핸드폰번호" value="${user.phone }">
                                </div>
                                </div>
 							<div class="form-group row">
 								<div class="col-sm-6 mb-sm-1">
-									<input type="adress" class="form-control form-control-user" id="adress" name="adress" placeholder="우편번호">
+									<input type="adress" class="form-control form-control-user" id="adress" name="adress" placeholder="우편번호" value="${user.adress }">
 								</div>
 								<div class="col-sm-6">
 									<a type="button" class="btn btn-primary btn-user btn-block" >우편번호</a>
@@ -53,9 +53,8 @@
 						    <button type="submit" class="col-sm-6 btn btn-primary btn-user btn-block">
                               저장하기
                             </button>
-	                        <div class="col-sm-6 text-center">
-	                            <a class="small" href="/loginAuth">로그인으로 돌아가기</a>
-	                        </div>
+	                        <a href="/delete/${ user.membno }" class="col-sm-6 btn btn-primary btn-user btn-block">탈퇴하기
+	                        </a>
 						</div>
 					</form>
 				</div>
