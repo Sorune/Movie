@@ -13,8 +13,6 @@ public interface MoviesMapper {
 	
 	public MoviesVO get(Long movBno); // get방식으로 영화 식별 번호를 받아 객체를 리턴
 	
-	public List<MoviesVO> movieList(); 
-	
 	public void insert(MoviesVO vo);
 	
 	public Long insertSelectKey(MoviesVO vo);

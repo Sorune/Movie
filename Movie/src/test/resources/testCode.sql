@@ -10,6 +10,10 @@ ALTER TABLE tbl_member ADD enabled VARCHAR(1) DEFAULT '1' NOT NULL;
 ALTER TABLE tbl_member modify pw nvarchar2(100);
 update tbl_member set enabled='1';
 
+delete TBL_MEMBER where rownum=1;
+
+delete TBL_MEMBER_AUTH where rownum=1;
+
 select * from tbl_member;
 
 select id , pw from tbl_member where id = 'kkk';
@@ -18,6 +22,8 @@ alter table tbl_member_auth rename column id to username;
 alter table tbl_member_auth rename column username to id;
 
 select * from tbl_member_auth;
+
+update TBL_MEMBER_AUTH set auth = 'ROLE_ADMIN' where id = 'manager1';
 
 insert into tbl_member_auth values('바보','ROLE_MEMBER');
 
@@ -54,3 +60,7 @@ insert into tbl_movies_comment(combno, content, membno, movbno, stars, recommend
 select * from tbl_movies_comment;
 
 
+-- actor 테이블 조회
+select * from tbl_actor;
+
+select * from TBL_ACTOR_IMG;

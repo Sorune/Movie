@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.firstgroup.movies.domain.ActorVO;
 import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
-import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
 import com.firstgroup.movies.security.domain.CustomUser;
 import com.firstgroup.movies.service.ActorServiceImpl;
@@ -117,12 +116,10 @@ public class HomeController {
 		log.info(model);
 		MemberVO memVo = memberService.getMember(member.getId());
 		log.info(memVo);
-		//model.addAttribute("user",memVo);
+		model.addAttribute("user",memVo);
 		return "editPage";
 	
 	}
-	
-
 	/*
 	 * @PostMapping("/update") public String edit(MemberVO memVo) { //회원 정보 수정
 	 * String id
@@ -150,46 +147,21 @@ public class HomeController {
 		log.info("upload...........");
 	}
 	
-	@GetMapping("/movie/movieList")
+	@GetMapping("/movies/movieList")
 	public void movieList(Criteria cri, Model model) {
 		
 	}
 	
-	@GetMapping("/movie/register")
+	@GetMapping("/movies/register")
 	public void movieRegister() {
 		log.info("movie register........");
 	}
 	
-	@PostMapping("/movie/register")
+	@PostMapping("/movies/register")
 	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model, MultipartFile[] uploadFile) {
 		log.info("movie register action..............");
 		log.info(mov);
 		mov = moviesService.registerMovies(mov);
 		log.info(model);
 	}
-	
-	@GetMapping("/movie/movieModify")
-	public void movieModify() {
-		//우상제 테스트중
-	}
-	
-	@GetMapping("/actor/actorList")
-	public void actorList() {
-		log.info("actorList...............");
-	}
-	
-	@GetMapping("/actor/register")
-	public void actorRegister() {
-		log.info("actor register..............");
-	}
-	
-	@PostMapping("/actor/register")
-	public String actorRegister(@ModelAttribute("ActorVO") ActorVO act, Model model) {
-		log.info("post actor register...........");
-		log.info(act);
-		log.info(model);
-		
-		return "redirect:/actor/actorList"; 
-	}
-	
 }

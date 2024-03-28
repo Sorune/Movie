@@ -319,10 +319,10 @@ function imgUpload(files) {
 	for (var pair of formData.entries()) {
 		console.log(pair[0] + ', ' + pair[1]);
 	}																	//폼 데이타 파일 출력 코드
-	//var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';		//REST방식, 주소 파싱하여 해당 테이블로 전송하기 위한 URI 생성
-
+	var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';		//REST방식, 주소 파싱하여 해당 테이블로 전송하기 위한 URI 생성
+	console.log(urlString);
 	$.ajax({
-		url: /* urlString */'/uploadAjaxAction',
+		url: urlString/*'/uploadAjaxAction'*/,
 		processData: false,
 		contentType: false,
 		beforeSend: function(xhr) {
@@ -365,6 +365,7 @@ function displayImage(file, caroucel) {
 
 var formObj=$('form[role="form"]');					//폼 선택 jquery
 
+/*
 $("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
 	e.preventDefault();								//기본 동작 막기
 	console.log("submit clicked");
@@ -394,7 +395,7 @@ $("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
 	var newForm = document.createElement("form");									//새 폼 생성
 	newForm.setAttribute("charset", "UTF-8");
 
- 	newForm.setAttribute("method", "Post");  //Post 방식
+ 	newForm.setAttribute("method", "POST");  //Post 방식
 
  	newForm.setAttribute("action", "/actor/register"); //요청 보낼 주소
 
@@ -408,7 +409,53 @@ $("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
 	console.log(newForm);
 	newForm.submit();																//폼 전송
 });
+*/
+$("button[type='submit']").on("click", function(e) {
+    e.preventDefault(); // 기본 동작 막기
+    console.log("submit clicked");
 
+    var formData = {}; // 빈 객체 생성
+
+    // 각 input의 값을 formData 객체에 추가
+    $('form[role="form"] input').each(function(index, element) {
+        formData[element.name] = element.value;
+    });
+
+    // 이미지 태그들을 선택하고 각각의 데이터를 formData 객체에 추가
+    var nodes = document.querySelectorAll("#uploadedImages img");
+    formData.imgList = [];
+    nodes.forEach(function(img, index) {
+        var imageObj = {
+            fileName: img.getAttribute("fileName"),
+            uploadPath: img.getAttribute("uploadPath"),
+            uuid: img.getAttribute("uuid")
+        };
+        formData.imgList.push(imageObj);
+    });
+
+    // AJAX 요청 보내기
+    $.ajax({
+        type: "POST", // POST 방식 설정
+        url: "/actor/register", // 요청 보낼 URL 설정
+        data: JSON.stringify(formData), // JSON 형식으로 데이터 변환
+        contentType: "application/json; charset=UTF-8", // 요청의 컨텐츠 타입 설정
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 추가
+        },
+        success: function(response) {
+            console.log("Success:", response);
+			alert("Register Success!!!");
+			location.replace("/actor/actorList");
+            // 성공했을 때 실행할 코드 작성
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr);
+            console.error(status);
+            console.error("Error:", error);
+            // 오류 발생 시 실행할 코드 작성
+        }
+    });
+});
 // ajax file upload method
 $("#uploadBtn").on("click", (e) => {
 	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -447,11 +494,4 @@ $("#uploadBtn").on("click", (e) => {
 			console.log(result);
 		}
 	}); //$.ajax
-});           
-
-
-
-
-
-
-
+});                

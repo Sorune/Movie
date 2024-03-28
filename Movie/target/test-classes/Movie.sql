@@ -69,12 +69,10 @@ create table tbl_actor(
 	actbno number constraint act_pk primary key,
 	name nvarchar2(20) not null,
 	age number(3) not null,
-	b_date date default sysdate,
+	b_date date,
 	d_date date,
-	recommend number(5) default 0,
 	regdate date default sysdate,
-	up_date date default sysdate,
-	act_imgno(10)
+	up_date date default sysdate
 );
 
 create table tbl_actor_img(
@@ -84,6 +82,10 @@ create table tbl_actor_img(
 	FILETYPE char(1) default '1',
 	bno number(10)
 );
+
+-- actor bno 자동생성 시퀀스 생성
+create sequence seq_actor;
+
 
 create table tbl_director(
 	actbno number constraint act_pk primary key,
@@ -179,5 +181,4 @@ drop table TBL_REPLY;
 drop table TBL_board;
 drop table TBL_MEMBER;
 
-select * from tbl_member;
 

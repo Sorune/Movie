@@ -10,10 +10,10 @@
 		<result property="age" column="age"/>
 	</resultMap>
 	<!-- create -->
-  	<insert id="insert" parameterType="map">
+<!--   	<insert id="insert" parameterType="map">
 		insert into ${tableName} (uuid, uploadPath, fileName, fileType, movBno)
 		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{movBno})
-	</insert>
+	</insert> -->
   	<!-- delete -->
   	<delete id="delete" parameterType="map">
   		delete from ${tableName} where uuid = #{uuid}
@@ -22,4 +22,27 @@
   	<select id="select" parameterType="map" resultType="com.firstgroup.movies.domain.MoviesAttachVO">
   		select * from ${tableName} where movBno = #{movBno}
   	</select>
+  	
+  	<!-- actor insert -->
+	<insert id="insertActor" useGeneratedKeys="true" keyProperty="actbno">
+		<selectKey keyProperty="actbno" order="BEFORE" resultType="long">
+	    		select seq_actor.nextval from dual
+    	</selectKey>
+		insert into tbl_actor(actbno, name, age, b_date)
+		values(#{actbno}, #{name}, #{age}, #{bDate})
+	</insert>
+	
+	<!-- 전체 배우정보 불러오기 -->
+	<select id="getActorList" resultType="com.firstgroup.movies.domain.ActorVO">
+		select * from tbl_actor where actbno > 0
+	</select>
+	
+  	<!-- 한명의 배우 정보 불러오기 -->
+	 <select id="getActor" resultType="com.firstgroup.movies.domain.ActorVO">
+		select * from tbl_actor where actbno = #{actbno}
+	 </select>
+  	
+  	<!-- 한명의 배우 정보 수정하기 -->
+	<!-- 한명의 배우 정보 삭제하기 -->
+  	
 </mapper>

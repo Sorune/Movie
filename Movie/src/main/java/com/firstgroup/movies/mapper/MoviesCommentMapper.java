@@ -26,6 +26,4 @@ public interface MoviesCommentMapper {
 								(@Param("cri") Criteria cri,
 								 @Param("movbno") Long movbno);
 	
-	public int like(Long combno);
-	
 }

@@ -16,4 +16,5 @@ public interface MemberMapper {
 	void deleterMember(String id); //회원 탈퇴
 	public MemberVO read(String id);
 	
+	
 }

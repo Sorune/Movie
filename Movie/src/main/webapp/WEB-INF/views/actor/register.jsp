@@ -49,21 +49,23 @@
 											<div class="row row-cols-2 p-3">
 												<label class="col-sm-2 text-align-center">나이</label>
 												<div class="col-sm-10">
-													<input class="form-control" name='age'>
+													<input class="form-control" name='age' id="actorAge" readonly>
 												</div>
 											</div>
 											<div class="row row-cols-2">
 												<div class="form-group text-align-center">
 													<label>출생년도</label>
 												</div>
-												<div class="form-group text-align-center">
-													<label>년도</label>
+												<div class="form-group text-align-center d-flex">
+													<label style="margin-right: 3px;">사망년도</label>
+													<input type="checkbox" id="ripYear" onclick="ripCheck(event)">
 												</div>
 												<div class="form-group p-3">
-													<input type="date" class="form-control" id="date" max="2024-03-20" min="1850-06-05" value="2024-03-20">
+													<input type="date" class="form-control" name="bDate" id="date1" onchange="insertBirth()">
+													<input type="hidden" id="hiddenInput">
 												</div>
 												<div class="form-group p-3">
-													<input type="date" class="form-control" id="date" value="">
+													<input type="date" class="form-control" name="dDate" id="date2" disabled="disabled">
 												</div>
 											</div>
 										</div>
@@ -74,10 +76,6 @@
 									<button type="reset" class="btn btn-primary">초기화</button>
 									<a href="/movie/movieList" class="btn btn-primary">돌아가기</a>
 								</div>
-								
-								
-								
-								
 							</form>
 						</div>
 					</div>
@@ -89,9 +87,60 @@
 		</div>
 	</div>
 </div>
-<style>
-$(document).ready(function(e){
+<script type="text/javascript">
+
 	
-});
-</style>
+	// 체크하면 사망년도 datePicker 활성화
+	function ripCheck(event) {
+		// 사망년도 datePicker input 가져오기
+		var ripDate = document.getElementById("date2");
+		if(event.target.checked) {
+			ripDate.disabled = false;
+		}else {
+			ripDate.disabled = true;
+		}
+	}
+	
+	// 출생년도 선택하면 나이 입력되는 메서드
+	function insertBirth() {
+		// 오늘 날짜 구하기
+		var dates = new Date();
+		// 년도만 분리
+		var years = dates.getFullYear();
+		// 월만 분리
+		var month = dates.getMonth();
+		// 일자만 분리
+		var date = dates.getDate();
+		//console.log(String(dates));
+		//console.log(String(years));
+		// String 값으로 년도 치환
+		var st_y = String(years);
+		// String 값으로 달 치환
+		var st_m = String(month);
+		//console.log(String(month));
+		// String 값으로 일자 치환
+		var st_d = String(date);
+		//console.log(String(date));
+		// 포멧팅해서 변수에 저장
+		var format = " year : " + st_y + " month :  " + st_m + " date : " + st_d;
+		console.log(format);
+		// input date(출생년-월-일)값 가져오기
+		var birthday = document.querySelector("#date1").value;
+		// 콘솔에 출력(input date(출생년-월-일)값 가져오기)
+		console.log(birthday);
+		// 출생년도만 자르기
+		var strYMD = birthday.split("-");
+		var strY = strYMD[0];
+		console.log("자른 년도는 : " + strY);
+		// 이번년도 - 출생년도 = 만나이
+		var ages = years - strY;
+		// 콘솔에 출력(이번년도 - 출생년도 = 만나이)
+		console.log(ages); 
+		// 나이칸 변수에 저장
+		var actorAge = document.querySelector("#actorAge");
+		// 계산한 나이 나이칸에 값 저장 및 출력
+		actorAge.value = ages;
+	} 
+
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

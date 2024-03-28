@@ -13,7 +13,7 @@ public interface ImgMapper {
 	
 	public ImgVO getImg(Map<String, Object> data);
 	
-	public void insert(Map<String, Object> data); // create
+	public void insert(ImgVO vo); // create
 	
 	public void delete(Map<String, Object> data); // delete
 	
