@@ -35,10 +35,10 @@
 	</select>
 <!-- 회원가입 -->
   
-	<insert id ="insertMember">
+	<insert id ="insertMember" parameterType="com.firstgroup.movies.domain.MemberVO">
 		<![CDATA[ 
-		insert into tbl_member (membno, id,pw, name,nickName,phone, adress)
-		values (seq_member.NEXTVAL,#{id},#{pw},#{name},#{nickName},#{phone},${adress})
+			insert into tbl_member (membno, id, pw, name, nickName, phone, adress)
+			values (seq_member.NEXTVAL, #{id}, #{pw}, #{name}, #{nickName}, #{phone}, #{adress})
 		]]>
 	</insert>
 

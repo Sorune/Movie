@@ -9,8 +9,10 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -57,6 +59,10 @@ public class HomeController {
 
 	@Setter(onMethod_ = @Autowired)
 	private ActorServiceImpl actorService;
+	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+
 
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
@@ -133,9 +139,9 @@ public class HomeController {
 		log.info(memVo);
 		memberService.edit(memVo); 
 		log.info(user);
-		sessionReset(user);
+		sessionReset(user.getUsername());
 		
-		return "redirect:/update"; 
+		return "redirect:/"; 
 	}
 	
 
@@ -178,12 +184,10 @@ public class HomeController {
 		log.info(model);
 	}
 	
-    public  void sessionReset(CustomUser user){      
-        //유저 한명에 권한이 여러개 설정될수 있기 때문에 list 한다. ex)GUEST,USER ,MANAGER,ADMIN  
-        Collection authorities = user.getAuthorities();
-        CustomUserDetailsService service = new CustomUserDetailsService();
-        UserDetails userD = service.loadUserByUsername(user.getUsername());
-        Authentication newAuthentication = new UsernamePasswordAuthenticationToken( userD , null, authorities);
-        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-    }
+	public void sessionReset(String username) {
+	    UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+	    Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+	    SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+	}
+
 }

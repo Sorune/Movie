@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
 <!-- 바디영역 : 컨테이너 -->
-<div class="row ml-5 mb-5">
+<div class="row ml-5 mb-5 pt-6">
 	<h4>신작영화</h4>
+	<h3>${pinfo }</h3>
+	<h3>${pinfo.member }</h3>
+	<h3>${pinfo.member.id }</h3>
 </div>
 <div id="carouselExample" class="carousel slide stillcut">
 	<div class="carousel-inner">

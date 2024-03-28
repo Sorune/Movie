@@ -15,7 +15,7 @@
         <meta content="" name="keywords">
         <meta content="" name="description">
         <sec:csrfMetaTags/>
-
+		<sec:authentication property="principal" var="pinfo"/>
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
