@@ -18,7 +18,7 @@
 								    <c:when test="${not empty actor.imgList}">
 								        <c:set var="uploadPath" value="${fn:replace(actor.imgList[0].uploadPath, '\\\\', '/')}"/>
 										<c:set var="imagePath" value="${uploadPath}/${actor.imgList[0].uuid}_${actor.imgList[0].fileName}"/>
-										<c:url var="imageUrl" value="/download"/>
+										<c:url var="imageUrl" value="/actor/download"/>
 										<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>" class="img-fluid rounded-top w-100" alt="">
 								    </c:when>
 								    <c:otherwise>

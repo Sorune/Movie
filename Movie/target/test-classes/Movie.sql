@@ -1,6 +1,5 @@
 --계정 생성--
 create user movies identified by movies;
-
 grant connect, dba to movies;
 -----------------------------------------------------------------------
 create table tbl_member(

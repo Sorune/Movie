@@ -27,7 +27,7 @@
   		SELECT mem.membno, name, nickName, adress, phone, regdate,auth.id, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id
   	</select>
   	
-	<select id="read" resultMap="memberMap">
+	<select id="read" parameterType="String" resultMap="memberMap">
 		<![CDATA[ 
 			SELECT 
 			mem.id,pw, name, nickName,adress,phone,regdate, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id WHERE mem.id = #{id}
@@ -52,15 +52,14 @@
 	</select>
 	
 	<!-- 회원정보 수정 -->
-	<update id="updateMem">
+	<update id="updateMember">
 		 <![CDATA[
 			update tbl_member
-				set	name = #{name},
+				set	pw=#{pw},
+					name = #{name},
 					nickName = #{nickName},	
 					adress = #{adress},
-					phone = #{phone},
-					memImgno = #{memImgno},
-					update_date = sysdate
+					phone = #{phone}
 				where id=#{id}	
 		 ]]>
 	</update>

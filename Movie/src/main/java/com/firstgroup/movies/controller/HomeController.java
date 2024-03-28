@@ -1,6 +1,8 @@
 package com.firstgroup.movies.controller;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
@@ -9,16 +11,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +33,7 @@ import com.firstgroup.movies.domain.ActorVO;
 import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesVO;
+import com.firstgroup.movies.security.CustomUserDetailsService;
 import com.firstgroup.movies.security.domain.CustomUser;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
@@ -42,126 +48,142 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @Log4j2
 public class HomeController {
-	
+
 	@Setter(onMethod_ = @Autowired)
 	private MemberServiceImpl memberService;
-	
+
 	@Setter(onMethod_ = @Autowired)
 	private MoviesServiceImpl moviesService;
-	
+
 	@Setter(onMethod_ = @Autowired)
 	private ActorServiceImpl actorService;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
+
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+
+		model.addAttribute("serverTime", formattedDate);
+
 		return "home";
 	}
-	
+
 	@GetMapping("/loginCheck")
 	public void LoginCheck(String error, String logout, Model model) {
-		
+
 	}
-	
+
 	@GetMapping("/loginAuth")
 	public void loginAuth(Model model) {
 		log.info(model);
 	}
-	
+
 	@GetMapping("/register")
 	public String register() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(authentication instanceof AnonymousAuthenticationToken)
+		if (authentication instanceof AnonymousAuthenticationToken)
 			return "register";
 		return "redirect:/";
-		
-	
+
 	}
-	
+
 	@PostMapping("/register")
 	public String register(MemberVO memVo) {
 		try {
 			memberService.register(memVo);
-			//Auth
-		}	catch (DuplicateKeyException e) {
-				return " redirect:register?error_code=-1";
-		}	catch(Exception e) {
+			// Auth
+		} catch (DuplicateKeyException e) {
+			return " redirect:register?error_code=-1";
+		} catch (Exception e) {
 			e.printStackTrace();
-			return"redirect:/register?error_code=-99";
+			return "redirect:/register?error_code=-99";
 		}
 		return "redirect:/loginAuth";
 	}
-	
-	@GetMapping("/update") //회원 정보 수정 페이지
+
+	@GetMapping("/update") // 회원 정보 수정 페이지
 	public String editPage(@AuthenticationPrincipal Model model) {
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		log.info(user);
-		MemberVO member = user.getMember();
-		log.info(member);
-		String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		log.info(id);
-		log.info(model);
-		MemberVO memVo = memberService.getMember(member.getId());
+		/*
+		 * log.info(user); MemberVO member = user.getMember().getId(); log.info(member);
+		 * String id =
+		 * SecurityContextHolder.getContext().getAuthentication().getPrincipal().
+		 * toString(); log.info(id); log.info(model);
+		 */
+		MemberVO memVo = memberService.getMember(user.getMember().getId());
 		log.info(memVo);
-		model.addAttribute("user",memVo);
+		model.addAttribute("user", memVo);
 		return "editPage";
-	
+
 	}
-	/*
-	 * @PostMapping("/update") public String edit(MemberVO memVo) { //회원 정보 수정
-	 * String id
-	 * =(String)SecurityContextHolder.getContext().getAuthentication().getPrincipal(
-	 * ); memVo.setId(id); memberService.edit(memVo); return"redirect:/"; }
-	 */
 	
+	@PostMapping("/update")
+	public String edit(@ModelAttribute("MemberVO") MemberVO memVo) { //회원 정보 수정
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		memVo.setId(user.getUsername());
+		log.info(memVo);
+		memberService.edit(memVo); 
+		log.info(user);
+		sessionReset(user);
+		
+		return "redirect:/update"; 
+	}
+	
+
 	@GetMapping("/test")
 	public void test() {
-		//테스트 페이지용
+		// 테스트 페이지용
 	}
-	
+
 	@GetMapping("/home")
 	public void home(Model model) {
 		log.info(model);
 	}
-	
+
 	@GetMapping("/logout")
 	public void logout() {
 		log.info("logout........");
 	}
-	
+
 	@GetMapping("/uploadest")
 	public void uploadest() {
 		log.info("upload...........");
 	}
-	
+
 	@GetMapping("/movies/movieList")
 	public void movieList(Criteria cri, Model model) {
-		
+
 	}
-	
+
 	@GetMapping("/movies/register")
 	public void movieRegister() {
 		log.info("movie register........");
 	}
-	
+
 	@PostMapping("/movies/register")
 	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model, MultipartFile[] uploadFile) {
 		log.info("movie register action..............");
 		log.info(mov);
 		mov = moviesService.registerMovies(mov);
+		
 		log.info(model);
 	}
+	
+    public  void sessionReset(CustomUser user){      
+        //유저 한명에 권한이 여러개 설정될수 있기 때문에 list 한다. ex)GUEST,USER ,MANAGER,ADMIN  
+        Collection authorities = user.getAuthorities();
+        CustomUserDetailsService service = new CustomUserDetailsService();
+        UserDetails userD = service.loadUserByUsername(user.getUsername());
+        Authentication newAuthentication = new UsernamePasswordAuthenticationToken( userD , null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+    }
 }

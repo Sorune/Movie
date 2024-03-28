@@ -5,9 +5,17 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.mapper.MemberMapper;
+import com.firstgroup.movies.security.domain.CustomUser;
+
+import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -15,7 +23,9 @@ import lombok.extern.log4j.Log4j2;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class TestCode {
 	
-	@Test
+	@Setter(onMethod_ = @Autowired)
+	private MemberMapper memberMapper;
+	//@Test
 	public void stringParser() {
 		String intList = "{1,2,3,4}";
 		List<Integer> list = new ArrayList<Integer>();
@@ -52,5 +62,23 @@ public class TestCode {
 	
 	public int[] listToIntList(List<Integer> list) {
 		return list.stream().mapToInt(Integer::intValue).toArray();
+	}
+	
+	@Test
+	public void test() {
+		String id= "manager1";
+		log.info(loadUserByUsername(id));
+	}
+	
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+		
+		log.warn("Load User By UserName : " + id);
+
+		// userName means userid
+		MemberVO vo = memberMapper.read(id);
+
+		log.warn("queried by member mapper: " + vo);
+
+		return vo == null ? null : new CustomUser(vo);
 	}
 }

@@ -3,7 +3,11 @@ package com.firstgroup.movies.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,4 +40,14 @@ public class HomeRESTController {
 		mv.addObject("members", memberList);
 		return mv;
 	}
+	
+	/*
+	 * @PostMapping(value="/update/{membno}", produces =
+	 * MediaType.MULTIPART_FORM_DATA_VALUE) public ModelAndView
+	 * updateUser(@PathVariable long membno, @RequestBody MemberVO memVo) {
+	 * ModelAndView mv = new ModelAndView(); log.info(membno + " : " + memVo);
+	 * //memberService.edit(memVo); mv.setViewName("/update");
+	 * 
+	 * return mv; }
+	 */
 }
