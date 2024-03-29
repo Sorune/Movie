@@ -464,54 +464,33 @@ $("#uploadBtn").on("click", (e) => {
 	}); //$.ajax
 });
 
-function isChecked(e){
+function isChecked(e){ // 체크박스 값 확인해서 권한 변경 요청
+	var id = e.value;
+    var auth = "ROLE_MANAGER";
 	if (e.checked){
-		var id = e.value;
-        var auth = "ROLE_MANAGER";
-        var requestData = {
-	        id: id,
-	        auth: auth
-	    };
-        $.ajax({
-	        url: "/admin/authChange",
-	        type: "POST",
-	        contentType: "application/json",
-			beforeSend: function(xhr) {
-				xhr.setRequestHeader(csrfHeader, csrfToken);
-			},
-	        data: JSON.stringify(requestData),
-	        success: function(response) {
-	            alert(response + " : change Success!");
-	            console.log("Success:", response);
-	        },
-	        error: function(xhr, status, error) {
-	            alert(error);
-	            console.error("Error:", xhr.responseText);
-	        }
-	    });
+		auth = "ROLE_MANAGER"
 	}else{
-		var id = e.value;
-        var auth = "ROLE_MEMBER";
-        var requestData = {
-	        id: id,
-	        auth: auth
-	    };
-       $.ajax({
-	        url: "/admin/authChange",
-	        type: "POST",
-	        contentType: "application/json",
-	        beforeSend: function(xhr) {
-				xhr.setRequestHeader(csrfHeader, csrfToken);
-			},
-	        data: JSON.stringify(requestData),
-	        success: function(response) {
-	            alert(response + " : change Success!");
-	            console.log("Success:", response);
-	        },
-	        error: function(xhr, status, error) {
-	            alert(error);
-	            console.error("Error:", xhr.responseText);
-	        }
-	    });
+        auth = "ROLE_MEMBER";
 	}
+    var requestData = {
+	    id: id,
+	    auth: auth
+    };
+    $.ajax({
+        url: "/admin/authChange",
+        type: "POST",
+        contentType: "application/json",
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(csrfHeader, csrfToken);
+		},
+        data: JSON.stringify(requestData),
+        success: function(response) {
+            alert(response + " : change Success!");
+            console.log("Success:", response);
+        },
+        error: function(xhr,error) {
+            alert(error);
+            console.error("Error:", xhr.responseText);
+        }
+    });
 };
