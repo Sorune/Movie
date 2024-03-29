@@ -39,19 +39,19 @@
                                </div>
 							<div class="form-group row">
 								<div class="col-sm-6 mb-sm-1">
-									<input type="adress" class="form-control form-control-user" id="adress" name="adress" placeholder="우편번호">
+									<input type="text" class="form-control form-control-user" name="zonecode" placeholder="우편번호">
 								</div>
 								<div class="col-sm-6">
-									<a type="button" class="btn btn-primary btn-user btn-block" >우편번호</a>
+									<a type="button" class="btn btn-primary btn-user btn-block" id="addressInput">우편번호</a>
 								</div>
 								<div class="col-sm-12 mb-sm-1">
-									<input type="adress" class="form-control form-control-user" id="adress" placeholder="서울 용산구 한남동 (지번주소)">
+									<input type="text" class="form-control form-control-user" name="roadAddress" placeholder="도로명주소">
 								</div>
 								<div class="col-sm-12 mb-sm-1">
-									<input type="adress" class="form-control form-control-user" id="adress" placeholder="서울 용산구 다산로 (도로명주소)">
+									<input type="text" class="form-control form-control-user" name="buildingName" placeholder="건물이름">
 	                            </div>
 								<div class="col-sm-6 mb-sm-3">
-									<input type="adress" class="form-control form-control-user" id="adress" placeholder="나머지 주소">
+									<input type="text" class="form-control form-control-user" name="adress" placeholder="나머지">
 								</div>
 						</div>
 						<div class="row">
@@ -69,5 +69,19 @@
 	</div>
 </div>
 
-
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+console.log(document.getElementById("addressInput"));
+document.getElementById("addressInput").addEventListener("click",function(){
+	new daum.Postcode({
+		oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        	document.querySelector('[name=zonecode]').value = data.zonecode;
+        	document.querySelector('[name=roadAddress]').value = data.roadAddress;
+        	document.querySelector('[name=buildingName]').value = data.buildingName;
+        }
+    }).open();
+});
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

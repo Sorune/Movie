@@ -11,6 +11,9 @@
 		<result property="pw" column="pw"/>
 		<result property="name" column="name"/>
 		<result property="nickName" column="nickName"/>
+		<result property="zonecode" column="zonecode"/>
+		<result property="roadAddress" column="roadAddress"/>
+		<result property="buildingName" column="buildingName"/>
 		<result property="adress" column="adress"/>
 		<result property="phone" column="phone"/>
 		<result property="regdate" column="regdate"/>
@@ -24,21 +27,21 @@
 	</resultMap>
   	
   	<select id="getMemList" resultMap="memberMap">
-  		SELECT mem.membno, name, nickName, adress, phone, regdate,auth.id, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id
+  		SELECT mem.membno, name, nickName,zonecode,roadAddress,buildingName, adress, phone, regdate,auth.id, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id
   	</select>
   	
 	<select id="read" parameterType="String" resultMap="memberMap">
 		<![CDATA[ 
 			SELECT 
-			mem.id,pw, name, nickName,adress,phone,regdate, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id WHERE mem.id = #{id}
+			mem.id,pw, name, nickName,zonecode,roadAddress,buildingName,adress,phone,regdate, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id WHERE mem.id = #{id}
 		]]>
 	</select>
 <!-- 회원가입 -->
   
 	<insert id ="insertMember" parameterType="com.firstgroup.movies.domain.MemberVO">
 		<![CDATA[ 
-			insert into tbl_member (membno, id, pw, name, nickName, phone, adress)
-			values (seq_member.NEXTVAL, #{id}, #{pw}, #{name}, #{nickName}, #{phone}, #{adress})
+			insert into tbl_member (membno, id, pw, name, nickName, phone,zonecode,roadAddress,buildingName, adress)
+			values (seq_member.NEXTVAL, #{id}, #{pw}, #{name}, #{nickName}, #{phone},#{zonecode},#{roadAddress},#{buildingName}, #{adress})
 		]]>
 	</insert>
 
@@ -57,7 +60,10 @@
 			update tbl_member
 				set	pw=#{pw},
 					name = #{name},
-					nickName = #{nickName},	
+					nickName = #{nickName},
+					zonecode=#{zonecode},
+					roadAddress=#{roadAddress},
+					buildingName=#{buildingName},
 					adress = #{adress},
 					phone = #{phone}
 				where id=#{id}	

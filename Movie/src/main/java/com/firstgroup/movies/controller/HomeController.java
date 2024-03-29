@@ -1,40 +1,27 @@
 package com.firstgroup.movies.controller;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.firstgroup.movies.domain.ActorVO;
-import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
-import com.firstgroup.movies.domain.MoviesVO;
 import com.firstgroup.movies.security.CustomUserDetailsService;
 import com.firstgroup.movies.security.domain.CustomUser;
 import com.firstgroup.movies.service.ActorServiceImpl;

@@ -5,7 +5,9 @@ ALTER TABLE tbl_member RENAME COLUMN username TO id;
 alter table tbl_member rename column password to pw;
 
 ALTER TABLE tbl_member MODIFY enabled char(1);
-
+ALTER TABLE tbl_member ADD zonecone nVARCHAR2(10);
+ALTER TABLE tbl_member ADD roadAddress nVARCHAR2(50);
+ALTER TABLE tbl_member ADD buildingName nVARCHAR2(20);
 ALTER TABLE tbl_member ADD enabled VARCHAR(1) DEFAULT '1' NOT NULL;
 ALTER TABLE tbl_member modify pw nvarchar2(100);
 update tbl_member set enabled='1';

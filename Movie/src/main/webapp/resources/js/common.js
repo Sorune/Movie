@@ -241,9 +241,6 @@ if (!(dropArea == null)) {
 
 };
 
-console.log(!(document.getElementById("drop-area") == null));
-
-console.log(dropArea.dispatchEvent);
 if (!(document.getElementById("drop-area") == null)) {
 
 	dropArea.setAttribute('eventList', 'click');
@@ -251,7 +248,7 @@ if (!(document.getElementById("drop-area") == null)) {
 	console.log("event set");
 } else {
 	if (document.getElementById("drop-area") == null) {
-		if ((!dropArea.getAttribute('eventList') == null)) {
+		if (!(dropArea.getAttribute('eventList') == null)) {
 			dropArea.removeAttribute('eventList');
 			dropArea.removeEventListener("click", onClickFunction);
 			console.log("event remove");

@@ -14,6 +14,9 @@ public class MemberVO {
 	private String pw;
 	private String name;
 	private String nickName;
+	private String zonecode;
+	private String roadAddress;
+	private String buildingName;
 	private String adress;
 	private String phone;
 	private Date regdate;
