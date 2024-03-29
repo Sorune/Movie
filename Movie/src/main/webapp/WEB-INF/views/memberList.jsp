@@ -13,26 +13,41 @@
 							<th scope="col">멤버 번호</th>
 							<th scope="col">닉네임</th>
 							<th scope="col">전화번호</th>
-							<th scope="col">권한</th>
+							<th scope="col">관리자</th>
 							<th scope="col">수정/삭제</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${members}" var="member" >
-							<tr>
-								<td data=${member.membno }><img src="" class="bi-person-circle h2 rounded"><span class="px-1">${member.membno }</span></td>
-								<td>${ member.nickName }</td>
-								<td>${ member.phone }</td>
-								<td>${ member.authList[0].auth }</td><!-- List<AuthVO>의 0번항목의 AuthVO객체의 필드 auth 접근 -->
-								<td>
-									<div class="row row-cols-2">
-										<input type="button" class="btn btn-primary" value="수정">
-										<input type="button" class="btn btn-primary" value="삭제">
-									</div>
-								</td>
-							</th>
-							</tr>
-						</c:forEach>
+						<c:forEach items="${members}" var="member">
+					        <c:choose>
+					            <c:when test="${member.authList[0].auth eq 'ROLE_ADMIN'}">
+					                <!-- Skip rendering for ROLE_ADMIN -->
+					            </c:when>
+					            <c:otherwise>
+					                <tr>
+					                    <td data=${member.membno} class="text-align-center"><span class="px-1">${member.membno}</span></td>
+					                    <td class="text-align-center"><img src="" class="bi-person-circle h2 rounded"><span class="px-1">${member.nickName}</span></td>
+					                    <td class="text-align-center">${member.phone}</td>
+					                    <c:choose>
+							                <c:when test="${member.authList[0].auth eq 'ROLE_MEMBER'}">
+							                    <td class="text-align-center"><input type="checkbox" name="role" value="${member.authList[0].auth}" onclick="isChecked(this)" /></td>
+							                </c:when>
+							                <c:when test="${member.authList[0].auth eq 'ROLE_MANAGER'}">
+							                    <td class="text-align-center" ><input type="checkbox" name="role" value="${member.authList[0].auth}" onclick="isChecked(this)" checked/></td>
+							                </c:when>
+							                <c:otherwise>
+							                </c:otherwise>
+							            </c:choose>
+					                    <td class="text-align-center">
+					                        <div class="row row-cols-2">
+					                            <button id="modify" class="btn btn-primary">수정</button>
+					                            <button id="remove" class="btn btn-primary" value="${member.membno}">삭제</button><!-- console.log(e.target.value); -->
+					                        </div>
+					                    </td>
+					                </tr>
+					            </c:otherwise>
+					        </c:choose>
+					    </c:forEach>
 					</tbody>
 						
 				</table>

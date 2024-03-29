@@ -3,7 +3,7 @@ ALTER TABLE tbl_member RENAME COLUMN id TO username;
 alter table tbl_member rename column pw to password;
 ALTER TABLE tbl_member RENAME COLUMN username TO id;
 alter table tbl_member rename column password to pw;
-
+alter table tbl_member rename column zonecone to zonecode;
 ALTER TABLE tbl_member MODIFY enabled char(1);
 ALTER TABLE tbl_member ADD zonecone nVARCHAR2(10);
 ALTER TABLE tbl_member ADD roadAddress nVARCHAR2(50);

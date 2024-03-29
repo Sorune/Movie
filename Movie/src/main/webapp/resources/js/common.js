@@ -462,4 +462,12 @@ $("#uploadBtn").on("click", (e) => {
 			console.log(result);
 		}
 	}); //$.ajax
-});                
+});
+
+function isChecked(e){
+	if (e.checked){
+		alert("check : "+e.value);
+	}else{
+		alert("unCheck : "+e.value);
+	}
+};
