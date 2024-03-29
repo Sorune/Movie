@@ -13,4 +13,8 @@
 		
 		 ]]>
 	</select>
+	
+	<update id="updateAuth" parameterType="com.firstgroup.movies.domain.AuthVO">
+		update tbl_member_auth set auth=#{auth} where id=#{id}
+	</update>
  </mapper>

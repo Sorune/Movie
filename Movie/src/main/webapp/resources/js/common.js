@@ -466,8 +466,52 @@ $("#uploadBtn").on("click", (e) => {
 
 function isChecked(e){
 	if (e.checked){
-		alert("check : "+e.value);
+		var id = e.value;
+        var auth = "ROLE_MANAGER";
+        var requestData = {
+	        id: id,
+	        auth: auth
+	    };
+        $.ajax({
+	        url: "/admin/authChange",
+	        type: "POST",
+	        contentType: "application/json",
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeader, csrfToken);
+			},
+	        data: JSON.stringify(requestData),
+	        success: function(response) {
+	            alert(response + " : change Success!");
+	            console.log("Success:", response);
+	        },
+	        error: function(xhr, status, error) {
+	            alert(error);
+	            console.error("Error:", xhr.responseText);
+	        }
+	    });
 	}else{
-		alert("unCheck : "+e.value);
+		var id = e.value;
+        var auth = "ROLE_MEMBER";
+        var requestData = {
+	        id: id,
+	        auth: auth
+	    };
+       $.ajax({
+	        url: "/admin/authChange",
+	        type: "POST",
+	        contentType: "application/json",
+	        beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeader, csrfToken);
+			},
+	        data: JSON.stringify(requestData),
+	        success: function(response) {
+	            alert(response + " : change Success!");
+	            console.log("Success:", response);
+	        },
+	        error: function(xhr, status, error) {
+	            alert(error);
+	            console.error("Error:", xhr.responseText);
+	        }
+	    });
 	}
 };

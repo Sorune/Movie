@@ -8,5 +8,6 @@ import com.firstgroup.movies.domain.AuthVO;
 public interface AuthMapper {
 
 	void insertAuth(AuthVO authVo);
-
+	
+	void updateAuth(AuthVO authVO);
 }

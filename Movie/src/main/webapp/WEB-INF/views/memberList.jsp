@@ -30,10 +30,10 @@
 					                    <td class="text-align-center">${member.phone}</td>
 					                    <c:choose>
 							                <c:when test="${member.authList[0].auth eq 'ROLE_MEMBER'}">
-							                    <td class="text-align-center"><input type="checkbox" name="role" value="${member.authList[0].auth}" onclick="isChecked(this)" /></td>
+							                    <td class="text-align-center"><input type="checkbox" name="role" value="${member.id}" onclick="isChecked(this)" /></td>
 							                </c:when>
 							                <c:when test="${member.authList[0].auth eq 'ROLE_MANAGER'}">
-							                    <td class="text-align-center" ><input type="checkbox" name="role" value="${member.authList[0].auth}" onclick="isChecked(this)" checked/></td>
+							                    <td class="text-align-center" ><input type="checkbox" name="role" value="${member.id}" onclick="isChecked(this)" checked/></td>
 							                </c:when>
 							                <c:otherwise>
 							                </c:otherwise>

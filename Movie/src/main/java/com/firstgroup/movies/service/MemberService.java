@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.firstgroup.movies.domain.AuthVO;
 import com.firstgroup.movies.domain.MemberVO;
 
 public interface MemberService {
@@ -11,6 +12,8 @@ public interface MemberService {
 	public List<MemberVO> getMemList();
 	
 	public MemberVO getMember(String id);
+	
+	public void updateAuth(AuthVO auth);
 	
 	public void register(MemberVO memVo);
 	

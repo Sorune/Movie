@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.firstgroup.movies.domain.AuthVO;
 import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.mapper.AuthMapper;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
 
@@ -28,10 +30,6 @@ public class HomeRESTController {
 	@Setter(onMethod_ = @Autowired)
 	private ActorServiceImpl actorService;
 	
-	public void actorList() {
-		log.info("REST actorList...........");
-	}
-	
 	@GetMapping(value="/admin/memberList")
 	public ModelAndView memberList() {
 		ModelAndView mv = new ModelAndView();
@@ -42,6 +40,15 @@ public class HomeRESTController {
 		}
 		mv.addObject("members", memberList);
 		return mv;
+	}
+	
+	@PostMapping(value="/admin/authChange")
+	public String authChange(@RequestBody AuthVO auth) {
+		log.info(auth);
+		
+		memberService.updateAuth(auth);
+		
+		return auth.getId();
 	}
 	
 	/*

@@ -61,4 +61,8 @@ public class MemberServiceImpl implements MemberService {
 	public PasswordEncoder passwordEncoder() {
 		return this.passwordEncoder();
 	}
+	@Override
+	public void updateAuth(AuthVO auth) {
+		authMapper.updateAuth(auth);
+	}
 }
