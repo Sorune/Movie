@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
 
 @Mapper
@@ -17,5 +16,6 @@ public interface MoviesMapper {
 	
 	public Long insertSelectKey(MoviesVO vo);
 	
-	public List<MoviesCommentVO> getList(); // 댓글 객체를 리스트에 담아 리턴
+	public List<MoviesVO> getMovieList();
+	
 }

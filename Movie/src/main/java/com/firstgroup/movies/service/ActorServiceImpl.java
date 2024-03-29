@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.firstgroup.movies.domain.ActorVO;
+import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.mapper.ActorMapper;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class ActorServiceImpl implements ActorService {
 	private ActorMapper actorMapper;
 
 	@Override
-	public ActorVO get(Long actbno) {
+	public ActorVO getActor(Long actbno) {
 		log.info("불러올 배우 번호 : " + actbno);
 		
 		return actorMapper.getActor(actbno);
@@ -50,8 +51,10 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public boolean remove(Long actbno) {
+	public int remove(Long actbno) {
 		log.info("삭제할 배우 번호 : " + actbno);
+		
+		ActorVO vo = actorMapper.getActor(actbno);
 		
 		return actorMapper.remove(actbno);
 	}

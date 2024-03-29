@@ -6,7 +6,7 @@ import com.firstgroup.movies.domain.ActorVO;
 
 public interface ActorService {
 
-	public ActorVO get(Long actbno); // r - only one
+	public ActorVO getActor(Long actbno); // r - only one
 	
 	public List<ActorVO> actorList(); // r - total
 	
@@ -14,6 +14,6 @@ public interface ActorService {
 	
 	public boolean modify(ActorVO atv); // u - actor
 	
-	public boolean remove(Long actbno); // d - actor
+	public int remove(Long actbno); // d - actor
 	
 }

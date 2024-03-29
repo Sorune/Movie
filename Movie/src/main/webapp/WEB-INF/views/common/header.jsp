@@ -63,9 +63,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="/movies/movieList" class="nav-item nav-link">영화</a>
-                        <a href="/actor/actorList" class="nav-item nav-link">배우</a>
-                        <a href="#" class="nav-item nav-link">감독</a>
+                        <a href="/movies/list" class="nav-item nav-link">영화</a>
+                        <a href="/actor/list" class="nav-item nav-link">배우</a>
+                        <a href="/director/list" class="nav-item nav-link">감독</a>
                         <sec:authorize access="!isAuthenticated()">
                         	<a href="/loginAuth" class="nav-item nav-link" id="login">로그인</a>
                         </sec:authorize>
@@ -73,11 +73,7 @@
                         	<div class="nav-item dropdown" id="information">
 	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">회원정보</a>
 	                            <div class="dropdown-menu m-0">
-	                                <a href="#" class="dropdown-item">회원 정보 수정</a>
-	                                <a href="#" class="dropdown-item">Features</a>
-	                                <a href="#" class="dropdown-item">Our Blog</a>
-	                                <a href="#" class="dropdown-item">Our Team</a>
-	                                <a href="#" class="dropdown-item">Testimonial</a>
+	                                <a href="/member/update" class="dropdown-item">회원 정보 수정</a>
 	                               	<form class="dropdown-item" method="post" action="/home">
 	                               		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 	                               		<button type="submit" class="dropdown-item">LogOut</button>	
@@ -87,13 +83,9 @@
                         </sec:authorize>
                         <sec:authorize access="hasRole('ROLE_ADMIN')">
 	                        <div class="nav-item dropdown" id="admin">
-	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">영화관리</a>
+	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">관리하기</a>
 	                            <div class="dropdown-menu m-0">
-	                                <a href="#" class="dropdown-item">Appointment</a>
-	                                <a href="#" class="dropdown-item">Features</a>
-	                                <a href="#" class="dropdown-item">Our Blog</a>
-	                                <a href="#" class="dropdown-item">Our Team</a>
-	                                <a href="#" class="dropdown-item">Testimonial</a>
+	                                <a href="/admin/memberList" class="dropdown-item">멤버 관리</a>
 	                                <form class="dropdown-item" method="post" action="/home">
 		                               		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 		                               		<button type="submit" class="dropdown-item">LogOut</button>	

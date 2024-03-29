@@ -337,8 +337,8 @@ img {
 								</div><br>
 								 <sec:authorize access="isAuthenticated()">
 								<div class="form-group">
-									<label>작성자</label> <input class="form-control" name="writer" value='<sec:authentication property="principal.username"/>' readonly="readonly">
-										 <input type="hidden" name='memBno' value='<c:out value="${user.membno }"/>' id='memBno'/> 
+									<label>작성자</label> <input class="form-control" name="writer" value='<sec:authentication property="principal.member.name"/>' readonly="readonly">
+										 <input type="hidden" name='memBno' value='<c:out value="${ user.membno }"/>' id='memBno'/> 
 								</div><br>
 										</sec:authorize>
 								 <sec:authorize access="isAnonymous()">

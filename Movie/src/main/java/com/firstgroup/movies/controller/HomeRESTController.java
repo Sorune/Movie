@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
 
 import lombok.Setter;
@@ -24,6 +25,8 @@ public class HomeRESTController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private MemberServiceImpl memberService;
+	@Setter(onMethod_ = @Autowired)
+	private ActorServiceImpl actorService;
 	
 	public void actorList() {
 		log.info("REST actorList...........");

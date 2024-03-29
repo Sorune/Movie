@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.firstgroup.movies.domain.ImgVO;
-import com.firstgroup.movies.domain.MoviesAttachVO;
 
 @Mapper
 public interface ImgMapper {

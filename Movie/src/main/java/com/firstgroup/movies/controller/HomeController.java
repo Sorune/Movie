@@ -116,7 +116,7 @@ public class HomeController {
 		return "redirect:/loginAuth";
 	}
 
-	@GetMapping("/update") // 회원 정보 수정 페이지
+	@GetMapping("/member/update") // 회원 정보 수정 페이지
 	public String editPage(@AuthenticationPrincipal Model model) {
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		/*
@@ -132,7 +132,7 @@ public class HomeController {
 
 	}
 	
-	@PostMapping("/update")
+	@PostMapping("/member/update")
 	public String edit(@ModelAttribute("MemberVO") MemberVO memVo) { //회원 정보 수정
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		memVo.setId(user.getUsername());
@@ -143,44 +143,9 @@ public class HomeController {
 		
 		return "redirect:/"; 
 	}
-	
-
-	@GetMapping("/test")
-	public void test() {
-		// 테스트 페이지용
-	}
 
 	@GetMapping("/home")
 	public void home(Model model) {
-		log.info(model);
-	}
-
-	@GetMapping("/logout")
-	public void logout() {
-		log.info("logout........");
-	}
-
-	@GetMapping("/uploadest")
-	public void uploadest() {
-		log.info("upload...........");
-	}
-
-	@GetMapping("/movies/movieList")
-	public void movieList(Criteria cri, Model model) {
-
-	}
-
-	@GetMapping("/movies/register")
-	public void movieRegister() {
-		log.info("movie register........");
-	}
-
-	@PostMapping("/movies/register")
-	public void movieRegisterAction(@ModelAttribute("MoviesVO") MoviesVO mov, Model model, MultipartFile[] uploadFile) {
-		log.info("movie register action..............");
-		log.info(mov);
-		mov = moviesService.registerMovies(mov);
-		
 		log.info(model);
 	}
 	

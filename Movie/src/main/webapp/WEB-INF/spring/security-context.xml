@@ -17,7 +17,15 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 	<bean id="customUserDetailsService" class="com.firstgroup.movies.security.CustomUserDetailsService" />
 	
-	<security:http>
+	<security:http auto-config="true">
+		<!-- Guest 사용자를 anonymous로 설정 -->
+	    <security:anonymous enabled="true" username="guest"/>
+	    <!-- Guest 권한에 대한 접근 설정 -->    
+	    <security:intercept-url pattern="/" access="permitAll"/>
+    	<security:intercept-url pattern="/home" access="permitAll"/>
+	    <security:intercept-url pattern="/login" access="permitAll"/>
+	    <security:intercept-url pattern="/loginAuth" access="permitAll"/>
+	    <!-- 나머지 설정... -->
 		<!-- <security:intercept-url pattern="/home" access="hasRole('ROLE_ADMIN')"/> -->
 		<!-- 접근 거부시 -->
 		<security:access-denied-handler ref="customAccessDenied"/>

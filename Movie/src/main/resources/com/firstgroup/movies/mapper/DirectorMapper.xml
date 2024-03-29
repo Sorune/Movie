@@ -4,24 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.firstgroup.movies.mapper.DirectorMapper">
 
-	<resultMap type="com.firstgroup.movies.domain.DirectorVO" id="directorMap">
-		<id property="uuid" column="uuid"/>
-		<result property="uploadpath" column="uploadpath"/>
-		<result property="filename" column="filename"/>
-		<result property="filetype" column="filetype"/>
-		<result property="bno" column="bno"/>
+		<resultMap type="com.firstgroup.movies.domain.DirectorVO" id="dirMap">
+		<id property="dirBno" column="dirbno"/>
+		<result property="dirName" column="dirname"/>
+		<result property="dirAge" column="dirage"/>
 	</resultMap>
-	<!-- create -->
-  	<insert id="insert" parameterType="map">
-		insert into ${tableName} (uuid, uploadPath, fileName, fileType, movBno)
-		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{movBno})
+	
+	 
+  	 	<!-- actor insert -->
+	<insert id="insertDirector" useGeneratedKeys="true" keyProperty="dirBno">
+		<selectKey keyProperty="dirBno" order="BEFORE" resultType="long">
+	    		select seq_director.nextval from dual
+    	</selectKey>
+		insert into tbl_director(dirbno, dirname, dirage, dirbirth)
+		values(#{dirBno}, #{dirName}, #{dirAge}, #{dirBirth})
 	</insert>
-  	<!-- delete -->
-  	<delete id="delete" parameterType="map">
-  		delete from ${tableName} where uuid = #{uuid}
-  	</delete>
-  	<!-- read -->
-  	<select id="select" parameterType="map" resultType="com.firstgroup.movies.domain.MoviesAttachVO">
-  		select * from ${tableName} where movBno = #{movBno}
-  	</select>
+  	
+  		<!-- 전체 배우정보 불러오기 -->
+	<select id="getDirectorList" resultType="com.firstgroup.movies.domain.DirectorVO">
+		select * from tbl_director where dirbno > 0
+	</select>
+	
+  	<!-- 한명의 배우 정보 불러오기 -->
+	 <select id="getDirector" resultType="com.firstgroup.movies.domain.DirectorVO">
+	 	select * from tbl_director where dirbno =  #{dirbno}
+		
+	 </select>
 </mapper>

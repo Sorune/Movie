@@ -13,7 +13,7 @@ public class Utility {
 		return parsingIntList; 
 	}
 	
-	public long[] listToIntList(List<Long> list) {
+	public long[] listToLongList(List<Long> list) {
 		return list.stream().mapToLong(Long::longValue).toArray();
 	}
 }

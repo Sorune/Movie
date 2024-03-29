@@ -2,42 +2,43 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.firstgroup.movies.mapper.MoviesCommentMapper">
+<mapper namespace="com.firstgroup.movies.mapper.MoviesCommentMapper">
   
   <!-- 댓글리스트 전체 불러오기 -->
-  <select id="getCommentList" resultType="com.firstgroup.movies.domain.MoviesCommentVO">
+	  <select id="getCommentList" resultType="com.firstgroup.movies.domain.MoviesCommentVO">
+	  
+		  <![CDATA[ 
+			select mem.membno, mem.name, mem.nickname, mem.mem_imgno, com.content, com.stars, com.recommend, com.regdate, com.up_date, com.movbno, com.combno
+			FROM 
+	  		tbl_movies_comment com INNER JOIN tbl_member mem on com.membno = mem.membno
+			WHERE com.movbno = #{movbno}  AND com.combno IS NOT NULL 
+			ORDER BY com.regdate DESC 
+			]]>
+	  </select>
+	  
+	<select id="getListPage" resultType="com.firstgroup.movies.domain.MoviesCommentVO">
+		<![CDATA[
+		select *
+		from
+		(
+		select /*+INDEX(tbl_movies_comment idx_reply*/
+		rownum rn, rno, bno,  reply, replyer, replydate, updatedate
+		from tbl_movies_comment
+		where bno = #{bno} 
+		and rno > 0 
+		and rownum <= #{cri.pageNum} * #{cri.amount} 
+		) where rn > (#{cri.pageNum} - 1) * #{cri.amount}
+		]]>
+	</select>
+	
+	<insert id="insertComment"  >
+		insert into tbl_movies_comment (combno, movbno, content, membno, regdate, stars)
+		values(seq_comment.nextval, #{movBno}, #{content}, #{memBno}, sysdate, #{stars})
+	</insert>
+	
+	<delete id="removeComment">
+		delete from tbl_movies_comment where combno = #{combno}
+	</delete>
+	  
   
-  <![CDATA[ 
-select mem.membno, mem.name, mem.nickname, mem.mem_imgno, com.content, com.stars, com.recommend, com.regdate, com.up_date, com.movbno, com.combno
-		FROM 
-  		tbl_movies_comment com INNER JOIN tbl_member mem on com.membno = mem.membno
-		WHERE com.movbno = #{movbno} 
-	]]>
-  </select>
-  
-<select id="getListPage" resultType="com.firstgroup.movies.domain.MoviesCommentVO">
-	<![CDATA[
-	select *
-	from
-	(
-	select /*+INDEX(tbl_movies_comment idx_reply*/
-	rownum rn, rno, bno,  reply, replyer, replydate, updatedate
-	from tbl_movies_comment
-	where bno = #{bno} 
-	and rno > 0 
-	and rownum <= #{cri.pageNum} * #{cri.amount} 
-	) where rn > (#{cri.pageNum} - 1) * #{cri.amount}
-	]]>
-</select>
-
-<insert id="insertComment"  >
-	insert into tbl_movies_comment (combno, movbno, content, membno, regdate, stars)
-	values(seq_comment.nextval, #{movBno}, #{content}, #{memBno}, sysdate, #{stars})
-</insert>
-
-<delete id="removeComment">
-	delete from tbl_movies_comment where combno = #{combno}
-</delete>
-  
-  
-  </mapper>
+</mapper>

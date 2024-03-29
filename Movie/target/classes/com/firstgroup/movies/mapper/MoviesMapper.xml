@@ -8,7 +8,7 @@
   
   
   <!-- 영화 리스트 불러오기 -->
-  <select id="getList" resultType="com.firstgroup.movies.domain.MoviesVO">
+  <select id="getMovieList" resultType="com.firstgroup.movies.domain.MoviesVO">
   select * from tbl_movies where movbno > 0
   </select>
   
@@ -19,8 +19,8 @@
 	
 
 	<insert id="insert">
-		insert into tbl_movies(movbno, title, content, director, actor, mov_imgNo)
-		values(seq_movies.nextval, #{title}, #{content}, #{director}, #{actor}, #{movImgNo})
+		insert into tbl_movies(movbno, title, content, created_date, actor, director)
+		values(seq_movies.nextval, #{title}, #{content}, #{createdDate}, #{actor}, #{director})
 	</insert>
 	
 	<insert id="insertSelectKey" parameterType="com.firstgroup.movies.domain.MoviesVO" useGeneratedKeys="true" keyProperty="movbno">

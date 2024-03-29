@@ -56,8 +56,8 @@ public class MoviesServiceImpl implements MoviesService{
 	@Override
 	public MoviesVO registerMovies(MoviesVO mov) {
 		log.info("영화 등록...........");
-		mov.setMovBno(movMapper.insertSelectKey(mov)); 
-		
+		//mov.setMovBno(movMapper.insertSelectKey(mov)); 
+		movMapper.insert(mov);
 		return mov;
 		
 	}
@@ -86,31 +86,12 @@ public class MoviesServiceImpl implements MoviesService{
 		return null;
 	}
 
-//	public int remove(Long rno) {
-//		log.info("삭제 할 댓글 번호 : "+ rno);
-//		
-//		ReplyVO vo = mapper.read(rno); // 삭제 할 댓글의 번호를 불러옴
-//		
-//		boardMapper.updateReplyCnt(vo.getBno(), -1); // 가져온 게시물의 댓글 카운트를 -1
-//		
-//		return mapper.delete(rno);
-//	}
 
-//	@Override
-//	public List<MoviesCommentVO> getList(Criteria cri, Long bno) {
-//		return null;
-//	}
-//
-//
-//	@Override
-//	public CommentPageDTO getListPage(Criteria cri, Long bno) {
-//		return null;
-//	}
+	@Override
+	public List<MoviesVO> getMovieList() {
+		//전체 영화 리스트 출력
+		return movMapper.getMovieList();
+	}
 
-
-
-
-	
-	
 	
 }

@@ -9,19 +9,6 @@
 		<result property="name" column="name"/>
 		<result property="age" column="age"/>
 	</resultMap>
-	<!-- create -->
-<!--   	<insert id="insert" parameterType="map">
-		insert into ${tableName} (uuid, uploadPath, fileName, fileType, movBno)
-		values(#{uuid}, #{uploadPath}, #{fileName}, #{fileType}, #{movBno})
-	</insert> -->
-  	<!-- delete -->
-  	<delete id="delete" parameterType="map">
-  		delete from ${tableName} where uuid = #{uuid}
-  	</delete>
-  	<!-- read -->
-  	<select id="select" parameterType="map" resultType="com.firstgroup.movies.domain.MoviesAttachVO">
-  		select * from ${tableName} where movBno = #{movBno}
-  	</select>
   	
   	<!-- actor insert -->
 	<insert id="insertActor" useGeneratedKeys="true" keyProperty="actbno">
@@ -43,6 +30,21 @@
 	 </select>
   	
   	<!-- 한명의 배우 정보 수정하기 -->
+  	<update id="modify">
+  		<![CDATA[
+			update tbl_actor
+				set	name = #{name},
+					age = #{age},	
+					b_date = #{b_date},
+					d_date = #{d_date},
+					update_date = sysdate
+				where actbno = #{actbno}	
+		 ]]>
+  	</update>
+  	
 	<!-- 한명의 배우 정보 삭제하기 -->
+  	<delete id="remove">
+		delete from tbl_actor where actbno = #{actbno}
+	</delete>
   	
 </mapper>

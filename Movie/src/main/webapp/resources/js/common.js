@@ -280,9 +280,10 @@ if (!(fileInput == null)) {
 		for (var pair of formData.entries()) {
 			console.log(pair[0] + ', ' + pair[1]);
 		}
-
+		var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';		//REST방식, 주소 파싱하여 해당 테이블로 전송하기 위한 URI 생성
+		console.log(urlString);
 		$.ajax({
-			url: '/uploadAjaxAction',
+			url: urlString/*'/uploadAjaxAction'*/,
 			processData: false,
 			contentType: false,
 			beforeSend: function(xhr) {
@@ -292,11 +293,10 @@ if (!(fileInput == null)) {
 			type: 'POST',
 			success: function(result) {
 				console.log(result);
-				createCarouselInner(result);
+				createCarouselInner(result);			//이미지 업로드 성공시 업로드된 이미지를 보여줄 캐러셀 이미지 생성
 			},
 			error: function(result) {
 				alert("uploadFail");
-				createCarouselInner(result);
 				console.log(result);
 			}
 		}); //$.ajax
@@ -366,51 +366,6 @@ function displayImage(file, caroucel) {
 
 var formObj=$('form[role="form"]');					//폼 선택 jquery
 
-/*
-$("button[type='submit']").on("click",function(e){	//폼 등록버튼 선택
-	e.preventDefault();								//기본 동작 막기
-	console.log("submit clicked");
-	console.log(formObj);
-	//createUploadFileInput(formObj);
-	let nodes = document.querySelector("#uploadedImages").querySelectorAll("img");	//캐러셀 이미지들 호출
-	let inputString = "";
-	$(nodes).each(function(i, obj) {												//캐러셀 이미지들을 input태그에 담기
-		let inputFileName = document.createElement("input");						//input 태그 생성
-		let inputFilePath = document.createElement("input");
-		let inputFileUuid = document.createElement("input");
-		inputFileName.type = "hidden";
-		inputFileName.setAttribute('name', "imgList[" + i + "].fileName");			//imgList List로 보내기 위해 imgList[i]로 전송
-		inputFileName.setAttribute('value', obj.getAttribute("fileName"));			//imgList[0].filename = value
-		inputFilePath.type = "hidden";
-		inputFilePath.setAttribute('name', "imgList[" + i + "].uploadPath");
-		inputFilePath.setAttribute('value', obj.getAttribute("uploadPath"));		//imgList[0].uploadPath = value
-		inputFileUuid.type = "hidden";
-		inputFileUuid.setAttribute('name', "imgList[" + i + "].uuid");
-		inputFileUuid.setAttribute('value', obj.getAttribute("uuid"));				//imgList[0].uuid = value
-		inputString += inputFileName.outerHTML+inputFilePath.outerHTML+inputFileUuid.outerHTML;
-	});
-	console.log(inputString);
-	formObj.append(inputString).submit();											//인풋태그들을 폼에 담아 전송(현재 동작 안함)
-	var formnodes=document.querySelector("form").querySelectorAll("input");			//폼의 인풋태그들 선택
-	console.log(formnodes);
-	var newForm = document.createElement("form");									//새 폼 생성
-	newForm.setAttribute("charset", "UTF-8");
-
- 	newForm.setAttribute("method", "POST");  //Post 방식
-
- 	newForm.setAttribute("action", "/actor/register"); //요청 보낼 주소
-
-	newForm.setAttribute("style","{display:none;}");
-
-	$(formnodes).each(function(i,obj){												//옮겨온 input태그들을 새 폼에 등록
-		console.log(obj);
-		newForm.appendChild(formnodes[i]);
-	});
-	document.querySelector("body").appendChild(newForm);							//바디 태그에 폼 등록
-	console.log(newForm);
-	newForm.submit();																//폼 전송
-});
-*/
 $("button[type='submit']").on("click", function(e) {
     e.preventDefault(); // 기본 동작 막기
     console.log("submit clicked");
@@ -419,7 +374,17 @@ $("button[type='submit']").on("click", function(e) {
 
     // 각 input의 값을 formData 객체에 추가
     $('form[role="form"] input').each(function(index, element) {
-        formData[element.name] = element.value;
+        // 체크박스인 경우에는 선택된 값들을 배열로 추가
+        if (element.type === 'checkbox') {
+            if (!formData[element.name]) {
+                formData[element.name] = [];
+            }
+            if (element.checked) {
+                formData[element.name].push(element.value);
+            }
+        } else {
+            formData[element.name] = element.value;
+        }
     });
 
     // 이미지 태그들을 선택하고 각각의 데이터를 formData 객체에 추가
@@ -433,11 +398,13 @@ $("button[type='submit']").on("click", function(e) {
         };
         formData.imgList.push(imageObj);
     });
-
+    var url = '/'+ window.location.pathname.split("/")[1];
+    var urlString = url+'/register';
+    var urlListString = url+'/list';
     // AJAX 요청 보내기
     $.ajax({
         type: "POST", // POST 방식 설정
-        url: "/actor/register", // 요청 보낼 URL 설정
+        url: urlString, // 요청 보낼 URL 설정
         data: JSON.stringify(formData), // JSON 형식으로 데이터 변환
         contentType: "application/json; charset=UTF-8", // 요청의 컨텐츠 타입 설정
         beforeSend: function(xhr) {
@@ -445,8 +412,8 @@ $("button[type='submit']").on("click", function(e) {
         },
         success: function(response) {
             console.log("Success:", response);
-			alert("Register Success!!!");
-			location.replace("/actor/actorList");
+            alert("Register Success!!!");
+            location.replace(urlListString);
             // 성공했을 때 실행할 코드 작성
         },
         error: function(xhr, status, error) {
@@ -478,8 +445,10 @@ $("#uploadBtn").on("click", (e) => {
 		console.log(pair[0] + ', ' + pair[1]);
 	}
 
+	var urlString = '/'+ window.location.pathname.split("/")[1]+'/uploadAjaxAction';		//REST방식, 주소 파싱하여 해당 테이블로 전송하기 위한 URI 생성
+	console.log(urlString);
 	$.ajax({
-		url: '/uploadAjaxAction',
+		url: urlString/*'/uploadAjaxAction'*/,
 		processData: false,
 		contentType: false,
 		beforeSend: function(xhr) {
@@ -489,6 +458,7 @@ $("#uploadBtn").on("click", (e) => {
 		type: 'POST',
 		success: function(result) {
 			console.log(result);
+			createCarouselInner(result);			//이미지 업로드 성공시 업로드된 이미지를 보여줄 캐러셀 이미지 생성
 		},
 		error: function(result) {
 			alert("uploadFail");

@@ -13,6 +13,6 @@ public interface ActorMapper {
 	public List<ActorVO> getActorList(); // r - total actor
 	ActorVO getActor(Long actbno); // r - actor 
 	public boolean modify(ActorVO atv); // u - actor
-	public boolean remove(Long actbno); // d - actor
+	public int remove(Long actbno); // d - actor
 	
 }

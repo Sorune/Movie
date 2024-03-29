@@ -10,8 +10,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.firstgroup.movies.domain.ActorVO;
 import com.firstgroup.movies.domain.ImgVO;
+import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.ImgServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
@@ -52,7 +55,7 @@ public class ActorRESTController {
 	 * membno) { memService.delete(membno); }
 	 */
 	
-	@GetMapping("/actorList") // actor 리스트
+	@GetMapping("/list") // actor 리스트
 	public ModelAndView actorList(Model model) {
 		log.info("REST actorList...........");
 		ModelAndView mv = new ModelAndView();
@@ -95,11 +98,13 @@ public class ActorRESTController {
 		return atv.getName();
 	}
 	
-	@GetMapping("/get") // actor 조회
-	public void get(@RequestParam("actbno") Long actbno, Model model) {
-		
-		log.info("/get");
-		model.addAttribute("atv", service.get(actbno));
+	@GetMapping("/getActor/{actbno}") // actor 조회
+	public ModelAndView getActor(@PathVariable Long actbno, Model model) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/actor/getActor");
+		log.info("/actor/getActor");
+		model.addAttribute("atv", service.getActor(actbno));
+		return mv;
 	}
 	
 	@PostMapping("/modify") // actor 수정
@@ -112,13 +117,17 @@ public class ActorRESTController {
 		return "redirect:/actor/actorList";
 	}
 	
-	@PostMapping("/remove") // actor 삭제
-	public String remove(@RequestParam("actbno") Long actbno, RedirectAttributes rttr) {
-		
-		log.info("remove : " + actbno);
-		if(service.remove(actbno)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/actor/actorList";
+	// actor 삭제
+	@GetMapping("/delete/{actBno}")
+	public ResponseEntity<String> remove(@RequestParam Long actBno){
+	    log.info("actBno? : " + actBno);
+		/*
+		 * if(actBno > 0) { }
+		 */
+	    
+	    return service.remove(actBno) == 1 ?
+	    		new ResponseEntity<>("success", HttpStatus.OK) :
+	    		new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)	;
 	}
+	
 }

@@ -3,10 +3,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <sec:authentication property="principal" var="pinfo" />
-<div>${pinfo }</div>
-<div>${pinfo.member }</div>
-<div>${user }</div>
-<div>${pinfo.member.id }</div>
 <div class="container pt-6">
     <div class="card o-hidden border-0 shadow-lg my-3">
         <div class="card-body p-2">
@@ -17,7 +13,7 @@
                        <div class="text-center">
                            <h1 class="h4 text-gray-900 mb-4">회원 수정을 해보자 !</h1>
                        </div>
-                       <form class="user" action="/update" method="post">
+                       <form class="user" action="/member/update" method="post">
 							<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
 							<input type="hidden" name="membno" value="${user.membno }"/>
                            <div class="form-group">

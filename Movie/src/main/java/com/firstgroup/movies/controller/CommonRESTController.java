@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.firstgroup.movies.domain.MoviesAttachVO;
+import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.ImgServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
@@ -100,7 +100,7 @@ public class CommonRESTController {
 	@ResponseBody
 	public ResponseEntity<List<?>> uploadAjaxPost(MultipartFile[] uploadFile,@PathVariable String tableName){
 		log.info(tableName);
-		List<MoviesAttachVO> list = new ArrayList<>();
+		List<ImgVO> list = new ArrayList<>();
 		String uploadFolder = "D://upload//"+tableName+"//"; 
 		
 		String uploadFolderPath = getFolder();
@@ -117,7 +117,7 @@ public class CommonRESTController {
 		
 		for(MultipartFile multipartFile : uploadFile) {
 			
-			MoviesAttachVO attachDTO = new MoviesAttachVO();
+			ImgVO attachDTO = new ImgVO();
 			
 			String uploadFileName = multipartFile.getOriginalFilename();
 			
@@ -143,7 +143,7 @@ public class CommonRESTController {
 				
 				attachDTO.setUuid(uuid.toString());
 				attachDTO.setUploadPath(uploadFolderPath);
-				attachDTO.setMovBno(1L);
+				attachDTO.setBno(1L);
 //					attachMapper.insert(attachDTO);
 				// add to List
 				list.add(attachDTO);
