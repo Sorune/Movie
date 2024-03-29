@@ -7,14 +7,14 @@
         <div class="card-body p-2 row justify-content-center">
             <!-- 테이블 형식 -->
         	<div class="row justify-content-center">
-				<table class="table table-striped table-hover text-align-center" id="actorList">
+				<table class="table table-striped table-hover text-align-center align-middle" id="actorList">
 					<thead>
 						<tr>
-							<th scope="col">멤버 번호</th>
-							<th scope="col">닉네임</th>
-							<th scope="col">전화번호</th>
-							<th scope="col">관리자</th>
-							<th scope="col">수정/삭제</th>
+							<th scope="col" class="text-center col-xs-1">멤버 번호</th>
+							<th scope="col" class="text-center col-xs-2">닉네임</th>
+							<th scope="col" class="text-center col-xs-2">전화번호</th>
+							<th scope="col" class="text-center col-xs-1">관리자</th>
+							<th scope="col" class="text-center col-xs-4">수정/삭제</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -25,23 +25,37 @@
 					            </c:when>
 					            <c:otherwise>
 					                <tr>
-					                    <td data=${member.membno} class="text-align-center"><span class="px-1">${member.membno}</span></td>
-					                    <td class="text-align-center"><img src="" class="bi-person-circle h2 rounded"><span class="px-1">${member.nickName}</span></td>
-					                    <td class="text-align-center">${member.phone}</td>
+					                    <td data=${member.membno} class="text-center"><span class="px-1">${member.membno}</span></td>
+					                    <td ><img src="" class="bi-person-circle h2 rounded"><span class="px-1">${member.nickName}</span></td>
+					                    <td >${member.phone}</td>
 					                    <c:choose>
 							                <c:when test="${member.authList[0].auth eq 'ROLE_MEMBER'}">
-							                    <td class="text-align-center"><input type="checkbox" name="role" value="${member.id}" onclick="isChecked(this)" /></td>
+							                    <td class="align-center">
+							                    	<div class="form-check form-switch d-flex justify-content-center">
+							                    		<input class="form-check-input" type="checkbox" name="role" value="${member.id}" onclick="isChecked(this)" />
+					                    			</div>
+					                    		</td>
 							                </c:when>
 							                <c:when test="${member.authList[0].auth eq 'ROLE_MANAGER'}">
-							                    <td class="text-align-center" ><input type="checkbox" name="role" value="${member.id}" onclick="isChecked(this)" checked/></td>
+							                    <td class="align-center" >
+							                    	<div class="form-check form-switch d-flex justify-content-center">
+							                    		<input class="form-check-input" type="checkbox" name="role" value="${member.id}" onclick="isChecked(this)" checked/>
+					                    			</div>
+							                    </td>
 							                </c:when>
 							                <c:otherwise>
 							                </c:otherwise>
 							            </c:choose>
 					                    <td class="text-align-center">
-					                        <div class="row row-cols-2">
-					                            <button id="modify" class="btn btn-primary">수정</button>
-					                            <button id="remove" class="btn btn-primary" value="${member.membno}">삭제</button><!-- console.log(e.target.value); -->
+						                    <div class="container overflow-hidden">
+						                        <div class="row row-cols-2">
+						                        	<div class="col d-flex justify-content-center">
+						                            	<button id="modify" class="col btn btn-primary gx-1">수정</button>
+						                        	</div>
+						                        	<div class="col d-flex justify-content-center">
+							                            <button id="remove" class="col btn btn-primary gx-1" value="${member.membno}">삭제</button><!-- console.log(e.target.value); -->
+						                        	</div>
+						                        </div>
 					                        </div>
 					                    </td>
 					                </tr>
