@@ -17,4 +17,8 @@
 	<update id="updateAuth" parameterType="com.firstgroup.movies.domain.AuthVO">
 		update tbl_member_auth set auth=#{auth} where id=#{id}
 	</update>
+	
+	<delete id="deleteAuth" parameterType="String">
+		delete tbl_member_auth where id=#{id}
+	</delete>
  </mapper>

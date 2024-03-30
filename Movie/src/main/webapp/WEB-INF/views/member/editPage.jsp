@@ -17,6 +17,7 @@
                        <form role="form" class="user" action="/member/update" method="post">
 							<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
 							<input type="hidden" name="membno" value="${user.membno }"/>
+							<input type="hidden" name="memid" value="${ user.id }" />
 							<div class="row justify-content-center">
 									<div class="col-4">
 							        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">

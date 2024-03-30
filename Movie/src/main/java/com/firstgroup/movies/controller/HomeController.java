@@ -2,8 +2,12 @@ package com.firstgroup.movies.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.domain.MemberVO;
@@ -138,17 +144,24 @@ public class HomeController {
 	}
 	
 	@PostMapping("/member/delete")
-	public String withDrawMember(@RequestBody Map<String,String> requestData) {
-		String result = requestData.get("id");
+	@ResponseBody
+	public Map<String, String> withDrawMember(@RequestBody Map<String,String> requestData,HttpServletRequest request) {
+		Map<String, String> response = new HashMap<>();
+		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		logout(request);
+		String result = requestData.get("bno");
 	    Long bno = Long.parseLong(result);
 		log.info("delete : " + bno);
-		memberService.withdraw(bno);
+		memberService.withdraw(bno,user.getUsername());
 		ImgVO vo = new ImgVO();
 		vo.setBno(bno);
 		vo.setTblName("tbl_member_img");
 		
 		imgService.delete(vo);
-		return result;
+		
+		response.put("status","success");
+		response.put("message","회원 탈퇴가 성공적으로 처리되었습니다.");
+		return response;
 	}
 	
 	@GetMapping("/home")
@@ -160,6 +173,13 @@ public class HomeController {
 	    UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 	    Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 	    SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+	}
+	
+	public void logout(HttpServletRequest request) {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null) {
+	        new SecurityContextLogoutHandler().logout(request, null, auth);
+	    }
 	}
 
 }

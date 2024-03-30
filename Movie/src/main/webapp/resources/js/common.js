@@ -506,9 +506,9 @@ function isChecked(e){ // 체크박스 값 확인해서 권한 변경 요청
 function deleteData(e){
 	//e.preventDefault();
 	if(confirm("정말 탈퇴하시겠습니까?")==true){
-		var id = parseInt(e.value);
+		var bno = parseInt(e.value);
 		var requestData = {
-			id : id
+			bno : bno
 		}
 		var urlString = '/'+ window.location.pathname.split("/")[1]+'/delete';
 		$.ajax({
@@ -520,13 +520,14 @@ function deleteData(e){
 			},
 	        data: JSON.stringify(requestData),
 	        success: function(response) {
-	            alert(response + " : change Success!");
-	            console.log("Success:", response);
-	        },
-	        error: function(xhr,error) {
-	            alert(error);
-	            console.error("Error:", xhr.responseText);
-	        }
+                alert("그동안 감사했습니다!"); // 서버에서 반환한 메시지 출력
+                console.log("Success:", response);
+                location.replace("/");
+            },
+            error: function(xhr,error) {
+                alert(error);
+                console.error("Error:", xhr.responseText);
+            }
 	    });
 	} else {
 		return;

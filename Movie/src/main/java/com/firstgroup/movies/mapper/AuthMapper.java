@@ -10,4 +10,6 @@ public interface AuthMapper {
 	void insertAuth(AuthVO authVo);
 	
 	void updateAuth(AuthVO authVO);
+	
+	void deleteAuth(String id);
 }

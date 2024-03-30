@@ -19,7 +19,7 @@ public interface MemberService {
 	
 	public void edit(MemberVO memVo);
 	
-	public void withdraw(long bno);
+	public void withdraw(long bno,String id);
 	
 	public PasswordEncoder passwordEncoder();
 }
