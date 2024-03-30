@@ -69,7 +69,7 @@
                         <sec:authorize access="!isAuthenticated()">
                         	<a href="/loginAuth" class="nav-item nav-link" id="login">로그인</a>
                         </sec:authorize>
-                        <sec:authorize access="hasRole('ROLE_MEMBER')">
+                        <sec:authorize access="hasAnyRole('ROLE_MEMBER','ROLE_MANAGER')">
                         	<div class="nav-item dropdown" id="information">
 	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">회원정보</a>
 	                            <div class="dropdown-menu m-0">
@@ -94,7 +94,7 @@
 	                        </div>
                         </sec:authorize>
                         <sec:authorize access="!isAuthenticated()">
-                        	<a href="/register" class="nav-item nav-link" id="register">회원가입</a>
+                        	<a href="/member/register" class="nav-item nav-link" id="register">회원가입</a>
                         </sec:authorize>
                     </div>
                     <!-- <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">예매하기</a> -->

@@ -14,7 +14,7 @@ public interface ImgMapper {
 	
 	public void insert(ImgVO vo); // create
 	
-	public void delete(Map<String, Object> data); // delete
+	public void delete(ImgVO vo); // delete
 	
 	public List<ImgVO> findByBno (Map<String, Object> data); // select
 }

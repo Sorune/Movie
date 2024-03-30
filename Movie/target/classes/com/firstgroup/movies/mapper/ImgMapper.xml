@@ -18,7 +18,7 @@
 	</insert>
   	<!-- delete -->
   	<delete id="delete" parameterType="map">
-  		delete from ${tableName} where uuid = #{uuid}
+  		delete from ${tblName} where bno = #{bno}
   	</delete>
   	<!-- read -->
   	<select id="findByBno" parameterType="map" resultType="com.firstgroup.movies.domain.ImgVO">

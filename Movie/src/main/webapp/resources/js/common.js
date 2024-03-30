@@ -241,14 +241,14 @@ if (!(dropArea == null)) {
 
 };
 
-if (!(document.getElementById("drop-area") == null)) {
+if (!(document.getElementById("drop-area") === null)&&!(document.querySelector('input[type="file"]')===null)) {
 
 	dropArea.setAttribute('eventList', 'click');
 	dropArea.addEventListener("click", onClickFunction);
 	console.log("event set");
 } else {
-	if (document.getElementById("drop-area") == null) {
-		if (!(dropArea.getAttribute('eventList') == null)) {
+	if (document.getElementById("drop-area") === null&&!(document.querySelector('input[type="file"]')===null)) {
+		if (!(dropArea.getAttribute('eventList') === null)) {
 			dropArea.removeAttribute('eventList');
 			dropArea.removeEventListener("click", onClickFunction);
 			console.log("event remove");
@@ -396,8 +396,13 @@ $("button[type='submit']").on("click", function(e) {
         formData.imgList.push(imageObj);
     });
     var url = '/'+ window.location.pathname.split("/")[1];
-    var urlString = url+'/register';
+    var urlString = url+"/"+window.location.pathname.split("/")[2];
     var urlListString = url+'/list';
+    if(urlString==="/member/register"){	
+		urlListString = '/loginAuth';
+	} else if(url==="/member"){
+		urlListString = '/';
+	}
     // AJAX 요청 보내기
     $.ajax({
         type: "POST", // POST 방식 설정
@@ -409,7 +414,7 @@ $("button[type='submit']").on("click", function(e) {
         },
         success: function(response) {
             console.log("Success:", response);
-            alert("Register Success!!!");
+            alert(window.location.pathname.split("/")[2]+" Success!!!");
             location.replace(urlListString);
             // 성공했을 때 실행할 코드 작성
         },

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.firstgroup.movies.domain.ActorVO;
-import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.mapper.ActorMapper;
 import lombok.AllArgsConstructor;
 import lombok.Setter;

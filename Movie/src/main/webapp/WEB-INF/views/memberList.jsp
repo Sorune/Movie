@@ -25,7 +25,7 @@
 					            </c:when>
 					            <c:otherwise>
 					                <tr>
-					                    <td data=${member.membno} class="text-center"><span class="px-1">${member.membno}</span></td>
+					                    <td class="text-center"><span class="px-1">${member.membno}</span></td>
 					                    <td ><img src="" class="bi-person-circle h2 rounded"><span class="px-1">${member.nickName}</span></td>
 					                    <td >${member.phone}</td>
 					                    <c:choose>

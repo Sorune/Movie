@@ -34,8 +34,8 @@ public class ImgServiceImpl implements ImgService {
 	}
 
 	@Override
-	public void delete(String tblName, String uuid) {
-		// TODO Auto-generated method stub
+	public void delete(ImgVO vo) {
+		mapper.delete(vo);
 		
 	}
 

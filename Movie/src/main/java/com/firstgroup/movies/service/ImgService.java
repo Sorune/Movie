@@ -9,7 +9,7 @@ public interface ImgService {
 	
 	public void insert(ImgVO vo); // create
 	
-	public void delete(String tblName, String uuid); // delete
+	public void delete(ImgVO vo); // delete
 	
 	public List<ImgVO>  findByBno(String tblName, Long bno); // select
 	

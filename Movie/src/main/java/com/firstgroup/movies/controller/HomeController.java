@@ -7,7 +7,6 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,15 +15,20 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.security.CustomUserDetailsService;
 import com.firstgroup.movies.security.domain.CustomUser;
 import com.firstgroup.movies.service.ActorServiceImpl;
+import com.firstgroup.movies.service.ImgServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
 import com.firstgroup.movies.service.MoviesServiceImpl;
 
@@ -46,6 +50,9 @@ public class HomeController {
 
 	@Setter(onMethod_ = @Autowired)
 	private ActorServiceImpl actorService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private ImgServiceImpl imgService;
 	
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
@@ -70,35 +77,28 @@ public class HomeController {
 		return "home";
 	}
 
-	@GetMapping("/loginCheck")
-	public void LoginCheck(String error, String logout, Model model) {
-
-	}
-
 	@GetMapping("/loginAuth")
 	public void loginAuth(Model model) {
 		log.info(model);
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/member/register")
 	public String register() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken)
-			return "register";
+			return "/member/register";
 		return "redirect:/";
 
 	}
 
-	@PostMapping("/register")
-	public String register(MemberVO memVo) {
-		try {
-			memberService.register(memVo);
-			// Auth
-		} catch (DuplicateKeyException e) {
-			return " redirect:register?error_code=-1";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "redirect:/register?error_code=-99";
+	@PostMapping("/member/register")
+	public String register(@Validated @RequestBody MemberVO memVo) {
+		log.info(memVo);
+		memberService.register(memVo);
+		for(ImgVO img : memVo.getImgList()) {
+			img.setTblName("tbl_member_img");
+			img.setBno(memVo.getMembno());
+			imgService.insert(img);
 		}
 		return "redirect:/loginAuth";
 	}
@@ -106,26 +106,32 @@ public class HomeController {
 	@GetMapping("/member/update") // 회원 정보 수정 페이지
 	public String editPage(@AuthenticationPrincipal Model model) {
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		/*
-		 * log.info(user); MemberVO member = user.getMember().getId(); log.info(member);
-		 * String id =
-		 * SecurityContextHolder.getContext().getAuthentication().getPrincipal().
-		 * toString(); log.info(id); log.info(model);
-		 */
+		
 		MemberVO memVo = memberService.getMember(user.getMember().getId());
+		memVo.setImgList(imgService.findByBno("tbl_member_img", memVo.getMembno()));
 		log.info(memVo);
 		model.addAttribute("user", memVo);
-		return "editPage";
+		return "/member/editPage";
 
 	}
 	
 	@PostMapping("/member/update")
-	public String edit(@ModelAttribute("MemberVO") MemberVO memVo) { //회원 정보 수정
+	public String edit(@RequestBody MemberVO memVo) { //회원 정보 수정
 		CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		memVo.setId(user.getUsername());
 		log.info(memVo);
 		memberService.edit(memVo); 
 		log.info(user);
+		ImgVO tmp = memVo.getImgList().get(0);
+		tmp.setBno(memVo.getMembno());
+		tmp.setTblName("tbl_member_img");
+		imgService.delete(tmp);
+		for (ImgVO vo : memVo.getImgList()) {
+			vo.setBno(memVo.getMembno());
+			vo.setTblName("tbl_member_img");
+			imgService.insert(vo);
+		}
+		
 		sessionReset(user.getUsername());
 		
 		return "redirect:/"; 
@@ -136,7 +142,7 @@ public class HomeController {
 		log.info(model);
 	}
 	
-	public void sessionReset(String username) {
+	public void sessionReset(String username) { //인증정보 갱신
 	    UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 	    Authentication newAuthentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 	    SecurityContextHolder.getContext().setAuthentication(newAuthentication);

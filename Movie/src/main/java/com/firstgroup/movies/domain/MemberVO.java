@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class MemberVO {
 	
-	private int membno;
+	private long membno;
 	private String id;
 	private String pw;
 	private String name;
@@ -20,8 +20,9 @@ public class MemberVO {
 	private String adress;
 	private String phone;
 	private Date regdate;
-	private Long memImgno;
 	
 	private List<AuthVO> authList;
+	
+	private List<ImgVO> imgList;
 
 }

@@ -39,9 +39,12 @@
 <!-- 회원가입 -->
   
 	<insert id ="insertMember" parameterType="com.firstgroup.movies.domain.MemberVO">
+		<selectKey keyProperty="membno" order="BEFORE" resultType="long">
+	    		select seq_member.nextval from dual
+    	</selectKey>
 		<![CDATA[ 
 			insert into tbl_member (membno, id, pw, name, nickName, phone,zonecode,roadAddress,buildingName, adress)
-			values (seq_member.NEXTVAL, #{id}, #{pw}, #{name}, #{nickName}, #{phone},#{zonecode},#{roadAddress},#{buildingName}, #{adress})
+			values (#{membno}, #{id}, #{pw}, #{name}, #{nickName}, #{phone},#{zonecode},#{roadAddress},#{buildingName}, #{adress})
 		]]>
 	</insert>
 

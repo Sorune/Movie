@@ -69,6 +69,7 @@ $(document).ready(function(){
 	        success: function(result){
 	            console.log(result);
 	            alert("success!")
+	            window.location.reload(true);
 	        },
 	        error:function(result){
 	            console.log(result);
