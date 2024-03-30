@@ -3,6 +3,7 @@ package com.firstgroup.movies.controller;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,12 +132,25 @@ public class HomeController {
 			vo.setTblName("tbl_member_img");
 			imgService.insert(vo);
 		}
-		
 		sessionReset(user.getUsername());
 		
 		return "redirect:/"; 
 	}
-
+	
+	@PostMapping("/member/delete")
+	public String withDrawMember(@RequestBody Map<String,String> requestData) {
+		String result = requestData.get("id");
+	    Long bno = Long.parseLong(result);
+		log.info("delete : " + bno);
+		memberService.withdraw(bno);
+		ImgVO vo = new ImgVO();
+		vo.setBno(bno);
+		vo.setTblName("tbl_member_img");
+		
+		imgService.delete(vo);
+		return result;
+	}
+	
 	@GetMapping("/home")
 	public void home(Model model) {
 		log.info(model);

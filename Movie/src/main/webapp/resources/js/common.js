@@ -361,72 +361,75 @@ function displayImage(file, caroucel) {
 }
 
 
-var formObj=$('form[role="form"]');					//폼 선택 jquery
+if(window.location.pathname.split("/")[1]!=='loginAuth'){
+	var formObj=$('form[role="form"]');					//폼 선택 jquery
+	
+	$("button[type='submit']").on("click", function(e) {
+	    e.preventDefault(); // 기본 동작 막기
+	    console.log("submit clicked");
+	
+	    var formData = {}; // 빈 객체 생성
+	
+	    // 각 input의 값을 formData 객체에 추가
+	    $('form[role="form"] input').each(function(index, element) {
+	        // 체크박스인 경우에는 선택된 값들을 배열로 추가
+	        if (element.type === 'checkbox') {
+	            if (!formData[element.name]) {
+	                formData[element.name] = [];
+	            }
+	            if (element.checked) {
+	                formData[element.name].push(element.value);
+	            }
+	        } else {
+	            formData[element.name] = element.value;
+	        }
+	    });
+	
+	    // 이미지 태그들을 선택하고 각각의 데이터를 formData 객체에 추가
+	    var nodes = document.querySelectorAll("#uploadedImages img");
+	    formData.imgList = [];
+	    nodes.forEach(function(img, index) {
+	        var imageObj = {
+	            fileName: img.getAttribute("fileName"),
+	            uploadPath: img.getAttribute("uploadPath"),
+	            uuid: img.getAttribute("uuid")
+	        };
+	        formData.imgList.push(imageObj);
+	    });
+	    var url = '/'+ window.location.pathname.split("/")[1];
+	    var urlString = url+"/"+window.location.pathname.split("/")[2];
+	    var urlListString = url+'/list';
+	    if(urlString==="/member/register"){	
+			urlListString = '/loginAuth';
+		} else if(url==="/member"){
+			urlListString = '/';
+		}
+	    // AJAX 요청 보내기
+	    $.ajax({
+	        type: "POST", // POST 방식 설정
+	        url: urlString, // 요청 보낼 URL 설정
+	        data: JSON.stringify(formData), // JSON 형식으로 데이터 변환
+	        contentType: "application/json; charset=UTF-8", // 요청의 컨텐츠 타입 설정
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 추가
+	        },
+	        success: function(response) {
+	            console.log("Success:", response);
+	            alert(window.location.pathname.split("/")[2]+" Success!!!");
+	            location.replace(urlListString);
+	            // 성공했을 때 실행할 코드 작성
+	        },
+	        error: function(xhr, status, error) {
+	            console.error(xhr);
+	            console.error(status);
+	            console.error("Error:", error);
+	            // 오류 발생 시 실행할 코드 작성
+	        }
+	    });
+	});
+	// ajax file upload method
+}
 
-$("button[type='submit']").on("click", function(e) {
-    e.preventDefault(); // 기본 동작 막기
-    console.log("submit clicked");
-
-    var formData = {}; // 빈 객체 생성
-
-    // 각 input의 값을 formData 객체에 추가
-    $('form[role="form"] input').each(function(index, element) {
-        // 체크박스인 경우에는 선택된 값들을 배열로 추가
-        if (element.type === 'checkbox') {
-            if (!formData[element.name]) {
-                formData[element.name] = [];
-            }
-            if (element.checked) {
-                formData[element.name].push(element.value);
-            }
-        } else {
-            formData[element.name] = element.value;
-        }
-    });
-
-    // 이미지 태그들을 선택하고 각각의 데이터를 formData 객체에 추가
-    var nodes = document.querySelectorAll("#uploadedImages img");
-    formData.imgList = [];
-    nodes.forEach(function(img, index) {
-        var imageObj = {
-            fileName: img.getAttribute("fileName"),
-            uploadPath: img.getAttribute("uploadPath"),
-            uuid: img.getAttribute("uuid")
-        };
-        formData.imgList.push(imageObj);
-    });
-    var url = '/'+ window.location.pathname.split("/")[1];
-    var urlString = url+"/"+window.location.pathname.split("/")[2];
-    var urlListString = url+'/list';
-    if(urlString==="/member/register"){	
-		urlListString = '/loginAuth';
-	} else if(url==="/member"){
-		urlListString = '/';
-	}
-    // AJAX 요청 보내기
-    $.ajax({
-        type: "POST", // POST 방식 설정
-        url: urlString, // 요청 보낼 URL 설정
-        data: JSON.stringify(formData), // JSON 형식으로 데이터 변환
-        contentType: "application/json; charset=UTF-8", // 요청의 컨텐츠 타입 설정
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰 추가
-        },
-        success: function(response) {
-            console.log("Success:", response);
-            alert(window.location.pathname.split("/")[2]+" Success!!!");
-            location.replace(urlListString);
-            // 성공했을 때 실행할 코드 작성
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr);
-            console.error(status);
-            console.error("Error:", error);
-            // 오류 발생 시 실행할 코드 작성
-        }
-    });
-});
-// ajax file upload method
 $("#uploadBtn").on("click", (e) => {
 	var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 	var csrfToken = $("meta[name='_csrf']").attr("content");
@@ -498,4 +501,34 @@ function isChecked(e){ // 체크박스 값 확인해서 권한 변경 요청
             console.error("Error:", xhr.responseText);
         }
     });
+};
+
+function deleteData(e){
+	//e.preventDefault();
+	if(confirm("정말 탈퇴하시겠습니까?")==true){
+		var id = parseInt(e.value);
+		var requestData = {
+			id : id
+		}
+		var urlString = '/'+ window.location.pathname.split("/")[1]+'/delete';
+		$.ajax({
+	        url: urlString,
+	        type: "POST",
+	        contentType: "application/json",
+			beforeSend: function(xhr) {
+				xhr.setRequestHeader(csrfHeader, csrfToken);
+			},
+	        data: JSON.stringify(requestData),
+	        success: function(response) {
+	            alert(response + " : change Success!");
+	            console.log("Success:", response);
+	        },
+	        error: function(xhr,error) {
+	            alert(error);
+	            console.error("Error:", xhr.responseText);
+	        }
+	    });
+	} else {
+		return;
+	}
 };

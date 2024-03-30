@@ -112,8 +112,7 @@
 						    <button type="submit" class="col-sm-6 btn btn-primary btn-user btn-block">
                               저장하기
                             </button>
-	                        <a href="/delete/${ user.membno }" class="col-sm-6 btn btn-primary btn-user btn-block">탈퇴하기
-	                        </a>
+	                        <button type="button" value="${ user.membno }" class="col-sm-6 btn btn-primary btn-user btn-block" onclick="deleteData(this)">탈퇴하기</button>
 						</div>
 					</form>
 				</div>

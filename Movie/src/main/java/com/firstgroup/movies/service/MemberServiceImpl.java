@@ -55,8 +55,8 @@ public class MemberServiceImpl implements MemberService {
 		memVo.setPw(passwordEncoder.encode(memVo.getPw()));
 		memberMapper.updateMember(memVo);
 	}
-	public void withdraw(String id) {
-		memberMapper.deleterMember(id);
+	public void withdraw(long bno) {
+		memberMapper.deleteMember(bno);
 	}
 	public PasswordEncoder passwordEncoder() {
 		return this.passwordEncoder();

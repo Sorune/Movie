@@ -13,7 +13,7 @@ public interface MemberMapper {
 	
 	MemberVO getMember(String id);//회원 정보 가져오기
 	void updateMember(MemberVO memVo); //회원정보 수정
-	void deleterMember(String id); //회원 탈퇴
+	void deleteMember(long bno); //회원 탈퇴
 	public MemberVO read(String id);
 	
 	
