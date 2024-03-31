@@ -384,6 +384,10 @@ if(window.location.pathname.split("/")[1]!=='loginAuth'){
 	            formData[element.name] = element.value;
 	        }
 	    });
+	    
+	    $('form[role="form"] textarea' ).each(function(index, element){
+			formData[element.name] = element.value;
+		});
 	
 	    // 이미지 태그들을 선택하고 각각의 데이터를 formData 객체에 추가
 	    var nodes = document.querySelectorAll("#uploadedImages img");
