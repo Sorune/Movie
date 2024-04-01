@@ -18,18 +18,18 @@ import lombok.extern.log4j.Log4j2;
 public class DirectorServiceImpl implements DirectorService{
 
 	@Setter(onMethod_ = @Autowired)
-	private DirectorMapper mapper;
+	private DirectorMapper directorMapper;
 	
 	@Override
-	public DirectorVO get(Long dirbno) {
+	public DirectorVO getDirector(Long dirbno) {
 		log.info("불러올 감독 번호 : " + dirbno);
-		return mapper.getDirector(dirbno);
+		return directorMapper.getDirector(dirbno);
 	}
 
 	@Override
 	public List<DirectorVO> directorList() {
 		log.info("감독 목록 전체 출력...........");
-		return mapper.getDirectorList();
+		return directorMapper.getDirectorList();
 	}
 
 	@Override
@@ -38,19 +38,20 @@ public class DirectorServiceImpl implements DirectorService{
 		log.info("감독 등록...........");
 		log.info("감독 정보 : "+ vo);
 		
-		mapper.insertDirector(vo);
+		directorMapper.insertDirector(vo);
 	}
 
 	@Override
-	public boolean modify(DirectorVO vo) {
+	public int modify(DirectorVO vo) {
 		log.info("수정할 감독 번호 : " + vo);
-		return mapper.modify(vo);
+		return directorMapper.modify(vo);
 	}
 	
 	@Override
-	public boolean remove(Long dirbno) {
-		log.info("삭제할 감독 번호 : " + dirbno);
-		return mapper.remove(dirbno);
+	public int remove(Long dirBno) {
+		log.info("삭제할 감독 번호 : " + dirBno);
+		DirectorVO dirVo= directorMapper.getDirector(dirBno);
+		return directorMapper.remove(dirBno);
 	}
 
 }

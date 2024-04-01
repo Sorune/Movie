@@ -328,7 +328,7 @@ function imgUpload(files) {
 		},
 		data: formData,
 		type: 'POST',
-		success: function(result) {
+ 		success: function(result) {
 			console.log(result);
 			createCarouselInner(result);			//이미지 업로드 성공시 업로드된 이미지를 보여줄 캐러셀 이미지 생성
 		},
@@ -361,7 +361,10 @@ function displayImage(file, caroucel) {
 }
 
 
-if(window.location.pathname.split("/")[1]!=='loginAuth'&&window.location.pathname.split("/")[1]!=='home'&&window.location.pathname.split("/")[1]!==''){
+const firstPathSegment = window.location.pathname.split("/")[1];
+const excludePaths = ['loginAuth', 'home', '','admin'];
+
+if(!excludePaths.includes(firstPathSegment)){
 	var formObj=$('form[role="form"]');					//폼 선택 jquery
 	
 	$("button[type='submit']").on("click", function(e) {

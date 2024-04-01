@@ -2,6 +2,7 @@ package com.firstgroup.movies.service;
 
 import java.util.List;
 
+import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
 
@@ -15,11 +16,18 @@ public interface MoviesService {
 	
 	public MoviesVO registerMovies(MoviesVO mov);
 	
+	public int removeMovie(Long movbno);
+	
 	public int insertComment(MoviesCommentVO vo);
 	
 	public List<MoviesCommentVO> getCommentList(Long movbno); // 댓글 작성자 불러오기
 	
 	public int removeComment(Long combno);
+	
+	public void updateMovies(MoviesVO mvo);
+	
+	public List<ImgVO> imgList(Long movbno);
+	
 	
 
 	

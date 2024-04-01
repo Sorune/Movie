@@ -1,6 +1,12 @@
 package com.firstgroup.movies.controller;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import com.firstgroup.movies.domain.Criteria;
+import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
@@ -108,56 +115,110 @@ public class MoviesController {
 	}	
 	
 	@PostMapping("/movies/register")
-	public ModelAndView movieRegisterAction// 폼에서 입력한 데이터와 다수의 데이터를 List로 묶어서 가져옴
-			(@RequestBody MoviesVO mov) {
-		
+	public String movieRegisterAction(@RequestBody MoviesVO mov) { // 폼에서 입력한 데이터와 다수의 데이터를 List로 묶어서 가져옴
+
 		log.info("movie register action..............");
 		log.info(mov);
-		/*
-		 * log.info(formData.get("title")); log.info(formData.get("content"));
-		 * log.info(createdDate); log.info(actorList);
-		 * 
-		 * 
-		 * // 빈 객체 생성 MoviesVO mov = new MoviesVO();
-		 * 
-		 * mov.setTitle(formData.get("title")); mov.setContent(formData.get("content"));
-		 * mov.setCreatedDate(createdDate); mov.setDirector("테스트용 감독");
-		 * 
-		 * // 리스트가 비어있지 않은 경우에만 String.join() 메소드 사용 if (!genre.isEmpty() ||
-		 * !actorList.isEmpty()) { // 리스트로 들어온 value를 ,를 붙여 합쳐줌 String genteStr =
-		 * genre.stream().collect(Collectors.joining(",")); String actorStr =
-		 * actorList.stream().collect(Collectors.joining(",")); log.info(genteStr);
-		 * log.info(actorStr);
-		 * 
-		 * mov.setActor(actorStr); }
-		 */
-		/*
-		 * for(ImgVO img : mov.getImgList()) { img.setBno(mov.getMovBno());
-		 * img.setTblName("tbl_Movies_img"); log.info(img); imgService.insert(img); }
-		 */
-	    //movService.registerMovies(mov);
-	    ModelAndView mv = new ModelAndView();
-	    mv.setViewName("/movies/movieList");
-		return mv;
+		 
+		 // 리스트가 비어있지 않은 경우에만 String.join() 메소드 사용 
+		 if (!mov.getActorList().isEmpty()) { // 리스트로 들어온 value를 ,를 붙여 합쳐줌 
+		 //genre.stream().collect(Collectors.joining(","));
+			 //[actorbno, actorbno, actorbno] 들어온 값 String으로 ,를 붙여 만들어줌
+			 mov.setActor(mov.getActorList().stream().collect(Collectors.joining(",")));
+		  }
+		 mov.setDirector("테스트용 감독");
+		 movService.registerMovies(mov);
+		 
+		for (ImgVO img : mov.getImgList()) {
+			img.setBno(mov.getMovBno());
+			img.setTblName("tbl_movies_img");
+			log.info(img);
+			imgService.insert(img);
+		}
+		return mov.getMovBno().toString();
 	}
-	
 	
 	@GetMapping("/movies/list")
 	public ModelAndView movieList(Criteria cri, Model model) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/movies/movieList");
-
-		model.addAttribute("movieList",movService.getMovieList());
 		
+		List<MoviesVO> movieList = movService.getMovieList();
+		 for(MoviesVO vo: movieList) {
+	        vo.setImgList(imgService.findByBno("tbl_movies_img", vo.getMovBno()));
+	      }
+		model.addAttribute("movieList",movieList);
 		return mv;
 	}
+
+	@DeleteMapping("/movies/remove/{movBno}")
+	public ResponseEntity<String> remove(@PathVariable Long movBno) {
+	    // movBno를 사용하여 영화 삭제 로직을 수행
+	    log.info("삭제할 영화 게시물 번호: " + movBno);
+	    
+		return movService.removeMovie(movBno) == 1 ? new ResponseEntity<>("success", HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
-	
- 	@DeleteMapping("/movies/delete/{movBno}") 
- 	public ResponseEntity<String> remove(@PathVariable Long movBno, Model model){
- 		log.info("삭제할 영화 게시물 번호 : " + movBno);
+	@GetMapping("/movies/remove/{movBno}")
+	public ModelAndView delete(@PathVariable Long movBno, HttpServletResponse response) {
+	    // movBno를 사용하여 영화 삭제 로직을 수행
+	    log.info("삭제할 영화 게시물 번호: " + movBno);
+	    movService.removeMovie(movBno);
+	    
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/movies/movieList");
+		
+		try {
+			response.sendRedirect("/movies/list");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return mv;
+	}
+
+	//---03.30
+ 	@GetMapping("/movies/modify/{movbno}")
+ 	public ModelAndView updatePage(@PathVariable Long movbno, Model model) {
+ 		ModelAndView mv = new ModelAndView();
+ 		mv.setViewName("/movies/modify");
+ 		log.info("updatePage : " + movbno);
+ 		model.addAttribute("movie",movService.get(movbno));
+ 		model.addAttribute("actorList", actService.actorList());
+ 		model.addAttribute("img", movService.imgList(movbno));
+		return mv;
+ 	}
+ 	
+ 	@PostMapping("/movies/modify")
+ 	public ModelAndView modify(@RequestBody MoviesVO mov) {
+
+ 		 // 리스트가 비어있지 않은 경우에만 String.join() 메소드 사용 
+		 if (!mov.getActorList().isEmpty()) { // 리스트로 들어온 value를 ,를 붙여 합쳐줌 
+			 //genre.stream().collect(Collectors.joining(","));
+				 
+				 //[actorbno, actorbno, actorbno] 들어온 값 String으로 ,를 붙여 만들어줌
+				 mov.setActor(mov.getActorList().stream().collect(Collectors.joining(",")));
+				 mov.setDirector("테스트용 수정감독");
+			  }
+			ImgVO tmp = mov.getImgList().get(0);
+			tmp.setBno(mov.getMovBno());
+			tmp.setTblName("tbl_movies_img");
+			imgService.delete(tmp);
+			 
+			for (ImgVO img : mov.getImgList()) {
+				img.setBno(mov.getMovBno());
+				img.setTblName("tbl_movies_img");
+				log.info(img);
+				imgService.insert(img);
+				mov.setMovImgNo(img.getBno());
+			}
+			movService.updateMovies(mov);
+			// 페이지 이동
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("/movies/movieList");
+			return mv;
  		
- 		return null;
  	}
 
 

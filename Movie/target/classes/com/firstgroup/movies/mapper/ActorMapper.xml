@@ -16,12 +16,17 @@
 	    		select seq_actor.nextval from dual
     	</selectKey>
 		insert into tbl_actor(actbno, name, age, b_date)
-		values(#{actbno}, #{name}, #{age}, #{bDate})
+		values(#{actbno}, #{name}, #{age}, #{birDate})
 	</insert>
 	
 	<!-- 전체 배우정보 불러오기 -->
 	<select id="getActorList" resultType="com.firstgroup.movies.domain.ActorVO">
-		select * from tbl_actor where actbno > 0
+	    select actbno, name, age,
+	    TO_TIMESTAMP(B_DATE, 'yyyy-MM-dd') as birDate
+	    <if test="deaDate!=null">
+		    , TO_TIMESTAMP(D_DATE, 'yyyy-MM-dd') as deaDate
+	    </if>
+	    from tbl_actor where actbno > 0
 	</select>
 	
   	<!-- 한명의 배우 정보 불러오기 -->

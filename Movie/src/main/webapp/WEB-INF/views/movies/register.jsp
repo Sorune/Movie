@@ -58,7 +58,7 @@
 												<div class="row d-flex align-items-center">
 													<div class="col-4">
 														<div class="form-group">
-															<input type="date" name="createdDate" class="form-control" id="date" max="2024-03-20" min="1850-06-05" value="" />
+															<input type="date" name="createdDate" class="form-control" id="date" max="2030-03-20" min="1850-06-05" value="" />
 														</div>
 													</div>
 													<div class="col-4">
@@ -123,7 +123,7 @@
 											
 									<div class="container d-flex" style="flex-wrap: wrap;">
 										<c:forEach var="actor" items="${actorList}">
-											<div class="director" style="margin-right: 20px; margin-bottom: 10px;">
+											<div class="actorList" style="margin-right: 20px; margin-bottom: 10px;">
 												<input type="checkbox" name="actorList" value="<c:out value="${actor.actbno}" />">
 												<c:out value="${actor.name}" /><br><c:out value="${actor.age }" />
 											</div>

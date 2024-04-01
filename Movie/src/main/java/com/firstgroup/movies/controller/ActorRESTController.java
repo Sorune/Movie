@@ -85,23 +85,34 @@ public class ActorRESTController {
 		return atv.getName();
 	}
 	
-	@GetMapping("/getActor/{actbno}") // actor 조회
+	@GetMapping("/modify/{actbno}") // actor 조회
 	public ModelAndView getActor(@PathVariable Long actbno, Model model) {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/actor/getActor");
-		log.info("/actor/getActor");
-		model.addAttribute("atv", service.getActor(actbno));
+		mv.setViewName("/actor/modify");
+		log.info("/actor/getActor num : " + actbno);
+		ActorVO atv = service.getActor(actbno);
+		log.info(atv);
+		model.addAttribute("atv", atv);
 		return mv;
 	}
 	
-	@PostMapping("/modify") // actor 수정
-	public String modify(ActorVO atv, RedirectAttributes rttr) {
+	// actor 수정
+	@PostMapping(value="/modify",produces = "application/text; charset=UTF-8") // modify
+	public String modify(@RequestBody ActorVO atv, Model model, RedirectAttributes rttr) {
 		log.info("modify : " + atv);
 		
-		if(service.modify(atv)) {
-			rttr.addFlashAttribute("result", "success");
-		}
-		return "redirect:/actor/actorList";
+		service.modify(atv);
+		log.info(atv);
+		// 처리 결과에 따른 응답 데이터 설정
+        for(ImgVO img : atv.getImgList()) {
+        	img.setBno(atv.getActbno());
+        	img.setTblName("tbl_Actor_img");
+        	log.info(img);
+            imgService.insert(img);
+        }
+        
+        // 처리 결과를 리다이렉트할 페이지로 전달
+		return atv.getName();
 	}
 	
 	// actor 삭제

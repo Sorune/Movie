@@ -16,9 +16,9 @@ public class ActorVO {
 	private int age;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date bDate;
+	private Date birDate;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date dDate;
+	private Date deaDate;
 	private List<ImgVO> imgList;
 }

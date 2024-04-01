@@ -18,4 +18,5 @@ public interface MemberMapper {
 	public MemberVO read(String id);
 	
 	public int getTotalCount(Criteria cri);
+	public List<MemberVO> getMemListWithPasing(Criteria cri);
 }

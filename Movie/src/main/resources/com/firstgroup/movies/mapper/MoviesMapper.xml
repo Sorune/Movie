@@ -18,23 +18,35 @@
 	 </select>
 	
 
-	<insert id="insert">
-		insert into tbl_movies(movbno, title, content, created_date, actor, director)
-		values(seq_movies.nextval, #{title}, #{content}, #{createdDate}, #{actor}, #{director})
-	</insert>
-	
-	<insert id="insertSelectKey" parameterType="com.firstgroup.movies.domain.MoviesVO" useGeneratedKeys="true" keyProperty="movbno">
-
+	<insert id="insert" parameterType="com.firstgroup.movies.domain.MoviesVO" useGeneratedKeys="true" keyProperty="movBno">
 		<selectKey keyProperty="movBno" order="BEFORE" resultType="long">
-			select seq_movies.nextval from dual
-		</selectKey>
-		insert into tbl_movies(movbno, title, content<!-- , director, actor -->)
-		values (#{movBno}, #{title},#{content}<!-- , #{director}, #{actor} -->)
+	    		select seq_movies.nextval from dual
+    	</selectKey>
+		insert into tbl_movies(movbno, title, content, created_date, actor, director)
+		values(#{movBno}, #{title}, #{content}, #{createdDate}, #{actor}, #{director})
 		
 	</insert>
+	
   
   	<delete id="delete">
-		delete from tbl_board where movbno = #{movBno}
+		delete from tbl_movies where movbno = #{movBno}
 	</delete>
   
+  
+  	<update id="update">
+		update tbl_movies set
+				title = #{title},
+				content = #{content},
+				up_date = sysdate,
+				actor = #{actor},
+				director = #{director},
+				mov_imgno = #{movImgNo} 
+			where movbno = #{movBno}
+	
+	</update>
+	
+	<select id="imgList" resultType="com.firstgroup.movies.domain.ImgVO">
+		select * from tbl_movies_img where bno = #{movBno}
+	</select>
+	
   </mapper>

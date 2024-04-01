@@ -48,6 +48,7 @@ select * from TBL_MEMBER;
 
 select * from TBL_MOVIES;
 
+select * from TBL_MOVIES_IMG;
 -------------------TBL MOVIES COMMENTS----------------------
 
 

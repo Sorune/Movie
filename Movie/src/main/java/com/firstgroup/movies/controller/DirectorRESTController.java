@@ -3,14 +3,19 @@ package com.firstgroup.movies.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import com.firstgroup.movies.domain.DirectorVO;
 import com.firstgroup.movies.domain.ImgVO;
@@ -66,6 +71,60 @@ public class DirectorRESTController {
 		}
 		//처리 결과에 다른 응답 데이터 설정하기
 		return dirVo.getDirName();
+		
+		
 	}
+	
+	
+	@GetMapping("/aaa") // d
+	public ModelAndView aaa(Model model) {
+		ModelAndView mv = new ModelAndView();
+		log.info("REST directorList...........");
+	 return mv;
+	}
+	
+	
+	
+	
+	
+	@GetMapping("/modify/{dirBno}") // 감독 조회
+	public ModelAndView getDirector(@PathVariable Long dirBno,Model model) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/director/modify");
+		log.info("/director/getDirector");
+		model.addAttribute("dirVo",service.getDirector(dirBno));
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	@PostMapping(value="/modify",produces = "application/text; charset=UTF-8")//감독 수정
+	public String modify(@RequestBody DirectorVO dirVo, Model model, RedirectAttributes rttr) {
+		log.info("modify:"+dirVo);
+		service.modify(dirVo);
+		log.info(dirVo);
+		 for(ImgVO img : dirVo.getImgList()) {
+	        	img.setBno(dirVo.getDirBno());
+	        	img.setTblName("tbl_director_img");
+	        	log.info(img);
+	            imgService.insert(img);
+		
+		}
+		 return dirVo.getDirName();
+		
+	}
+	
+	@GetMapping("/delete/{dirBno}")
+	@ResponseBody
+	public ResponseEntity<String> remove(@PathVariable("dirBno")Long dirBno){
+		return null;
+	}
+	
+//	@GetMapping({"/get", "/modify"})
+	//public void get(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) {
+//	}
 	
 }

@@ -25,4 +25,6 @@ public interface MemberService {
 	public PasswordEncoder passwordEncoder();
 	
 	public int getTotal(Criteria cri);
+	
+	public List<MemberVO> getMemListWithPasing(Criteria cri);
 }

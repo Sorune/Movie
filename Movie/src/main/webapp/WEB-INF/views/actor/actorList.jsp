@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
@@ -31,9 +32,24 @@
 	                       </div>
 	                        <div class="service-content rounded-bottom bg-light p-4">
 	                            <div class="service-content-inner">
-	                                <h5 class="mb-4">${actor.name }</h5>
-	                                <p class="mb-4">${actor.age }</p>
-	                                <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Read More</a>
+	                                <h6 class="mb-4">name : ${actor.name } 님</h6>
+	                                <h6 class="mb-4">age : ${actor.age } 세</h6>
+	                                
+									<fmt:formatDate value="${actor.birDate}" pattern="yy-MM-dd"/>
+	                                <%-- <c:if test="${not empty actor.bDate}">
+									    <h6 class="mb-4">
+									        birthDay : <fmt:formatDate value="${actor.bDate}" pattern="yyyy-MM-dd" />
+									        <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/birthday-cake--v1.png" alt="birthday-cake--v1"/>
+									    </h6>
+									</c:if> --%>
+	                                <div class="row">
+	                                	<div class="col-6">
+	                                		<a href="/actor/modify/${actor.actbno }" class="btn btn-primary text-white">Modify</a>
+	                                	</div>
+	                                	<div class="col-6">
+	                                		<a href="/actor/delete/${actor.actbno }" class="btn btn-danger text-white">Delete</a>
+	                                	</div>
+	                                </div>
 	                            </div>
 	                        </div>
 	                    </div>

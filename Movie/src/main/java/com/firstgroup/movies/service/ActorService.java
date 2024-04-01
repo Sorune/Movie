@@ -12,7 +12,7 @@ public interface ActorService {
 	
 	public void insertActor(ActorVO atv); // c
 	
-	public boolean modify(ActorVO atv); // u - actor
+	public int modify(ActorVO atv); // u - actor
 	
 	public int remove(Long actbno); // d - actor
 	

@@ -39,7 +39,7 @@ public class HomeRESTController {
 		log.info(page);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/memberList");
-		List<MemberVO> memberList = memberService.getMemList();
+		List<MemberVO> memberList = memberService.getMemListWithPasing(cri);
 		for(MemberVO member : memberList) {
 			log.info(member);
 		}

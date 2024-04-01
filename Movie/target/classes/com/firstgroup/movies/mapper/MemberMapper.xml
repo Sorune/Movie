@@ -26,8 +26,43 @@
 	    <result property="auth" column="auth"/>
 	</resultMap>
   	
+  	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'N'.toString()">
+							nickName like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'T'.toString()">
+							phone like '%'||#{keyword}||'%'
+						</when>
+						<when test="type == 'A'.toString()">
+							lower(auth) like lower('%'||#{keyword}||'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+  	
+  	
+  	<select id="getMemListWithPasing" resultMap="memberMap">
+  		<![CDATA[ 
+  		select * from (
+  		
+  		SELECT rownum rn, mem.id,pw, name, nickName,zonecode,roadAddress,buildingName,adress,phone,regdate, auth FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id WHERE   
+		]]>
+		<include refid="criteria"></include>
+		<![CDATA[    
+		      rownum <= #{pageNum} * #{amount}
+		      )
+		  where rn > (#{pageNum} -1) * #{amount}   
+		  ]]>
+  	</select>
+  	
   	<select id="getTotalCount" resultType="int">
-  		select count(*) from tbl_member where membno > 0
+  		select count(*) FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.id = auth.id where <include refid="criteria"></include> membno > 0
   	</select>
   	
   	<select id="getMemList" resultMap="memberMap">

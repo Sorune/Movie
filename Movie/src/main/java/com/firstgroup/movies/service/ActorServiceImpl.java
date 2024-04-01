@@ -43,7 +43,7 @@ public class ActorServiceImpl implements ActorService {
 	}
 
 	@Override
-	public boolean modify(ActorVO atv) {
+	public int modify(ActorVO atv) {
 		log.info("수정할 배우 번호 : " + atv);
 		
 		return actorMapper.modify(atv);

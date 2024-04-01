@@ -1,24 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
+
+<c:set var="movie" value="${movie}" />
 <div class="container  pt-6">
     <div class="card o-hidden border-0 shadow-lg my-3">
         <div class="card-body p-2">
 			<div class="row justify-content-center">
 				<div class="row justify-content-center">
 					<div class="col-lg-12">
-						<h4 class="color00b0f0">영화정보수정</h4>
+						<h4 class="color00b0f0">영화정보입력</h4>
 						<div class="row justify-content-center">
-							<form role="form" action="/register/new" method="post">
+							<input type="file" name="imgList" id="file-input" accept="image/*" style="display: none;" multiple>
+							<form role="form" action="/movies/modify" method="post">
 								<div class="row justify-content-center">
 									<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
+									<input type="hidden" name="movBno" value = "${movie.movBno}"/>
 									<div class="col-4">
-										<div id="drop-area">
-											<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
-											<input type="file" name="imgList" id="file-input" accept="image/*" style="display: none;" multiple>
-							        	</div>
-							        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
+										<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
 							        		<div class="carousel-inner" style="width:100%;height:auto;">
+												<div id="drop-area" style="width:100%;">
+													<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+									        	</div>
 							        		</div>
 							        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages" data-bs-slide="prev">
 												<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -28,12 +31,20 @@
 												<span class="carousel-control-next-icon" aria-hidden="true"></span>
 												<span class="visually-hidden">Next</span>
 											</button>
+											<button type="button" class="carousel-control-add" id="uploadImage" data-bs-target="#uploadedImages">
+												<span class="bi bi-file-plus fz20" aria-hidden="true"></span>
+												<span class="visually-hidden">Add</span>
+											</button>
+											<button type="button" class="carousel-control-remove" id="deleteImage" data-bs-target="#uploadedImages">
+												<span class="bi bi-file-x fz20" aria-hidden="true"></span>
+												<span class="visually-hidden">Remove</span>
+											</button>
 							        	</div>
 							        </div>
 							        <div class="col-8">
 						        		<div class="form-group">
 								        	<div class="row">
-													<label>제목</label><input class="form-control" name='title'>
+													<label>제목</label><input class="form-control" name='title' value="${movie.title }">
 											</div>
 											<div class="row d-flex align-items-center">
 												<div class="row d-flex align-items-center">
@@ -50,7 +61,7 @@
 												<div class="row d-flex align-items-center">
 													<div class="col-4">
 														<div class="form-group">
-															<input type="date" name="createdDate" class="form-control" id="date" max="2024-03-20" min="1850-06-05" value="" />
+															<input type="date" name="createdDate" class="form-control" id="date" max="2024-03-20" min="1850-06-05" value="${movie.createdDate }" />
 														</div>
 													</div>
 													<div class="col-4">
@@ -96,17 +107,26 @@
 									
 									<div class="form-group">
 										<label>스토리</label>
-										<textarea class="form-control" rows="8" name='content'></textarea>
+										<textarea class="form-control" rows="8" name='content'>${movie.content }</textarea>
 									</div>
 			
 								<div class="form-group border " style="min-height: 200px;">
 									<div>
 										<label>출연/제작 </label> 
 									</div>
+														<!-- director -->
+								<%-- 	<div class="container d-flex" style="flex-wrap: wrap;">
+										<c:forEach var="actor" items="${actorList}">
+											<div class="director" style="margin-right: 20px; margin-bottom: 10px;">
+												<input type="checkbox" name="actorList" value="<c:out value="${actor.actbno}" />">
+												<c:out value="${actor.name}" /><br><c:out value="${actor.age }" />
+											</div>
+										</c:forEach>
+									</div> --%>
 											
 									<div class="container d-flex" style="flex-wrap: wrap;">
 										<c:forEach var="actor" items="${actorList}">
-											<div class="director" style="margin-right: 20px; margin-bottom: 10px;">
+											<div class="actorList" style="margin-right: 20px; margin-bottom: 10px;">
 												<input type="checkbox" name="actorList" value="<c:out value="${actor.actbno}" />">
 												<c:out value="${actor.name}" /><br><c:out value="${actor.age }" />
 											</div>
@@ -159,10 +179,9 @@
 							</form>
 			
 									<div class="row">
-										<div class="col-4">	<button type="submit" class="border btn btn-default w-100" data-oper="modify">수정</button></div>
-										<div class="col-4">	<button type="submit" class="border btn btn-danger w-100" data-oper="remove">삭제</button></div>
-										<div class="col-4">	<button type="reset" class="border btn btn-default w-100">초기화</button></div>
-										<div class="col-4"><a href="/movies/movieList" class="border btn btn-default w-100">돌아가기</a></div>
+										<div class="col-4">	<button type="submit" class="border btn btn-primary w-100 text-white">수정</button></div>
+										<div class="col-4">	<button type="reset" class="border btn btn-primary w-100 text-white">초기화</button></div>
+										<div class="col-4"><a href="/movies/list" class="border btn btn-primary w-100 text-white">돌아가기</a></div>
 									</div>
 								</div>
 						</div>
@@ -175,34 +194,6 @@
 		</div>
 	</div>
 </div>
-
-
-<script>
-
-$(document).ready(function() {
-	
-		
-		var formObj = $("form");
-        $("button").on("click", function(e) {
-           e.preventDefault();
-           var operation = $(this).data("oper");
-           console.log(operation);
-           if (operation === 'remove') {
-                 formObj.attr("action", "/delete");
-           } else if (operation === 'list') {
-              self.location = "actor/actorList";
-              return;
-           };
-           formObj.submit();
-        });
-		
-		
-	
-	
-	
-});
-
-</script>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

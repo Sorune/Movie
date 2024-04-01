@@ -5,15 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.firstgroup.movies.domain.Criteria;
-import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
 import com.firstgroup.movies.mapper.MemberMapper;
 import com.firstgroup.movies.mapper.MoviesCommentMapper;
 import com.firstgroup.movies.mapper.MoviesMapper;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -92,6 +90,30 @@ public class MoviesServiceImpl implements MoviesService{
 		//전체 영화 리스트 출력
 		return movMapper.getMovieList();
 	}
+
+
+	@Override
+	public void updateMovies(MoviesVO mvo) {
+		// 영화 정보 수정
+		log.info("영화 정보 수정 : " + mvo);
+		movMapper.update(mvo);
+	}
+
+
+	@Override
+	public int removeMovie(Long movbno) {
+		log.info(movbno+"번 게시물 삭제 중......");
+		return movMapper.delete(movbno);
+		
+	}
+
+
+	@Override
+	public List<ImgVO> imgList(Long movbno) {
+		
+		return movMapper.imgList(movbno);
+	}
+
 
 	
 }

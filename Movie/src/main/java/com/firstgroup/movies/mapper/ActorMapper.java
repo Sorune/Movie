@@ -12,7 +12,7 @@ public interface ActorMapper {
 	public void insertActor(ActorVO atv); // c
 	public List<ActorVO> getActorList(); // r - total actor
 	ActorVO getActor(Long actbno); // r - actor 
-	public boolean modify(ActorVO atv); // u - actor
+	public int modify(ActorVO atv); // u - actor
 	public int remove(Long actbno); // d - actor
 	
 }

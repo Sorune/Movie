@@ -66,6 +66,7 @@
                         <a href="/movies/list" class="nav-item nav-link">영화</a>
                         <a href="/actor/list" class="nav-item nav-link">배우</a>
                         <a href="/director/list" class="nav-item nav-link">감독</a>
+                        <a href="/notice/list" class="nav-item nav-link">공지사항</a>
                         <sec:authorize access="!isAuthenticated()">
                         	<a href="/loginAuth" class="nav-item nav-link" id="login">로그인</a>
                         </sec:authorize>

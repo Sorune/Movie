@@ -26,6 +26,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
 	    <security:intercept-url pattern="/login" access="permitAll"/>
 	    <security:intercept-url pattern="/loginAuth" access="permitAll"/>
 	    <security:intercept-url pattern="/member/update" access="hasAnyRole('ROLE_MEMBER','ROLE_MANAGER')"/>
+	    <security:intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')"/>
 	    <!-- 나머지 설정... -->
 		<!-- <security:intercept-url pattern="/home" access="hasRole('ROLE_ADMIN')"/> -->
 		<!-- 접근 거부시 -->

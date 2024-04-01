@@ -11,7 +11,7 @@
 	</resultMap>
 	
 	 
-  	 	<!-- actor insert -->
+  	 	<!-- 감독 insert -->
 	<insert id="insertDirector" useGeneratedKeys="true" keyProperty="dirBno">
 		<selectKey keyProperty="dirBno" order="BEFORE" resultType="long">
 	    		select seq_director.nextval from dual
@@ -20,14 +20,36 @@
 		values(#{dirBno}, #{dirName}, #{dirAge}, #{dirBirth})
 	</insert>
   	
-  		<!-- 전체 배우정보 불러오기 -->
+  		<!-- 전체 감독정보 불러오기 -->
 	<select id="getDirectorList" resultType="com.firstgroup.movies.domain.DirectorVO">
 		select * from tbl_director where dirbno > 0
 	</select>
 	
-  	<!-- 한명의 배우 정보 불러오기 -->
+  	<!-- 한명의 감독 정보 불러오기 -->
 	 <select id="getDirector" resultType="com.firstgroup.movies.domain.DirectorVO">
 	 	select * from tbl_director where dirbno =  #{dirbno}
 		
 	 </select>
+	 
+	 <!-- 한명의 감독  수정하기 -->
+  	<update id="modify">
+  		<![CDATA[
+			update tbl_director
+				set	dirName = #{dirName},
+					dirAge = #{dirAge},	
+					dirBirth = #{dirBirth},
+		 ]]>
+		<if test="dirDead!=null">
+					dirDead = #{dirDead},
+		</if>
+							
+					dirupdate = sysdate
+				where dirBno= #{dirBno}	
+  	</update>
+  	
+	<!-- 한명의 감독 정보 삭제하기 -->
+  	<delete id="remove">
+		delete from tbl_director where dirBno = #{dirBno}
+	</delete>
+  	
 </mapper>

@@ -71,4 +71,8 @@ public class MemberServiceImpl implements MemberService {
 	public int getTotal(Criteria cri) {
 		return memberMapper.getTotalCount(cri);
 	}
+	@Override
+	public List<MemberVO> getMemListWithPasing(Criteria cri) {
+		return memberMapper.getMemListWithPasing(cri);
+	}
 }
