@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.firstgroup.movies.domain.AuthVO;
+import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.mapper.AuthMapper;
 import com.firstgroup.movies.mapper.MemberMapper;
@@ -65,5 +66,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updateAuth(AuthVO auth) {
 		authMapper.updateAuth(auth);
+	}
+	@Override
+	public int getTotal(Criteria cri) {
+		return memberMapper.getTotalCount(cri);
 	}
 }

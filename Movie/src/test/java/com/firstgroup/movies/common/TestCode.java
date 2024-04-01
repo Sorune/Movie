@@ -11,7 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.domain.PageVO;
 import com.firstgroup.movies.mapper.MemberMapper;
 import com.firstgroup.movies.security.domain.CustomUser;
 
@@ -64,7 +66,7 @@ public class TestCode {
 		return list.stream().mapToInt(Integer::intValue).toArray();
 	}
 	
-	@Test
+	//@Test
 	public void test() {
 		String id= "manager1";
 		log.info(loadUserByUsername(id));
@@ -80,5 +82,11 @@ public class TestCode {
 		log.warn("queried by member mapper: " + vo);
 
 		return vo == null ? null : new CustomUser(vo);
+	}
+	
+	@Test
+	public void pageTest() {
+		PageVO page = new PageVO(new Criteria(), 9);
+		log.info(page);
 	}
 }

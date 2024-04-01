@@ -6,9 +6,11 @@
     <div class="card o-hidden border-0 shadow-lg my-3">
         <div class="card-body p-2 row justify-content-center">
         	<!-- 셀 형식 -->
-        	<div class="col">
-				<a href="/actor/register" class="btn btn-primary">등록하기</a>
-			</div>
+        	<sec:authorize access="hasRole('ROLE_MANAGER')">
+	        	<div class="col">
+					<a href="/actor/register" class="btn btn-primary">등록하기</a>
+				</div>
+        	</sec:authorize>
         	<div class="row g-5 justify-content-center">
 	        	<c:forEach items="${ actorList}" var="actor">
 	                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">

@@ -53,7 +53,7 @@
 						                            	<button id="modify" class="col btn btn-primary gx-1">수정</button>
 						                        	</div>
 						                        	<div class="col d-flex justify-content-center">
-							                            <button id="remove" class="col btn btn-primary gx-1" value="${member.membno}">삭제</button><!-- console.log(e.target.value); -->
+							                            <button id="remove" class="col btn btn-primary gx-1" value="${member.membno}" onclick="deleteData(this)">삭제</button><!-- console.log(e.target.value); -->
 						                        	</div>
 						                        </div>
 					                        </div>
@@ -67,38 +67,54 @@
 				</table>
         	</div>
 
-			<div class='row'>
-				<div class="col-lg-8">
-					<form id='searchForm' action="/board/list" method='get'>
+			<form id='searchForm' action="/admin/memberList" method='get'>
+				<div class='row'>
+					<div class="col-lg-8">
 						<div class="row row-cols-3">
-							<select name='type' class="form-select">
-								<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
-								<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
-								<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
-								<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
-								<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 or 내용</option>
-								<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 or 작성자</option>
-								<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 or 내용 or 작성자</option>
-							</select>
-							<div class="cols-6">
+							<div class="col-sm-3">
+								<select name='type' class="form-select">
+									<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+									<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+									<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+									<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+									<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목 or 내용</option>
+									<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목 or 작성자</option>
+									<option value="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목 or 내용 or 작성자</option>
+								</select>
+							</div>
+							<div class="col-sm-7">
 								<input type='text' class="form-control" name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' />
 								<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' />
 								<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' />
 							</div>
-							<button class='btn btn-primary'>검색</button>
-						</div>
-					</form>
-					<div class="col-lg-4">
-						<div class="row">
-							<div class="col">
-							</div>
-							<div class="col">
-								<a href="/actor/register" class="btn btn-primary">등록하기</a>
+							<div class="col-sm-2">
+								<button class='btn btn-primary'>검색</button>
 							</div>
 						</div>
 					</div>
+					<div class="col-lg-4">
+						  <ul class="pagination justify-content-end">
+							<c:if test="${pageMaker.prev }">
+								<li class="page-item">
+									<a class="page-link" href="${ pageMaker.startPage-1 }" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+							</c:if>
+							<c:forEach var="num" begin="${ pageMaker.startPage }" end="${ pageMaker.endPage }">
+							    <li class="page-item ${ pageMaker.cri.pageNum == num ? 'Active':'' }"><a class="page-link" href="${ num }" >${ num }</a></li>
+							</c:forEach>
+							<c:if test="${pageMaker.prev }">
+								<li class="page-item">
+									<a class="page-link" href="${ pageMaker.endPage+1 }" aria-label="Previous">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</c:if>
+						  </ul>
+					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>

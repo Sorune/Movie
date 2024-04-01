@@ -9,9 +9,11 @@
         		<h5>DirectorList</h5>
         	</div>
         	<!-- 셀 형식 -->
+        	<sec:authorize access="hasRole('ROLE_MANAGER')">
         	<div class="col">
 				<a href="/director/register" class="btn btn-primary">추가하기</a>
 			</div>
+			</sec:authorize>
         	<div class="row g-5 justify-content-center">
 	        	<c:forEach items="${ directorList}" var="director">
 	                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
@@ -34,7 +36,7 @@
 	                            <div class="service-content-inner">
 	                                <h5 class="mb-4">${director.dirName }</h5>
 	                                <p class="mb-4">${director.dirAge }</p>
-	                                <a href="/getMovies/${director.dirBno }" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">상세보기</a>
+	                                <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">상세보기</a>
 	                            </div>
 	                        </div>
 	                    </div>

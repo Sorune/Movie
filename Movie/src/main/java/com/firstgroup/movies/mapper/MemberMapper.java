@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
 
 @Mapper
@@ -16,5 +17,5 @@ public interface MemberMapper {
 	void deleteMember(long bno); //회원 탈퇴
 	public MemberVO read(String id);
 	
-	
+	public int getTotalCount(Criteria cri);
 }

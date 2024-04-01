@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.firstgroup.movies.domain.AuthVO;
+import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
 
 public interface MemberService {
@@ -22,4 +23,6 @@ public interface MemberService {
 	public void withdraw(long bno,String id);
 	
 	public PasswordEncoder passwordEncoder();
+	
+	public int getTotal(Criteria cri);
 }

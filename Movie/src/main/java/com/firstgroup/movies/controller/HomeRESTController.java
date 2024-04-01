@@ -3,14 +3,19 @@ package com.firstgroup.movies.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.firstgroup.movies.domain.AuthVO;
+import com.firstgroup.movies.domain.Criteria;
 import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.domain.PageVO;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
 
@@ -27,7 +32,11 @@ public class HomeRESTController {
 	private ActorServiceImpl actorService;
 	
 	@GetMapping(value="/admin/memberList")
-	public ModelAndView memberList() {
+	public ModelAndView memberList(@ModelAttribute Criteria cri) {
+		log.info("MemberList : " +cri);
+		
+		PageVO page = new PageVO(cri, memberService.getTotal(cri));
+		log.info(page);
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/memberList");
 		List<MemberVO> memberList = memberService.getMemList();
@@ -35,6 +44,7 @@ public class HomeRESTController {
 			log.info(member);
 		}
 		mv.addObject("members", memberList);
+		mv.addObject("pageMaker",page);
 		return mv;
 	}
 	

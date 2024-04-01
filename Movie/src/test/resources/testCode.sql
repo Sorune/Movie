@@ -25,7 +25,9 @@ alter table tbl_member_auth rename column username to id;
 
 select * from tbl_member_auth;
 
-update TBL_MEMBER_AUTH set auth = 'ROLE_ADMIN' where id = 'manager1';
+insert into tbl_member_auth values('manager1','ROLE_ADMIN');
+
+update TBL_MEMBER_AUTH set auth = 'ROLE_ADMIN' where id = 'admin';
 
 insert into tbl_member_auth values('바보','ROLE_MEMBER');
 

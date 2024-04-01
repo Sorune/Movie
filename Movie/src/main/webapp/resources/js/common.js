@@ -361,7 +361,7 @@ function displayImage(file, caroucel) {
 }
 
 
-if(window.location.pathname.split("/")[1]!=='loginAuth'){
+if(window.location.pathname.split("/")[1]!=='loginAuth'&&window.location.pathname.split("/")[1]!=='home'&&window.location.pathname.split("/")[1]!==''){
 	var formObj=$('form[role="form"]');					//폼 선택 jquery
 	
 	$("button[type='submit']").on("click", function(e) {
@@ -509,12 +509,15 @@ function isChecked(e){ // 체크박스 값 확인해서 권한 변경 요청
 
 function deleteData(e){
 	//e.preventDefault();
-	if(confirm("정말 탈퇴하시겠습니까?")==true){
+	if(confirm("정말 삭제하시겠습니까?")==true){
 		var bno = parseInt(e.value);
 		var requestData = {
 			bno : bno
 		}
 		var urlString = '/'+ window.location.pathname.split("/")[1]+'/delete';
+		if (window.location.pathname.split("/")[1] === "admin"){
+			urlString = '/'+ 'member'+'/delete';
+		}
 		$.ajax({
 	        url: urlString,
 	        type: "POST",
@@ -524,7 +527,7 @@ function deleteData(e){
 			},
 	        data: JSON.stringify(requestData),
 	        success: function(response) {
-                alert("그동안 감사했습니다!"); // 서버에서 반환한 메시지 출력
+                alert("삭제되었습니다!"); // 서버에서 반환한 메시지 출력
                 console.log("Success:", response);
                 location.replace("/");
             },
@@ -537,3 +540,14 @@ function deleteData(e){
 		return;
 	}
 };
+
+document.addEventListener('click', function(event) {
+    if (event.target.tagName === 'A' && event.target.classList.contains('page-link')) {
+        event.preventDefault();
+        console.log('click');
+        var actionForm = document.getElementById("searchForm");
+        var pageNumInput = actionForm.querySelector("input[name='pageNum']");
+        pageNumInput.value = event.target.getAttribute("href");
+        actionForm.submit();
+    }
+});
