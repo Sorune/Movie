@@ -91,6 +91,7 @@ public class ActorRESTController {
 		mv.setViewName("/actor/modify");
 		log.info("/actor/getActor num : " + actbno);
 		ActorVO atv = service.getActor(actbno);
+		atv.setImgList(imgService.findByBno("tbl_actor_img", atv.getActbno()));
 		log.info(atv);
 		model.addAttribute("atv", atv);
 		return mv;

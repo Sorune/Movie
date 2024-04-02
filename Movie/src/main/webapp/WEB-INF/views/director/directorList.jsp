@@ -9,9 +9,11 @@
         		<h5>DirectorList</h5>
         	</div>
         	<!-- 셀 형식 -->
-        	<div class="col">
-				<a href="/director/register" class="btn btn-primary">추가하기</a>
-			</div>
+        	<sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
+	        	<div class="col">
+					<a href="/director/register" class="btn btn-primary">추가하기</a>
+				</div>
+			</sec:authorize>
         	<div class="row g-5 justify-content-center">
 	        	<c:forEach items="${ directorList}" var="director">
 	                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">

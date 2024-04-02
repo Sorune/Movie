@@ -20,18 +20,18 @@
 							<input type="hidden" name="memid" value="${ user.id }" />
 							<div class="row justify-content-center">
 									<div class="col-4">
-							        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
-							        		<div class="carousel-inner" style="width:100%;">
-												<c:forEach items="${user.imgList}" var="img" varStatus="i">
+							        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width:90%; height: 90%">
+							        		<div class="carousel-inner" style="width:100%; height: 100%">
+												<c:forEach items="${user.imgList}" var="img" varStatus="i" begin="0">
 													<c:choose>
 													    <c:when test="${not empty img}">
 													    	<c:choose>
-													    		<c:when test="${i.count }==0">
+													    		<c:when test="${ i.index == 0 }">
 													    			<div class="carousel-item active">
 													    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
 																		<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
 																		<c:url var="imageUrl" value="/member/download"/>
-																		<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="d-block w-100" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+																		<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
 													    			</div>
 													    		</c:when>
 													    		<c:otherwise>
@@ -39,7 +39,7 @@
 													    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
 																		<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
 																		<c:url var="imageUrl" value="/member/download"/>
-																		<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="d-block w-100" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+																		<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
 													    			</div>
 													    		</c:otherwise>
 													    	</c:choose>

@@ -7,7 +7,7 @@
     <div class="card o-hidden border-0 shadow-lg my-3">
         <div class="card-body p-2 row justify-content-center">
         	<!-- 셀 형식 -->
-        	<sec:authorize access="hasRole('ROLE_MANAGER')">
+        	<sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
 	        	<div class="col">
 					<a href="/actor/register" class="btn btn-primary">등록하기</a>
 				</div>

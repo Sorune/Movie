@@ -33,8 +33,9 @@
 	<div class="row ">
 		<div class="col-lg-12 flex_between">
 			<h3 class="page-header">공지 사항</h3>
-			<button id='regBtn' type="button" class="border btn">새글 등록</button>
-			
+			<sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
+				<button id='regBtn' type="button" class="border btn">새글 등록</button>
+			</sec:authorize>			
 		</div>
 		<!-- end col-lg-12 -->
 	</div>
