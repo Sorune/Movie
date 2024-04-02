@@ -23,9 +23,6 @@
 		<span class="visually-hidden">Next</span>
 	</button>
 </div>
-<div>
-	<iframe width="1280" height="720" src="https://www.youtube.com/embed/W7edvITC9g4" title="[스파이더맨: 노 웨이 홈] 티저 예고편" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
 	<hr>
 	<div class="row ml-5 mb-5">
 		<h4>베스트 무비</h4>

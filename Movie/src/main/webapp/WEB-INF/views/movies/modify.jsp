@@ -133,10 +133,6 @@
 									</c:if>
 									<div class="form-group">
 										<label>스토리</label>
-										<textarea class="form-control" rows="8" name='content'></textarea>
-									</div>
-									<div class="form-group">
-										<label>스토리</label>
 										<textarea class="form-control" rows="8" name='content'>${movie.content }</textarea>
 									</div>
 			

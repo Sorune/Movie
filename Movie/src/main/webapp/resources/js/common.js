@@ -323,13 +323,13 @@ if (!(dropArea == null)) {
 
 };
 
-if (!(document.getElementById("drop-area") === null)&&!(document.querySelector('input[type="file"]')===null)) {
+if (!(document.getElementById("drop-area") === null)&&!(document.querySelector('input[id="file-input"]')===null)) {
 
 	dropArea.setAttribute('eventList', 'click');
 	dropArea.addEventListener("click", onClickFunction);
 	console.log("event set");
 } else {
-	if (document.getElementById("drop-area") === null&&!(document.querySelector('input[type="file"]')===null)) {
+	if (document.getElementById("drop-area") === null&&!(document.querySelector('input[id="file-input"]')===null)) {
 		if (!(dropArea.getAttribute('eventList') === null)) {
 			dropArea.removeAttribute('eventList');
 			dropArea.removeEventListener("click", onClickFunction);
@@ -477,6 +477,8 @@ if(!excludePaths.includes(firstPathSegment)){
 	    // 이미지 태그들을 선택하고 각각의 데이터를 formData 객체에 추가
 	    var nodes = document.querySelectorAll("#uploadedImages img");
 	    formData.imgList = [];
+	    formData.titleList = [];
+	    formData.contentList = [];
 	    nodes.forEach(function(img, index) {
 	        var imageObj = {
 	            fileName: img.getAttribute("fileName"),
@@ -485,6 +487,29 @@ if(!excludePaths.includes(firstPathSegment)){
 	        };
 	        formData.imgList.push(imageObj);
 	    });
+	    
+	    if (document.getElementById("uploadedImages2")!==null&&document.getElementById("uploadedImages3")!==null){
+			var nodes2 = document.querySelectorAll("#uploadedImages2 img");
+		    formData.titleList = [];
+		    nodes2.forEach(function(img, index) {
+		        var imageObj = {
+		            fileName: img.getAttribute("fileName"),
+		            uploadPath: img.getAttribute("uploadPath"),
+		            uuid: img.getAttribute("uuid")
+		        };
+		        formData.titleList.push(imageObj);
+		    });
+		    var nodes3 = document.querySelectorAll("#uploadedImages2 img");
+		    formData.contentList = [];
+		    nodes3.forEach(function(img, index) {
+		        var imageObj = {
+		            fileName: img.getAttribute("fileName"),
+		            uploadPath: img.getAttribute("uploadPath"),
+		            uuid: img.getAttribute("uuid")
+		        };
+		        formData.contentList.push(imageObj);
+		    });
+		}
 	    var url = '/'+ window.location.pathname.split("/")[1];
 	    var urlString = url+"/"+window.location.pathname.split("/")[2];
 	    var urlListString = url+'/list';

@@ -7,9 +7,36 @@
 			<div class="row justify-content-center">
 				<div class="row justify-content-center">
 					<div class="col-lg-12">
+						<div id="uploadedImages2" class="carousel slide carousel-fade" data-bs-ride="carousel">
+			        		<div class="carousel-inner" id="carousel-inner2" style="width:100%;height:auto;">
+								<div id="drop-area2" style="width:100%;">
+									<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+					        	</div>
+			        		</div>
+			        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages2" data-bs-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Previous</span>
+							</button>
+							<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages2" data-bs-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="visually-hidden">Next</span>
+							</button>
+							<button type="button" class="carousel-control-add" id="uploadImage2" data-bs-target="#uploadedImages2">
+								<span class="bi bi-file-plus fz20" aria-hidden="true"></span>
+								<span class="visually-hidden">Add</span>
+							</button>
+							<button type="button" class="carousel-control-remove" id="deleteImage2" data-bs-target="#uploadedImages2">
+								<span class="bi bi-file-x fz20" aria-hidden="true"></span>
+								<span class="visually-hidden">Remove</span>
+							</button>
+			        	</div>
+					</div>
+					<div class="col-lg-12">
 						<h4 class="color00b0f0">영화정보입력</h4>
 						<div class="row justify-content-center">
 							<input type="file" name="imgList" id="file-input" accept="image/*" style="display: none;" multiple>
+							<input type="file" name="imgList" id="file-input2" accept="image/*" style="display: none;" multiple>
+							<input type="file" name="imgList" id="file-input3" accept="image/*" style="display: none;" multiple>
 							<form role="form" action="/register/new" method="post">
 								<div class="row justify-content-center">
 									<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
@@ -139,49 +166,29 @@
 										</c:forEach>
 									</div>
 								</div>
-			
-									<!--        영화 이미지           -->
-			
-									<h4 class="color00b0f0">영화 이미지</h4>
-			
-			
-									<div class="form-group border " style="min-height: 200px;">
-										<div>
-											<label>메인 이미지<span style="color: red">*</span> <span
-											style="font-size: 12px">가로 1080x1280px</span></label> <input type=button value="파일 업로드">
-										</div>
-			
-										<div class="border">
-											<ul>
-												<li class="row" style="width: 230px; height: 76px">
-													<div class="col">
-														<img src="../resources/img/dune-1.jp" alt="메인 이미지"
-															class="border">
-													</div>
-												</li>
-											</ul>
-										</div><!-- "border" -->
-									</div><!-- form-group -->
-									
-									
-									<div class="form-group border " style="min-height: 200px;">
-										<div>
-											<label>갤러리 이미지<span style="color: red">*</span> 
-											<span style="font-size: 12px">가로 1080x550px</span></label> 
-											<input type=button value="파일 업로드">
-										</div>
-			
-										<div class="border">
-											<ul>
-												<li class="row" style="width: 230px; height: 76px">
-													<div class="col">
-														<!-- <img src="/resources/img/dune-1.jpg" alt="갤러리 이미지"
-															class="border"> -->
-													</div>
-												</li>
-											</ul>
-										</div><!-- "border" -->
-									</div><!-- form-group -->
+								<div id="uploadedImages3" class="carousel slide carousel-fade" data-bs-ride="carousel">
+					        		<div class="carousel-inner" id="carousel-inner3" style="width:100%;height:auto;">
+										<div id="drop-area3" style="width:100%;">
+											<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+							        	</div>
+					        		</div>
+					        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages3" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Previous</span>
+									</button>
+									<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages3" data-bs-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Next</span>
+									</button>
+									<button type="button" class="carousel-control-add" id="uploadImage3" data-bs-target="#uploadedImages3">
+										<span class="bi bi-file-plus fz20" aria-hidden="true"></span>
+										<span class="visually-hidden">Add</span>
+									</button>
+									<button type="button" class="carousel-control-remove" id="deleteImage3" data-bs-target="#uploadedImages3">
+										<span class="bi bi-file-x fz20" aria-hidden="true"></span>
+										<span class="visually-hidden">Remove</span>
+									</button>
+					        	</div>
 								</div>
 							</form>
 			
@@ -200,5 +207,5 @@
 		   	<!-- ./ Outer Row -->
 		</div>
 	</div>
-
+<script src="/resources/js/movie.js"></script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
