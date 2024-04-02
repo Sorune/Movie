@@ -3,14 +3,19 @@ package com.firstgroup.movies.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class Utility {
-	public List<Long> parseToList(String listString){
+	public long[] parseToList(String listString){
 		List<Long> parsingIntList = new ArrayList<Long>();
 		String[] valueList = listString.replace(" ","").split(",");
 		for(String value : valueList) {
 			parsingIntList.add(Long.parseLong(value));
 		}
-		return parsingIntList; 
+		return listToLongList(parsingIntList); 
 	}
 	
 	public long[] listToLongList(List<Long> list) {

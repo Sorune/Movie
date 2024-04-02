@@ -1,8 +1,90 @@
 // 스프링 시큐리티용
 const csrfHeader = $("meta[name='_csrf_header']").attr("content");
 const csrfToken = $("meta[name='_csrf']").attr("content");
-// ver1 star
+function getVideoSource(e){
+	let videoSrc = "";
+	console.log(e.value);
+	let uri = e.value;
+	if(uri.includes('https://youtu.be/')){
+		let uris = uri.split("/");
+		console.log(uris);
+		let videoString = uris[uris.length-1];
+		console.log(videoString);
+		videoSrc = videoString.substring(0,videoString.indexOf('?'));
+		console.log(videoSrc);
+	} else if (uri.includes('https://www.youtube.com/watch?')){
+		let uris = uri.split("/");
+		console.log(uris);
+		let videoString = uris[uris.length-1];
+		console.log(videoString);
+		videoSrc = videoString.substring(videoString.indexOf('=')+1,videoString.length);
+		console.log(videoSrc);
+	} else {
+		alert("올바른 주소를 입력해주세요");
+		return;
+	}
+	let videoViewer = document.getElementById("videoViewer");
+	console.log(videoViewer);
+	videoViewer.setAttribute("src",'https://www.youtube.com/embed/'+videoSrc);
+	
+}
 
+
+
+function ripCheck(event) {
+      // 사망년도 datePicker input 가져오기
+      var ripDate = document.getElementById("date2");
+      if(event.target.checked) {
+         ripDate.disabled = false;
+      }else {
+         ripDate.disabled = true;
+      }
+}
+   
+   // 출생년도 선택하면 나이 입력되는 메서드
+   function insertBirth() {
+      // 오늘 날짜 구하기
+      var dates = new Date();
+      // 년도만 분리
+      var years = dates.getFullYear();
+      // 월만 분리
+      var month = dates.getMonth();
+      // 일자만 분리
+      var date = dates.getDate();
+      //console.log(String(dates));
+      //console.log(String(years));
+      // String 값으로 년도 치환
+      var st_y = String(years);
+      // String 값으로 달 치환
+      var st_m = String(month);
+      //console.log(String(month));
+      // String 값으로 일자 치환
+      var st_d = String(date);
+      //console.log(String(date));
+      // 포멧팅해서 변수에 저장
+      var format = " year : " + st_y + " month :  " + st_m + " date : " + st_d;
+      console.log(format);
+      // input date(출생년-월-일)값 가져오기
+      var birthday = document.querySelector("#date1").value;
+      // 콘솔에 출력(input date(출생년-월-일)값 가져오기)
+      console.log(birthday);
+      // 출생년도만 자르기
+      var strYMD = birthday.split("-");
+      var strY = strYMD[0];
+      console.log("자른 년도는 : " + strY);
+      // 이번년도 - 출생년도 = 만나이
+      var ages = years - strY;
+      // 콘솔에 출력(이번년도 - 출생년도 = 만나이)
+      console.log(ages); 
+      // 나이칸 변수에 저장
+      var Age = document.querySelector("#Age");
+      // 계산한 나이 나이칸에 값 저장 및 출력
+      Age.value = ages;
+   } 
+
+
+
+// ver1 star
 const checkStar = function(target) { // hidden  처리된 input에 값이 들어올 시 이벤트 처리 메서드를 변수에 저장한다(매개값 : this) 
 	document.querySelector(`.star span`).style.width = `${target.value * 20}%`; // 요소의 클래스네임이 star 안의 span 태그의 css 속성을 주고 너비는 hidden된 input의 값 x 20%를 너비로 준다
 	// 두개의 별5개를 포지션상으로 겹친 후, 색이들어올 별5개의 초기값은 너비가 0이고 input의 값 x 20% 만큼씩 누르면 배경색이 채워지면 반개씩 별을 채운다

@@ -10,6 +10,7 @@ ALTER TABLE tbl_member ADD roadAddress nVARCHAR2(50);
 ALTER TABLE tbl_member ADD buildingName nVARCHAR2(20);
 ALTER TABLE tbl_member ADD enabled VARCHAR(1) DEFAULT '1' NOT NULL;
 ALTER TABLE tbl_member modify pw nvarchar2(100);
+ALTER TABLE tbl_movies ADD video nVARCHAR2(50);
 update tbl_member set enabled='1';
 
 delete TBL_MEMBER where rownum=1;
@@ -69,3 +70,6 @@ select * from tbl_movies_comment;
 select * from tbl_actor;
 
 select * from TBL_ACTOR_IMG;
+
+
+select * from TBL_DIRECTOR;

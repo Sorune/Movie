@@ -29,12 +29,16 @@ public class MoviesVO {
 	private List<String> actorList;
 	private List<MoviesCommentVO> comment;
 	
+	private String video;
+	
 	private String actor; 	//배우 배열 파싱용
 	private List<ActorVO> actList;	//배우 배열
 	
 	private String director;	//감독 배열 파싱용
 	private List<DirectorVO> dirList;//감독 배열
 	
-	private List<ImgVO> imgList;
+	private List<ImgVO> titleList;		//영화 핵심 장면(왓챠피디아 최상단 이미지)
+	private List<ImgVO> imgList;		//영화 포스터
+	private List<ImgVO> contentList;	//영화 주요 장면(줄거리)
 	
 }

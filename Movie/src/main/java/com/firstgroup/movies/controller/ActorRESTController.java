@@ -99,11 +99,14 @@ public class ActorRESTController {
 	
 	// actor 수정
 	@PostMapping(value="/modify",produces = "application/text; charset=UTF-8") // modify
-	public String modify(@RequestBody ActorVO atv, Model model, RedirectAttributes rttr) {
+	public String modify(@RequestBody ActorVO atv ,Model model, RedirectAttributes rttr) {
 		log.info("modify : " + atv);
-		
 		service.modify(atv);
 		log.info(atv);
+		ImgVO tmp = new ImgVO();
+		tmp.setBno(atv.getActbno());
+		tmp.setTblName("tbl_Actor_img");
+		imgService.delete(tmp);
 		// 처리 결과에 따른 응답 데이터 설정
         for(ImgVO img : atv.getImgList()) {
         	img.setBno(atv.getActbno());

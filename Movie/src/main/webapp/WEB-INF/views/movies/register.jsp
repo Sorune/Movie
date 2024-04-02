@@ -101,7 +101,16 @@
 											</div>
 										</div>
 							        </div>
-									
+							        <label>쿠키 영상</label>
+									<div class="input-group mb-3">
+										<button class="btn btn-outline-secondary" type="button" id="button-addon1"  data-bs-toggle="collapse" data-bs-target="#video-container" aria-expanded="false" aria-controls="video-container">미리보기</button>
+										<input type="text" id="videoInput" name="video" class="form-control" placeholder="" aria-label="주소 입력" aria-describedby="button-addon1" oninput="getVideoSource(this)">
+									</div>
+									<div class="form-group collapse"  id="video-container">
+										<div class="card card-body">
+											<iframe id="videoViewer" width="1280" height="720" src='https://www.youtube.com/embed/' frameborder='0' allowfullscreen='true' ></iframe>
+										</div>
+									</div>
 									<div class="form-group">
 										<label>스토리</label>
 										<textarea class="form-control" rows="8" name='content'></textarea>
@@ -173,6 +182,7 @@
 											</ul>
 										</div><!-- "border" -->
 									</div><!-- form-group -->
+								</div>
 							</form>
 			
 									<div class="row">
@@ -190,7 +200,5 @@
 		   	<!-- ./ Outer Row -->
 		</div>
 	</div>
-</div>
-
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

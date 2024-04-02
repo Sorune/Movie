@@ -104,7 +104,37 @@
 											</div>
 										</div>
 							        </div>
-									
+									<label>쿠키 영상</label>
+									<div class="input-group mb-3">
+										<button class="btn btn-outline-secondary" type="button" id="button-addon1"  data-bs-toggle="collapse" data-bs-target="#video-container" aria-expanded="false" aria-controls="video-container">미리보기</button>
+										<input type="text" id="videoInput" name="video" class="form-control" placeholder="" aria-label="주소 입력" aria-describedby="button-addon1" oninput="getVideoSource(this)" value="${movie.video}">
+									</div>
+									<c:set var="videoId" value="" />
+									<c:choose>
+									    <c:when test="${not empty movie.video and movie.video.startsWith('https://youtu.be/')}">
+									        <c:set var="videoId" value="${fn:substringAfter(movie.video, 'https://youtu.be/')}"/>
+									    </c:when>
+									    <c:when test="${not empty movie.video and movie.video.startsWith('https://www.youtube.com/watch?v=')}">
+									        <c:set var="videoId" value="${fn:substringAfter(movie.video, 'https://www.youtube.com/watch?v=')}"/>
+									        <c:if test="${videoId.contains('&')}">
+									            <c:set var="videoId" value="${fn:substringBefore(videoId, '&')}"/>
+									        </c:if>
+									    </c:when>
+									    <c:otherwise>
+									        <p>올바른 YouTube URL을 입력하세요.</p>
+									    </c:otherwise>
+									</c:choose>
+									<c:if test="${not empty videoId}">
+									    <div class="form-group collapse"  id="video-container">
+									        <div class="card card-body">
+									            <iframe id="videoViewer" width="1280" height="720" src='https://www.youtube.com/embed/${ videoId }' frameborder='0' allowfullscreen='true' ></iframe>
+									        </div>
+									    </div>
+									</c:if>
+									<div class="form-group">
+										<label>스토리</label>
+										<textarea class="form-control" rows="8" name='content'></textarea>
+									</div>
 									<div class="form-group">
 										<label>스토리</label>
 										<textarea class="form-control" rows="8" name='content'>${movie.content }</textarea>

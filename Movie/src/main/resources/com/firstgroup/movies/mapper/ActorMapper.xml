@@ -40,11 +40,13 @@
 			update tbl_actor
 				set	name = #{name},
 					age = #{age},	
-					b_date = #{b_date},
-					d_date = #{d_date},
-					update_date = sysdate
-				where actbno = #{actbno}	
+					b_date = #{birDate},
 		 ]]>
+		 <if test="deaDate!=null">
+					d_date = #{deaDate},
+		</if>
+					up_date = sysdate
+				where actbno = #{actbno}	
   	</update>
   	
 	<!-- 한명의 배우 정보 삭제하기 -->

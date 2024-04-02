@@ -32,6 +32,7 @@ import com.firstgroup.movies.service.ActorService;
 import com.firstgroup.movies.service.ImgService;
 import com.firstgroup.movies.service.MemberService;
 import com.firstgroup.movies.service.MoviesService;
+import com.firstgroup.movies.util.Utility;
 
 import lombok.AllArgsConstructor;
 import lombok.Setter;
@@ -50,7 +51,8 @@ public class MoviesController {
 	private ImgService imgService;
 	@Setter(onMethod_ = @Autowired)
 	private ActorService actService;
-
+	@Setter(onMethod_ = @Autowired)
+	private Utility util;
 	@DeleteMapping(value = "/{combno}", produces = {MediaType.TEXT_PLAIN_VALUE,})	
 	public ResponseEntity<String> remove(@RequestBody MoviesCommentVO vo, @PathVariable("combno") Long combno){
 		
@@ -83,7 +85,12 @@ public class MoviesController {
 	public ModelAndView getMovie(@PathVariable Long movbno,@AuthenticationPrincipal Model model){
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/getMovie");
-		mv.addObject("movie", movService.get(movbno));
+		MoviesVO mov = movService.get(movbno);
+		/*
+		 * long[] tmp = util.parseToList(mov.getActor()); for(long tp : tmp) {
+		 * mov.getActList().add(actService.getActor(tp)); }
+		 */
+		mv.addObject("movie", mov);
 		
 		String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 		if(role.equals("[ROLE_ANONYMOUS]")) {

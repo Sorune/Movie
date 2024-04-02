@@ -3,6 +3,7 @@ package com.firstgroup.movies.controller;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -29,11 +30,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.domain.MemberVO;
+import com.firstgroup.movies.domain.MoviesVO;
 import com.firstgroup.movies.security.CustomUserDetailsService;
 import com.firstgroup.movies.security.domain.CustomUser;
 import com.firstgroup.movies.service.ActorServiceImpl;
 import com.firstgroup.movies.service.ImgServiceImpl;
 import com.firstgroup.movies.service.MemberServiceImpl;
+import com.firstgroup.movies.service.MoviesService;
 import com.firstgroup.movies.service.MoviesServiceImpl;
 
 import lombok.Setter;
@@ -50,7 +53,7 @@ public class HomeController {
 	private MemberServiceImpl memberService;
 
 	@Setter(onMethod_ = @Autowired)
-	private MoviesServiceImpl moviesService;
+	private MoviesService movService; // 영화 정보
 
 	@Setter(onMethod_ = @Autowired)
 	private ActorServiceImpl actorService;
@@ -77,7 +80,13 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 
 		model.addAttribute("serverTime", formattedDate);
-
+		
+		List<MoviesVO> movieList = movService.getMovieList();
+		 for(MoviesVO vo: movieList) {
+	        vo.setImgList(imgService.findByBno("tbl_movies_img", vo.getMovBno()));
+	      }
+		model.addAttribute("movieList",movieList);
+		
 		return "home";
 	}
 
@@ -164,6 +173,11 @@ public class HomeController {
 	@GetMapping("/home")
 	public void home(Model model) {
 		log.info(model);
+		List<MoviesVO> movieList = movService.getMovieList();
+		 for(MoviesVO vo: movieList) {
+	        vo.setImgList(imgService.findByBno("tbl_movies_img", vo.getMovBno()));
+	      }
+		model.addAttribute("movieList",movieList);
 	}
 	
 	public void sessionReset(String username) { //인증정보 갱신

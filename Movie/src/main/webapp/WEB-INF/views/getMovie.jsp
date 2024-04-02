@@ -159,9 +159,37 @@ img {
 	</div>
 	
 </div>
-
-
-
+<div class="container-sm">
+	<!-- Content here -->
+	<!-- 코멘트 -->
+	<div class="container-xs">
+		<div class="container py-5">
+			<label>쿠키 영상</label>
+			<c:set var="videoId" value="" />
+			<c:choose>
+			    <c:when test="${not empty movie.video and movie.video.startsWith('https://youtu.be/')}">
+			        <c:set var="videoId" value="${fn:substringAfter(movie.video, 'https://youtu.be/')}"/>
+			    </c:when>
+			    <c:when test="${not empty movie.video and movie.video.startsWith('https://www.youtube.com/watch?v=')}">
+			        <c:set var="videoId" value="${fn:substringAfter(movie.video, 'https://www.youtube.com/watch?v=')}"/>
+			        <c:if test="${videoId.contains('&')}">
+			            <c:set var="videoId" value="${fn:substringBefore(videoId, '&')}"/>
+			        </c:if>
+			    </c:when>
+			    <c:otherwise>
+			        <p>올바른 YouTube URL을 입력하세요.</p>
+			    </c:otherwise>
+			</c:choose>
+			<c:if test="${not empty videoId}">
+			    <div class="form-group"  id="video-container">
+			        <div class="card card-body">
+			            <iframe id="videoViewer" width="1280" height="720" src='https://www.youtube.com/embed/${ videoId }' frameborder='0' allowfullscreen='true' ></iframe>
+			        </div>
+			    </div>
+			</c:if>
+		</div>
+	</div>
+</div>
 <!-- 베스트 댓글  -->
 <div class="row g-4 justify-content-center">
 	<div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp"

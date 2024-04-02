@@ -17,8 +17,8 @@
 							<input type="file" name="imgList" id="file-input"
 								accept="image/*" style="display: none;" multiple>
 							<form name="modFrm" role="form" action="/actor/modify/${actor.actbno}" method="post">
-								<input type="hidden" name="${_csrf.parameterName}"
-									value="${_csrf.token}" />
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								<input type="hidden" name="actbno" value="${actor.actbno}"/>
 								<div class="row justify-content-center">
 									<div class="col-4">
 							        	<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel" style="width:90%; height: 90%">
@@ -84,7 +84,7 @@
 											<div class="row row-cols-2 p-3">
 												<label class="col-sm-2 text-align-center">나이</label>
 												<div class="col-sm-10">
-													<input class="form-control" name='age' id="actorAge"
+													<input class="form-control" name='age' id="Age"
 														value='<c:out value="${actor.age}"/>' readonly>
 												</div>
 											</div>
@@ -97,13 +97,13 @@
 														type="checkbox" id="ripYear">
 												</div>
 												<div class="form-group p-3">
-													<%-- <fmt:formatDate value="${actor.bDate}" pattern="yyyy-MM-dd" /> --%>
-													<input type="date" class="form-control" name="bDate"
+													<%-- <fmt:formatDate value="${actor.birDate}" pattern="yyyy-MM-dd" /> --%>
+													<input type="date" class="form-control" name="birDate"
 														id="date1" onchange="insertBirth()"> <input
 														type="hidden" id="hiddenInput" disabled>
 												</div>
 												<div class="form-group p-3">
-													<input type="date" class="form-control" name="dDate"
+													<input type="date" class="form-control" name="deaDate"
 														id="date2" disabled="disabled">
 												</div>
 											</div>
@@ -133,70 +133,12 @@
 	</div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
-	
-
-	   
-	   // 체크하면 사망년도 datePicker 활성화
-	   function ripCheck(event) {
-	      // 사망년도 datePicker input 가져오기
-	      var ripDate = document.getElementById("date2");
-	      if(event.target.checked) {
-	         ripDate.disabled = false;
-	      }else {
-	         ripDate.disabled = true;
-	      }
-	   }
-	   
-	   // 출생년도 선택하면 나이 입력되는 메서드
-	   function insertBirth() {
-	      // 오늘 날짜 구하기
-	      var dates = new Date();
-	      // 년도만 분리
-	      var years = dates.getFullYear();
-	      // 월만 분리
-	      var month = dates.getMonth();
-	      // 일자만 분리
-	      var date = dates.getDate();
-	      //console.log(String(dates));
-	      //console.log(String(years));
-	      // String 값으로 년도 치환
-	      var st_y = String(years);
-	      // String 값으로 달 치환
-	      var st_m = String(month);
-	      //console.log(String(month));
-	      // String 값으로 일자 치환
-	      var st_d = String(date);
-	      //console.log(String(date));
-	      // 포멧팅해서 변수에 저장
-	      var format = " year : " + st_y + " month :  " + st_m + " date : " + st_d;
-	      console.log(format);
-	      // input date(출생년-월-일)값 가져오기
-	      var birthday = document.querySelector("#date1").value;
-	      // 콘솔에 출력(input date(출생년-월-일)값 가져오기)
-	      console.log(birthday);
-	      // 출생년도만 자르기
-	      var strYMD = birthday.split("-");
-	      var strY = strYMD[0];
-	      console.log("자른 년도는 : " + strY);
-	      // 이번년도 - 출생년도 = 만나이
-	      var ages = years - strY;
-	      // 콘솔에 출력(이번년도 - 출생년도 = 만나이)
-	      console.log(ages); 
-	      // 나이칸 변수에 저장
-	      var directorAge = document.querySelector("#directorAge");
-	      // 계산한 나이 나이칸에 값 저장 및 출력
-	      directorAge.value = ages;
-	   } 
-
-	
-    
+   // 체크하면 사망년도 datePicker 활성화
+   
 });
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

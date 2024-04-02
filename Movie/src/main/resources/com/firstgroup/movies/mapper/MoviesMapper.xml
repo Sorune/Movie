@@ -22,8 +22,8 @@
 		<selectKey keyProperty="movBno" order="BEFORE" resultType="long">
 	    		select seq_movies.nextval from dual
     	</selectKey>
-		insert into tbl_movies(movbno, title, content, created_date, actor, director)
-		values(#{movBno}, #{title}, #{content}, #{createdDate}, #{actor}, #{director})
+		insert into tbl_movies(movbno, title, content, created_date, actor, director, video)
+		values(#{movBno}, #{title}, #{content}, #{createdDate}, #{actor}, #{director}, #{video})
 		
 	</insert>
 	
@@ -40,7 +40,7 @@
 				up_date = sysdate,
 				actor = #{actor},
 				director = #{director},
-				mov_imgno = #{movImgNo} 
+				video = #{video}
 			where movbno = #{movBno}
 	
 	</update>
