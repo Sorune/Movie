@@ -1,6 +1,7 @@
 package com.firstgroup.movies.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,13 +23,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.firstgroup.movies.domain.ActorVO;
 import com.firstgroup.movies.domain.Criteria;
+import com.firstgroup.movies.domain.DirectorVO;
 import com.firstgroup.movies.domain.ImgVO;
 import com.firstgroup.movies.domain.MemberVO;
 import com.firstgroup.movies.domain.MoviesCommentVO;
 import com.firstgroup.movies.domain.MoviesVO;
 import com.firstgroup.movies.security.domain.CustomUser;
 import com.firstgroup.movies.service.ActorService;
+import com.firstgroup.movies.service.DirectorService;
 import com.firstgroup.movies.service.ImgService;
 import com.firstgroup.movies.service.MemberService;
 import com.firstgroup.movies.service.MoviesService;
@@ -52,18 +57,33 @@ public class MoviesController {
 	@Setter(onMethod_ = @Autowired)
 	private ActorService actService;
 	@Setter(onMethod_ = @Autowired)
+	private DirectorService dirService;	// 디렉터 서비스
+	@Setter(onMethod_ = @Autowired)
 	private Utility util;
-	@DeleteMapping(value = "/{combno}", produces = {MediaType.TEXT_PLAIN_VALUE,})	
-	public ResponseEntity<String> remove(@RequestBody MoviesCommentVO vo, @PathVariable("combno") Long combno){
-		
-		log.info(combno);
-		
-		return movService.removeComment(combno) == 1 ?
-				new ResponseEntity<>("success", HttpStatus.OK):
-				new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR) ;
-	}
 	
-	
+
+   // 댓글 삭제
+   @DeleteMapping("/movies/deleteComment/{comBno}")
+   public String removeComment(@PathVariable Long comBno) {
+		/*
+		 * MoviesVO vo = new MoviesVO(); vo.setComment(null);
+		 */
+       log.info("삭제할 댓글의 번호 : " + comBno);
+       movService.removeComment(comBno);
+
+       return comBno.toString();
+   }
+
+   // 댓글 수정
+   @PostMapping("/movies/modifyComment/{comBno}")
+   public String updateComment(@PathVariable Long comBno) {
+	   
+	   log.info("수정할 댓글의 번호 : " + comBno);
+	   movService.modifyComment(comBno);
+	   
+	   return comBno.toString();
+   }
+   
 
 	@PostMapping(value = "/regComment") 
 	public ResponseEntity<String> insertComment(@RequestParam Map<String,String> formData) {
@@ -83,16 +103,41 @@ public class MoviesController {
 	
 	@GetMapping(value="/movies/getMovie/{movbno}")
 	public ModelAndView getMovie(@PathVariable Long movbno,@AuthenticationPrincipal Model model){
+		movService.views(movbno);
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/getMovie");
 		MoviesVO mov = movService.get(movbno);
 		mov.setImgList(imgService.findByBno("tbl_movies_img", movbno));
 		mov.setTitleList(imgService.findByBno("tbl_title_img", movbno));
 		mov.setContentList(imgService.findByBno("tbl_content_img", movbno));
-		/*
-		 * long[] tmp = util.parseToList(mov.getActor()); for(long tp : tmp) {
-		 * mov.getActList().add(actService.getActor(tp)); }
-		 */
+		
+		long[] tmp = util.parseToList(mov.getActor());	// String 형태의 배열을 잘라서 long[]에 넣음
+		
+		List<ActorVO> actorList = new ArrayList<>(); 
+		for(long tp : tmp) {
+			actorList.add(actService.getActor(tp));
+		}
+		for(ActorVO vo: actorList) {
+			vo.setImgList(imgService.findByBno("tbl_actor_img", vo.getActbno())==null?new ArrayList<ImgVO>():imgService.findByBno("tbl_actor_img", vo.getActbno())); 
+		}
+		mov.setActList(actorList);
+		
+		tmp = util.parseToList(mov.getDirector());	// String 형태의 배열을 잘라서 long[]에 넣음
+		
+		List<DirectorVO> directorList = new ArrayList<>();
+		for(long tp : tmp) {
+			directorList.add(dirService.getDirector(tp));
+		}
+		log.info(directorList);
+		for(DirectorVO vo: directorList) {
+			log.info(imgService.findByBno("tbl_director_img", vo.getDirBno()));
+			List<ImgVO> tp = imgService.findByBno("tbl_director_img", vo.getDirBno());
+			log.info(tp);
+			vo.setImgList(imgService.findByBno("tbl_director_img", vo.getDirBno())==null?new ArrayList<ImgVO>():imgService.findByBno("tbl_actor_img", vo.getDirBno())); 
+		}
+		mov.setDirList(directorList);
+		
 		mv.addObject("movie", mov);
 		
 		String role = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -114,8 +159,19 @@ public class MoviesController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/movies/register");
 		log.info("movie register........");
+		// diretor정보를 이미지와 함께 불러옴
+		List<DirectorVO> directorList = dirService.directorList();
+		for(DirectorVO vo: directorList) {
+			vo.setImgList(imgService.findByBno("tbl_director_img", vo.getDirBno()));
+	    }
+		model.addAttribute("directorList", directorList);
 		
-		model.addAttribute("actorList", actService.actorList());
+		// actor정보를 이미지와 함께 불러옴
+		List<ActorVO> actorList = actService.actorList();
+		for(ActorVO vo: actorList) {
+			vo.setImgList(imgService.findByBno("tbl_actor_img", vo.getActbno()));
+	    }
+		model.addAttribute("actorList", actorList);
 		return mv;
 	}	
 	
@@ -128,10 +184,11 @@ public class MoviesController {
 		 // 리스트가 비어있지 않은 경우에만 String.join() 메소드 사용 
 		 if (!mov.getActorList().isEmpty()) { // 리스트로 들어온 value를 ,를 붙여 합쳐줌 
 		 //genre.stream().collect(Collectors.joining(","));
-			 //[actorbno, actorbno, actorbno] 들어온 값 String으로 ,를 붙여 만들어줌
+			//[actorbno, actorbno, actorbno] 들어온 값 String으로 ,를 붙여 만들어줌
 			 mov.setActor(mov.getActorList().stream().collect(Collectors.joining(",")));
+			 //diretor
+			 mov.setDirector(mov.getDirectorList().stream().collect(Collectors.joining(",")));
 		  }
-		 mov.setDirector("테스트용 감독");
 		 movService.registerMovies(mov);
 		 
 		for (ImgVO img : mov.getImgList()) {

@@ -39,7 +39,7 @@
 													    			<div class="carousel-item">
 													    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
 																		<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
-																		<c:url var="imageUrl" value="/member/download"/>
+																		<c:url var="imageUrl" value="/actor/download"/>
 																		<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
 													    			</div>
 													    		</c:otherwise>
@@ -115,7 +115,7 @@
 										<button type="submit" class="btn btn-success w-100">저장하기</button>
 									</div>
 									<div class="col-4">
-									<button type="reset" class="btn btn-secondary w-100" >내용 지우기</button>
+										<button type="reset" class="btn btn-secondary w-100" >내용 지우기</button>
 									</div>
 									<div class="col-4">
 										<a href="/actor/actorList" class="btn btn-info w-100">돌아가기</a>

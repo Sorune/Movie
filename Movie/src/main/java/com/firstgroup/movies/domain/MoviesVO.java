@@ -27,6 +27,7 @@ public class MoviesVO {
     private List<String> major;
 	private List<String> genre;
 	private List<String> actorList;
+	private List<String> directorList;
 	private List<MoviesCommentVO> comment;
 	
 	private String video;

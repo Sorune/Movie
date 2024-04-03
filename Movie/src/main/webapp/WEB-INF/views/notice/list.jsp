@@ -33,9 +33,8 @@
 	<div class="row ">
 		<div class="col-lg-12 flex_between">
 			<h3 class="page-header">공지 사항</h3>
-			<sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
-				<button id='regBtn' type="button" class="border btn">새글 등록</button>
-			</sec:authorize>			
+			<button id='regBtn' type="button" class="border btn">새글 등록</button>
+			
 		</div>
 		<!-- end col-lg-12 -->
 	</div>
@@ -55,8 +54,6 @@
 					<c:forEach items="${list}" var="board"><!-- board는 java의 메소드와 반드시는 일치시킬필요없음 -->
 						<tr>
 							<td><c:out value="${board.bno}" /></td>
-							<%-- <td><a class='move' href='/notice/get?bno=<c:out value="${board.bno}"/>'>
-							<c:out value="${board.title}"/></a></td> --%>
 							<td><a class='move' href='<c:out value="${board.bno}"/>'>
 							<c:out value="${board.title}"/></a></td>
 							<td><c:out value="${board.writer}" /></td>
@@ -152,11 +149,11 @@ $(document).ready(function() {
 			return;
 		}
 
-		if (parseInt(result) > 0) {
+		/* if (parseInt(result) > 0) {
 			$(".modal-body").html("게시글 " + parseInt(result)+ " 번이 등록되었습니다.");
-		}
+		} */
 
-		$("#myModal").modal("show");
+	/* 	$("#myModal").modal("show"); */
 	}
 	
 	$("#regBtn").on("click", function() {
@@ -178,11 +175,8 @@ $(document).ready(function() {
 	$(".move").on("click", function(e) {
 
 		e.preventDefault();
-		actionForm
-				.append("<input type='hidden' name='bno' value='"
-						+ $(this).attr(
-								"href")
-						+ "'>");
+		actionForm.append("<input type='hidden' name='bno' value='"
+						+ $(this).attr("href")+ "'>");
 		actionForm.attr("action","/notice/get");
 		actionForm.submit();
 

@@ -96,6 +96,8 @@ padding: 10px 10px 0 10px;
 		<form role="form"action="/notice/register" method="post" 
 			class="col-lg-12 ">
 			<input type="hidden" name="${_csrf.parameterName}" value = "${_csrf.token}"/>
+			
+		
 			<div class="border">
 				<div class="group_area ">
 					<div class="title_area">

@@ -73,3 +73,5 @@ select * from TBL_ACTOR_IMG;
 
 
 select * from TBL_DIRECTOR;
+
+update tbl_movies set director = '10' where movbno = 99;

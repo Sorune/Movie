@@ -13,7 +13,7 @@ import lombok.Data;
 public class DirectorVO {
 	private long dirBno;
 	private String dirName;
-	private int dirAge;
+	private int age;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dirBirth;

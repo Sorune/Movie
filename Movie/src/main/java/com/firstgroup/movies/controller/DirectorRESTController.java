@@ -1,6 +1,9 @@
 package com.firstgroup.movies.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,8 +67,8 @@ public class DirectorRESTController {
 		service.insertDirector(dirVo);
 		log.info(dirVo);
 		for(ImgVO img : dirVo.getImgList()) {
-		    	img.setBno(dirVo.getDirBno());
-		    	img.setTblName("tbl_Director_img");
+	    	img.setBno(dirVo.getDirBno());
+	    	img.setTblName("tbl_Director_img");
 			log.info(img);
 		    imgService.insert(img);
 		}
@@ -75,37 +78,27 @@ public class DirectorRESTController {
 		
 	}
 	
-	
-	@GetMapping("/aaa") // d
-	public ModelAndView aaa(Model model) {
-		ModelAndView mv = new ModelAndView();
-		log.info("REST directorList...........");
-	 return mv;
-	}
-	
-	
-	
-	
-	
 	@GetMapping("/modify/{dirBno}") // 감독 조회
 	public ModelAndView getDirector(@PathVariable Long dirBno,Model model) {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/director/modify");
 		log.info("/director/getDirector");
-		model.addAttribute("dirVo",service.getDirector(dirBno));
+		DirectorVO dir = service.getDirector(dirBno);
+		dir.setImgList(imgService.findByBno("tbl_director_img", dirBno));
+		model.addAttribute("dirVo", dir);
 		
 		return mv;
 	}
 	
-	
-	
-	
-	
-	@PostMapping(value="/modify",produces = "application/text; charset=UTF-8")//감독 수정
+	@PostMapping(value="/modify")//감독 수정
 	public String modify(@RequestBody DirectorVO dirVo, Model model, RedirectAttributes rttr) {
 		log.info("modify:"+dirVo);
 		service.modify(dirVo);
 		log.info(dirVo);
+		ImgVO tmp = new ImgVO();
+		tmp.setTblName("tbl_director_img");
+		tmp.setBno(dirVo.getDirBno());
+		imgService.delete(tmp);
 		 for(ImgVO img : dirVo.getImgList()) {
 	        	img.setBno(dirVo.getDirBno());
 	        	img.setTblName("tbl_director_img");
@@ -118,13 +111,23 @@ public class DirectorRESTController {
 	}
 	
 	@GetMapping("/delete/{dirBno}")
-	@ResponseBody
-	public ResponseEntity<String> remove(@PathVariable("dirBno")Long dirBno){
-		return null;
+	public ModelAndView delete(@PathVariable Long dirBno ,HttpServletResponse response) {
+	    // movBno를 사용하여 영화 삭제 로직을 수행
+	    log.info("삭제할 영화 게시물 번호: " + dirBno);
+	    service.remove(dirBno);
+		ImgVO tmp = new ImgVO();
+		tmp.setTblName("tbl_director_img");
+		tmp.setBno(dirBno);
+		imgService.delete(tmp);
+	    ModelAndView mv = new ModelAndView();
+		mv.setViewName("/director/directorList");
+		
+		try {
+			response.sendRedirect("/director/list");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return mv;
 	}
-	
-//	@GetMapping({"/get", "/modify"})
-	//public void get(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) {
-//	}
 	
 }

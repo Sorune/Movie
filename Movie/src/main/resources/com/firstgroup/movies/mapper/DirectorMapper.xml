@@ -16,8 +16,8 @@
 		<selectKey keyProperty="dirBno" order="BEFORE" resultType="long">
 	    		select seq_director.nextval from dual
     	</selectKey>
-		insert into tbl_director(dirbno, dirname, dirage, dirbirth)
-		values(#{dirBno}, #{dirName}, #{dirAge}, #{dirBirth})
+		insert into tbl_director(dirbno, dirname, age, dirbirth)
+		values(#{dirBno}, #{dirName}, #{age}, #{dirBirth})
 	</insert>
   	
   		<!-- 전체 감독정보 불러오기 -->
@@ -36,7 +36,7 @@
   		<![CDATA[
 			update tbl_director
 				set	dirName = #{dirName},
-					dirAge = #{dirAge},	
+					age = #{age},	
 					dirBirth = #{dirBirth},
 		 ]]>
 		<if test="dirDead!=null">

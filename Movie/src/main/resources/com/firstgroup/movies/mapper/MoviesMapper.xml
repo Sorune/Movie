@@ -7,10 +7,11 @@
   <!-- 파라미터값 #{VO와 맞춰야함} -->
   
   
-  <!-- 영화 리스트 불러오기 -->
-  <select id="getMovieList" resultType="com.firstgroup.movies.domain.MoviesVO">
-  select * from tbl_movies where movbno > 0
-  </select>
+  	<!-- 영화 리스트 불러오기 -->
+	<select id="getMovieList"
+		resultType="com.firstgroup.movies.domain.MoviesVO">
+		select * from tbl_movies where movbno > 0 or movbno is not null order by movbno desc
+	</select>
   
 	<!-- 영화 한개 정보 불러오기 -->
 	 <select id="get" resultType="com.firstgroup.movies.domain.MoviesVO">
@@ -48,5 +49,9 @@
 	<select id="imgList" resultType="com.firstgroup.movies.domain.ImgVO">
 		select * from tbl_movies_img where bno = #{movBno}
 	</select>
+	<update id="views">
+		update tbl_movies set views=views+1 where
+		movbno=#{movBno}
+	</update>
 	
   </mapper>

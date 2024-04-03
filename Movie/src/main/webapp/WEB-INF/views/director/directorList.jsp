@@ -35,7 +35,7 @@
 	                        <div class="service-content rounded-bottom bg-light p-4">
 	                            <div class="service-content-inner">
 	                                <h5 class="mb-4">${director.dirName }</h5>
-	                                <p class="mb-4">${director.dirAge }</p>
+	                                <p class="mb-4">${director.age }</p>
 	                               
 	                                	<a href="/director/modify/${director.dirBno }" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Modify</a>
 	                                	<a href="/director/delete/${director.dirBno }"button type="submit" id="submit" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2" >Delete</a>

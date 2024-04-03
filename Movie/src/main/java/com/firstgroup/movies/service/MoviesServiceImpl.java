@@ -113,7 +113,24 @@ public class MoviesServiceImpl implements MoviesService{
 		
 		return movMapper.imgList(movbno);
 	}
-
-
 	
+	@Override
+	public void views(Long movbno) {
+		// 조회수 업데이트용 
+		movMapper.views(movbno);
+	}
+
+
+	@Override
+	public List<MoviesCommentVO> bestComment(Long movbno) {
+		// 추천수 높은 댓글 3개의 댓글 출력
+		return comMapper.bestComment(movbno);
+	}
+
+	@Override
+	public int modifyComment(Long movbno) {
+		log.info(movbno+"번 게시물 수정......");
+		return comMapper.modifyComment(movbno);
+	}
+
 }

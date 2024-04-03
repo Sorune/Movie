@@ -26,4 +26,8 @@ public interface MoviesCommentMapper {
 								(@Param("cri") Criteria cri,
 								 @Param("movbno") Long movbno);
 	
+	public List<MoviesCommentVO> bestComment(Long movbno);
+	
+	// 댓글 수정
+	public int modifyComment(Long combno);
 }

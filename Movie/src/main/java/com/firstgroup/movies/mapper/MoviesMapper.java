@@ -24,5 +24,6 @@ public interface MoviesMapper {
 	public int delete(Long movbno);
 	
 	public List<ImgVO> imgList(Long movBno);
-	
+
+	public void views(Long movbno);
 }

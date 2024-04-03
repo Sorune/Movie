@@ -145,23 +145,84 @@
 			
 								<div class="form-group border " style="min-height: 200px;">
 									<div>
-										<label>출연/제작 </label> 
+										<label><strong>제작</strong></label>
 									</div>
-														<!-- director -->
-								<%-- 	<div class="container d-flex" style="flex-wrap: wrap;">
+
+										<!-- directorList -->
+										<div class="row">
+											<c:forEach var="director" items="${directorList}">
+												<div class="col-2">
+													<input class="form-check-input" type="checkbox"	name="directorList" value="<c:out value="${director.dirBno}" />">
+													<div class="container-fluid justify d-flex flex-row mb-3">
+														<div class="card col-lg-4 Small shadow" style="width: 10rem; margin-right: 5px;">
+															<c:choose>
+																<c:when test="${not empty director.imgList}">
+																	<c:set var="uploadPath"
+																		value="${fn:replace(director.imgList[0].uploadPath, '\\\\', '/')}" />
+																	<c:set var="imagePath"
+																		value="${uploadPath}/${director.imgList[0].uuid}_${director.imgList[0].fileName}" />
+																	<c:url var="imageUrl" value="/director/download" />
+																	<img
+																		src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"
+																		class="img-fluid rounded-top w-100" alt="">
+																</c:when>
+																<c:otherwise>
+																	<!-- 이미지가 없는 경우 대체 내용 추가 -->
+																	<p>이미지가 없습니다.</p>
+																</c:otherwise>
+															</c:choose>
+															<div class="card-body">
+																<h5 class="card-title">
+																	<span>${director.dirName }</span>
+																</h5>
+																<p class="card-text">${director.dirAge }</p>
+																<p class="card-text">${actor.birDate }</p> 
+																<span>(평점 4.5/5.0)</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</c:forEach>
+										</div>
+									</div>
+
+									<!-- actorList -->
+									<div class="form-group border " style="min-height: 200px;">
+									<div>
+										<label><strong>출연</strong></label>
+									</div>
+									<div class="row">
 										<c:forEach var="actor" items="${actorList}">
-											<div class="director" style="margin-right: 20px; margin-bottom: 10px;">
-												<input type="checkbox" name="actorList" value="<c:out value="${actor.actbno}" />">
-												<c:out value="${actor.name}" /><br><c:out value="${actor.age }" />
-											</div>
-										</c:forEach>
-									</div> --%>
-											
-									<div class="container d-flex" style="flex-wrap: wrap;">
-										<c:forEach var="actor" items="${actorList}">
-											<div class="actorList" style="margin-right: 20px; margin-bottom: 10px;">
-												<input type="checkbox" name="actorList" value="<c:out value="${actor.actbno}" />">
-												<c:out value="${actor.name}" /><br><c:out value="${actor.age }" />
+											<div class="col-2">
+												<input class="form-check-input" type="checkbox"	name="actorList" value="<c:out value="${actor.actbno}" />">
+												<div class="container-fluid justify d-flex flex-row mb-3">
+													<div class="card col-lg-4 Small shadow"	style="width: 10rem; margin-right: 5px;">
+														<c:choose>
+															<c:when test="${not empty actor.imgList}">
+																<c:set var="uploadPath"
+																	value="${fn:replace(actor.imgList[0].uploadPath, '\\\\', '/')}" />
+																<c:set var="imagePath"
+																	value="${uploadPath}/${actor.imgList[0].uuid}_${actor.imgList[0].fileName}" />
+																<c:url var="imageUrl" value="/actor/download" />
+																<img
+																	src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"
+																	class="img-fluid rounded-top w-100" alt="">
+															</c:when>
+															<c:otherwise>
+																<!-- 이미지가 없는 경우 대체 내용 추가 -->
+																<p>이미지가 없습니다.</p>
+															</c:otherwise>
+														</c:choose>
+														<div class="card-body">
+															<h5 class="card-title">
+																<span>${actor.name }</span>
+															</h5>
+															<p class="card-text">${actor.age }</p>
+															<%-- 	<p class="card-text">${actor.bDate }</p> --%>
+															<span>(평점 4.5/5.0)</span>
+														</div>
+													</div>
+												</div>
 											</div>
 										</c:forEach>
 									</div>

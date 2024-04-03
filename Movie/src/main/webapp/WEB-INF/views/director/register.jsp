@@ -49,7 +49,7 @@
 											<div class="row row-cols-2 p-3">
 												<label class="col-sm-2 text-align-center">나이</label>
 												<div class="col-sm-10">
-													<input class="form-control" name='dirAge' id="directorAge" readonly>
+													<input class="form-control" name='age' id="Age" readonly>
 												</div>
 											</div>
 											<div class="row row-cols-2">

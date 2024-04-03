@@ -28,7 +28,11 @@ public interface MoviesService {
 	
 	public List<ImgVO> imgList(Long movbno);
 	
+	public void views(Long movbno);
 	
+	public List<MoviesCommentVO> bestComment(Long movbno);
+
+	public int modifyComment(Long movbno); // 댓글수정
 
 	
 	//public List<MoviesCommentVO> getList(Criteria cri, Long bno);

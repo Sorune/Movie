@@ -102,6 +102,7 @@ function ripCheck(event) {
       // 나이칸 변수에 저장
       var Age = document.querySelector("#Age");
       // 계산한 나이 나이칸에 값 저장 및 출력
+      console.log(Age);
       Age.value = ages;
    } 
 
@@ -535,6 +536,7 @@ if(!excludePaths.includes(firstPathSegment)){
 		}
 	    var url = '/'+ window.location.pathname.split("/")[1];
 	    var urlString = url+"/"+window.location.pathname.split("/")[2];
+	    console.log("urlString : "+urlString);
 	    var urlListString = url+'/list';
 	    if(urlString==="/member/register"){	
 			urlListString = '/loginAuth';
