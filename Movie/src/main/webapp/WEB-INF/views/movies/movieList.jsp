@@ -14,9 +14,11 @@
 				<a href="/actor/register" class="btn btn-primary">등록하기</a>
 			</div> -->
         	<div class="row g-5 justify-content-center">
-        		<div class="row">
-        			<a href="/movies/register" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2" style="width: 10%; position: right;">영화등록</a>
-        		</div>
+        		<sec:authorize access="hasAnyRole('ROLE_MANAGER','ROLE_ADMIN')">
+	        		<div class="row">
+	        			<a href="/movies/register" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2" style="width: 10%; position: right;">영화등록</a>
+	        		</div>
+        		</sec:authorize>
 	        	<c:forEach items="${movieList}" var="movies">
 	                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
 	                    <div class="service-item rounded">
@@ -30,7 +32,7 @@
 								    </c:when>
 								    <c:otherwise>
 								        <!-- 이미지가 없는 경우 대체 내용 추가 -->
-								        <p>이미지가 없습니다.</p>
+								        <img src="../resources/img/image-not-found-icon.png" class="card-img-top" alt="">
 								    </c:otherwise>
 								</c:choose>
 	                       </div>
@@ -42,12 +44,12 @@
 	                                </div>
 	                                <a href="/movies/getMovie/${movies.movBno }" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Read More</a><br>
 	                              
-									<%-- 	<sec:authorize access="hasAnyRole('ADMIN', 'MANAGER')"> --%>
+									<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 										
 			                                <a href="/movies/modify/${movies.movBno }" class="border btn btn-primary rounded-pill text-white">수정</a>
 			                                <a href="/movies/remove/${movies.movBno }" class="border btn btn-danger rounded-pill text-white">삭제</a>
 			                                
-	                              <%--   	</sec:authorize> --%>
+	                              	</sec:authorize>
 	                                
 	                              <%--  <button type="button" class="border btn btn-danger rounded-pill text-white" onclick="deleteMovie(${movies.movBno })">삭제</button> --%> 
 	                            </div>

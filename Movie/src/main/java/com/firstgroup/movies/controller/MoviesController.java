@@ -86,6 +86,9 @@ public class MoviesController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("/getMovie");
 		MoviesVO mov = movService.get(movbno);
+		mov.setImgList(imgService.findByBno("tbl_movies_img", movbno));
+		mov.setTitleList(imgService.findByBno("tbl_title_img", movbno));
+		mov.setContentList(imgService.findByBno("tbl_content_img", movbno));
 		/*
 		 * long[] tmp = util.parseToList(mov.getActor()); for(long tp : tmp) {
 		 * mov.getActList().add(actService.getActor(tp)); }
@@ -98,14 +101,9 @@ public class MoviesController {
 		} else {
 			
 			CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			log.info(user);
 			MemberVO member = user.getMember();
-			log.info(member);
 			String id = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-			log.info(id);
-			log.info(model);
 			MemberVO memVo = memService.getMember(member.getId());
-			log.info(memVo);
 			model.addAttribute("user", memVo);
 		}
 		return mv;
@@ -139,6 +137,20 @@ public class MoviesController {
 		for (ImgVO img : mov.getImgList()) {
 			img.setBno(mov.getMovBno());
 			img.setTblName("tbl_movies_img");
+			log.info(img);
+			imgService.insert(img);
+		}
+		
+		for (ImgVO img : mov.getTitleList()) {
+			img.setBno(mov.getMovBno());
+			img.setTblName("tbl_title_img");
+			log.info(img);
+			imgService.insert(img);
+		}
+		
+		for (ImgVO img : mov.getContentList()) {
+			img.setBno(mov.getMovBno());
+			img.setTblName("tbl_content_img");
 			log.info(img);
 			imgService.insert(img);
 		}
@@ -191,9 +203,12 @@ public class MoviesController {
  		ModelAndView mv = new ModelAndView();
  		mv.setViewName("/movies/modify");
  		log.info("updatePage : " + movbno);
- 		model.addAttribute("movie",movService.get(movbno));
+		MoviesVO mov = movService.get(movbno);
+		mov.setImgList(imgService.findByBno("tbl_movies_img", movbno));
+		mov.setTitleList(imgService.findByBno("tbl_title_img", movbno));
+		mov.setContentList(imgService.findByBno("tbl_content_img", movbno));
+ 		model.addAttribute("movie",mov);
  		model.addAttribute("actorList", actService.actorList());
- 		model.addAttribute("img", movService.imgList(movbno));
 		return mv;
  	}
  	
@@ -212,13 +227,29 @@ public class MoviesController {
 			tmp.setBno(mov.getMovBno());
 			tmp.setTblName("tbl_movies_img");
 			imgService.delete(tmp);
-			 
+			tmp.setTblName("tbl_title_img");
+			imgService.delete(tmp);
+			tmp.setTblName("tbl_content_img");
+			imgService.delete(tmp);
 			for (ImgVO img : mov.getImgList()) {
 				img.setBno(mov.getMovBno());
 				img.setTblName("tbl_movies_img");
 				log.info(img);
 				imgService.insert(img);
 				mov.setMovImgNo(img.getBno());
+			}
+			for (ImgVO img : mov.getTitleList()) {
+				img.setBno(mov.getMovBno());
+				img.setTblName("tbl_title_img");
+				log.info(img);
+				imgService.insert(img);
+			}
+			
+			for (ImgVO img : mov.getContentList()) {
+				img.setBno(mov.getMovBno());
+				img.setTblName("tbl_content_img");
+				log.info(img);
+				imgService.insert(img);
 			}
 			movService.updateMovies(mov);
 			// 페이지 이동

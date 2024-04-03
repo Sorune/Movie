@@ -63,6 +63,22 @@ create table tbl_movies_img(
 	bno number(10)
 );
 
+create table tbl_title_img(
+	UUID varchar2(100)constraint mov_title_img_pk primary key,
+	uploadpath nvarchar2(200) not null,
+	filename nvarchar2(50) not null,
+	FILETYPE char(1) default '1',
+	bno number(10)
+);
+
+create table tbl_content_img(
+	UUID varchar2(100)constraint mov_content_img_pk primary key,
+	uploadpath nvarchar2(200) not null,
+	filename nvarchar2(50) not null,
+	FILETYPE char(1) default '1',
+	bno number(10)
+);
+
 
 create table tbl_actor(
 	actbno number constraint act_pk primary key,

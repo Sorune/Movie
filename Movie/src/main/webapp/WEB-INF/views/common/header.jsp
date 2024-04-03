@@ -75,10 +75,7 @@
 	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">회원정보</a>
 	                            <div class="dropdown-menu m-0">
 	                                <a href="/member/update" class="dropdown-item">회원 정보 수정</a>
-	                               	<form class="dropdown-item" method="post" action="/home">
-	                               		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-	                               		<button type="submit" class="dropdown-item">LogOut</button>	
-	                               	</form>
+	                                <button class="dropdown-item" onclick="logout()">LogOut</button>
 	                            </div>
 	                        </div>
                         </sec:authorize>
@@ -87,10 +84,7 @@
 	                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">관리하기</a>
 	                            <div class="dropdown-menu m-0">
 	                                <a href="/admin/memberList" class="dropdown-item">멤버 관리</a>
-	                                <form class="dropdown-item" method="post" action="/home">
-		                               		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
-		                               		<button type="submit" class="dropdown-item">LogOut</button>	
-	                               	</form>
+	                                <button class="dropdown-item" onclick="logout()">LogOut</button>
 	                            </div>
 	                        </div>
                         </sec:authorize>

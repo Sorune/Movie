@@ -28,7 +28,7 @@
 								    </c:when>
 								    <c:otherwise>
 								        <!-- 이미지가 없는 경우 대체 내용 추가 -->
-								        <p>이미지가 없습니다.</p>
+								        <img src="../resources/img/image-not-found-icon.png" class="card-img-top" alt="">
 								    </c:otherwise>
 								</c:choose>
 	                       </div>

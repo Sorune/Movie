@@ -30,7 +30,18 @@
 	<div class="container-fluid row d-flex justify-content-center">
 		<c:forEach items="${movieList}" var="movies">
 			<div class="card col-lg-4" style="width: 18rem; margin-right: 5px;">
-				<img src="../resources/img/OguLOKDk-6VrZQaMG7zcjA.jpg" class="card-img-top" alt="...">
+				<c:choose>
+				    <c:when test="${not empty movies.imgList}">
+				        <c:set var="uploadPath" value="${fn:replace(movies.imgList[0].uploadPath, '\\\\', '/')}"/>
+						<c:set var="imagePath" value="${uploadPath}/${movies.imgList[0].uuid}_${movies.imgList[0].fileName}"/>
+						<c:url var="imageUrl" value="/movies/download"/>
+						<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>" class="card-img-top" alt="">
+				    </c:when>
+				    <c:otherwise>
+				        <!-- 이미지가 없는 경우 대체 내용 추가 -->
+				        <img src="../resources/img/image-not-found-icon.png" class="card-img-top" alt="">
+				    </c:otherwise>
+				</c:choose>
 				<div class="card-body">
 					<h5 class="card-title">${ movies.title }</h5>
 					<p class="card-text">${ fn:substring(movies.content,0,20) } ...</p>

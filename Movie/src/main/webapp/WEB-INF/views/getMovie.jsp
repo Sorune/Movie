@@ -73,30 +73,49 @@ img {
 }
 
 </style>
-<div class="pt-6">
-	<div id="carouselExample" class="carousel slide">
-		<div class="carousel-inner">
-			<div class="carousel-item active" style="background-color: black;">
-				<img src="../resources/img/dune-1.jpg" class="d-block w-100 img-dark" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="../resources/img/dune-2.jpg" class="d-block w-100 img-dark" alt="...">
-			</div>
-			<div class="carousel-item">
-				<img src="../resources/img/dune-3.jpg" class="d-block w-100 img-dark" alt="...">
-			</div>
-		</div>
-		<button class="carousel-control-prev" type="button"
-			data-bs-target="#carouselExample" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span> <span
-				class="visually-hidden">Previous</span>
+<div class="col-lg-12 pt-6">
+	<div id="uploadedImages2" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      		<div class="carousel-inner" id="carousel-inner2" style="width:100%;height:auto;">
+			<c:forEach items="${movie.titleList}" var="img" varStatus="i" begin="0">
+				<c:choose>
+				    <c:when test="${not empty img}">
+				    	<c:choose>
+				    		<c:when test="${ i.index == 0 }">
+				    			<div class="carousel-item active">
+				    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
+									<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
+									<c:url var="imageUrl" value="/movies/download"/>
+									<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+				    			</div>
+				    		</c:when>
+				    		<c:otherwise>
+				    			<div class="carousel-item">
+				    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
+									<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
+									<c:url var="imageUrl" value="/member/download"/>
+									<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+				    			</div>
+				    		</c:otherwise>
+				    	</c:choose>
+				    </c:when>
+				    <c:otherwise>
+				        <!-- 이미지가 없는 경우 대체 내용 추가 -->
+				        <div id="drop-area" style="width:100%;">
+							<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+	        			</div>
+				    </c:otherwise>
+				</c:choose>
+			</c:forEach>
+      		</div>
+      		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages2" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
 		</button>
-		<button class="carousel-control-next" type="button"
-			data-bs-target="#carouselExample" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span> <span
-				class="visually-hidden">Next</span>
+		<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages2" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
 		</button>
-	</div>
+      	</div>
 </div>
 
 <!-- About Start -->
@@ -104,11 +123,49 @@ img {
 	<div class="container py-5">
 		<div class="row g-5 align-items-center">
 			<div class="col-lg-5 wow fadeInLeft" data-wow-delay="0.2s">
-				<div class="about-img pb-5 ps-5">
-					<img src="../resources/img/dune-poster.jpg"  class="img-fluid rounded w-100"
-						style="object-fit: cover;" alt="Image" />
-					<div class="about-experience">15 years experience</div>
-				</div>
+				<div id="uploadedImages" class="carousel slide carousel-fade" data-bs-ride="carousel">
+	        		<div class="carousel-inner" style="width:100%;height:auto;">
+						<c:forEach items="${movie.imgList}" var="img" varStatus="i" begin="0">
+							<c:choose>
+							    <c:when test="${not empty img}">
+							    	<c:choose>
+							    		<c:when test="${ i.index == 0 }">
+							    			<div class="carousel-item active">
+							    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
+												<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
+												<c:url var="imageUrl" value="/movies/download"/>
+												<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+							    			</div>
+							    		</c:when>
+							    		<c:otherwise>
+							    			<div class="carousel-item">
+							    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
+												<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
+												<c:url var="imageUrl" value="/member/download"/>
+												<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+							    			</div>
+							    		</c:otherwise>
+							    	</c:choose>
+							    </c:when>
+							    <c:otherwise>
+							        <!-- 이미지가 없는 경우 대체 내용 추가 -->
+							        <div id="drop-area" style="width:100%;">
+										<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+				        			</div>
+							    </c:otherwise>
+							</c:choose>
+						</c:forEach>
+	        		</div>
+	        		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+	        	</div>
+	        </div>
 			</div>
 			<div class="col-lg-7 wow fadeInRight" data-wow-delay="0.4s">
 				<div class="section-title text-start mb-5">
@@ -157,7 +214,48 @@ img {
 			<%-- 	</c:forEach> --%>
 		</div>
 	</div>
-	
+	<div id="uploadedImages3" class="carousel slide carousel-fade" data-bs-ride="carousel">
+   		<div class="carousel-inner" id="carousel-inner3" style="width:100%;height:auto;">
+			<c:forEach items="${movie.contentList}" var="img" varStatus="i" begin="0">
+				<c:choose>
+				    <c:when test="${not empty img}">
+				    	<c:choose>
+				    		<c:when test="${ i.index == 0 }">
+				    			<div class="carousel-item active">
+				    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
+									<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
+									<c:url var="imageUrl" value="/movies/download"/>
+									<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+				    			</div>
+				    		</c:when>
+				    		<c:otherwise>
+				    			<div class="carousel-item">
+				    				<c:set var="uploadPath" value="${fn:replace(img.uploadPath, '\\\\', '/')}"/>
+									<c:set var="imagePath" value="${uploadPath}/${img.uuid}_${img.fileName}"/>
+									<c:url var="imageUrl" value="/member/download"/>
+									<img src="<c:out value="${imageUrl}?fileName=${imagePath}"/>"  width="100%" class="img-fluid" uploadPath="${uploadPath}" uuid="${img.uuid}" fileName="${img.fileName}">
+				    			</div>
+				    		</c:otherwise>
+				    	</c:choose>
+				    </c:when>
+				    <c:otherwise>
+				        <!-- 이미지가 없는 경우 대체 내용 추가 -->
+				        <div id="drop-area" style="width:100%;">
+							<p>이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+	        			</div>
+				    </c:otherwise>
+				</c:choose>
+			</c:forEach>
+   		</div>
+   		<button class="carousel-control-prev" type="button" data-bs-target="#uploadedImages3" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Previous</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#uploadedImages3" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Next</span>
+		</button>
+   	</div>
 </div>
 <div class="container-sm">
 	<!-- Content here -->

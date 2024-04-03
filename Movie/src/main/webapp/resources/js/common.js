@@ -1,6 +1,29 @@
 // 스프링 시큐리티용
 const csrfHeader = $("meta[name='_csrf_header']").attr("content");
 const csrfToken = $("meta[name='_csrf']").attr("content");
+
+function logout() {
+    $.ajax({
+        type: "POST",
+        url: "/home", // 로그아웃 처리 URL
+		beforeSend: function(xhr) {
+			xhr.setRequestHeader(csrfHeader, csrfToken);
+		},
+        success: function(response) {
+            // 로그아웃 성공 시 동작
+            console.log("로그아웃 성공");
+            // 여기에서 원하는 추가 작업을 수행할 수 있습니다.
+            // 예: 로그아웃 후 특정 페이지로 리다이렉트
+            window.location.href = "/";
+        },
+        error: function(xhr, status, error) {
+            // 로그아웃 실패 시 동작
+            console.error("로그아웃 실패:", error);
+            // 여기에서 실패한 경우에 대한 처리를 수행할 수 있습니다.
+        }
+    });
+}
+
 function getVideoSource(e){
 	let videoSrc = "";
 	console.log(e.value);
