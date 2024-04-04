@@ -32,7 +32,7 @@ public interface MoviesService {
 	
 	public List<MoviesCommentVO> bestComment(Long movbno);
 
-	public int modifyComment(Long movbno); // 댓글수정
+	public int modifyComment(MoviesCommentVO vo); // 댓글수정
 
 	
 	//public List<MoviesCommentVO> getList(Criteria cri, Long bno);

@@ -29,5 +29,5 @@ public interface MoviesCommentMapper {
 	public List<MoviesCommentVO> bestComment(Long movbno);
 	
 	// 댓글 수정
-	public int modifyComment(Long combno);
+	public int modifyComment(MoviesCommentVO vo);
 }

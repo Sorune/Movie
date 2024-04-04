@@ -58,8 +58,10 @@
 	</select>
 	 
   	<!-- 댓글수정 -->
-  	<update id="modifyComment"  >
-		update tbl_movies_comment set content = #{content}, updateDate = sysdate where combno = #{comBno}
+  	<update id="modifyComment">
+  		<![CDATA[ 
+			update tbl_movies_comment set content = #{content}, up_date = sysdate where combno = #{comBno}
+		]]>
 	</update>
 	
 </mapper>

@@ -128,9 +128,9 @@ public class MoviesServiceImpl implements MoviesService{
 	}
 
 	@Override
-	public int modifyComment(Long movbno) {
-		log.info(movbno+"번 게시물 수정......");
-		return comMapper.modifyComment(movbno);
+	public int modifyComment(MoviesCommentVO vo) {
+		log.info(vo.getComBno()+"번 게시물 수정......");
+		return comMapper.modifyComment(vo);
 	}
 
 }

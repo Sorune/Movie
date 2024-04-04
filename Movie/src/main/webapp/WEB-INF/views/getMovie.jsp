@@ -441,11 +441,13 @@ img {
 																<c:when test="${user.id eq pinfo.username}">
 
 																	<!-- 본인이 작성한 댓글인 경우 수정 및 삭제 버튼 표시 -->
-																	<button type="button" id="modalOpen" value="${comment.comBno}"
+																	<button type="button" id="modalOpen"
+																		data-combno='${comment.comBno}'
 																		class="btn btn-outline-info btn-sm midify-comment-button"
 																		style="height: 30px; text-align: center; margin-right: 5px;">
 																		<small>수정</small>
 																	</button>
+																	<input type="hidden" name='content' value="<c:out value="${comment.comBno}"/>" id='hdInput'/>
 																	<a data-combno='${comment.comBno}'
 																		class="btn btn-danger text-white btn-sm delete-comment-button"
 																		style="height: 30px;"> 삭제 </a>
@@ -565,10 +567,6 @@ img {
 </div>
 <br>
 
-
-
-
-	
 	
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -584,7 +582,7 @@ img {
 				<div class="form-group">
 					<label class="mb-2 mt-2">댓글</label>
 					<%-- <c:set value="${movie.comment}" var="comment"/> --%>
-					<textarea class="form-control" name='content'></textarea>
+					<textarea class="form-control" name='content' id="modContent"></textarea>
 				</div>
 				<div class="form-group">
 					<label class="mb-2 mt-2">작성자</label> <input class="form-control"
@@ -645,6 +643,7 @@ img {
     	            type: 'DELETE', // HTTP 메소드를 DELETE로 변경
     	            // contentType과 dataType은 이 경우에 따라 필요하지 않을 수 있습니다.
     	            // 특히, 단순 문자열 응답을 처리하는 경우에는 dataType을 생략하거나 변경할 수 있습니다.
+    	            // 깃 테스트sss
     	            data : {
     	            	comBno : comBno
     	            },
@@ -669,17 +668,17 @@ img {
     	button.addEventListener("click", function(e) {
     		e.preventDefault(); // 'e'를 사용하여 이벤트의 기본 동작을 방지
     	    if (confirm("댓글을 수정하시겠습니까?")) {
-    	    	console.log(e);
-    	    	let button = e.target.value;
-    	    	console.log(button);
-    		    var comBno = e.target.value; // 버튼의 value값: comBno
-    		    console.log("수정할 댓글번호 : " + comBno + "번");
-    		    $(".modal").modal("show");
-    		    var content = modal.find("input[name='content']").val(); // 댓글 내용 가져오기
-    		    console.log(content);
+
     	    	var modal = $(".modal");
-    	    	var modBtn = $("$modalModBtn");
+    		    $(".modal").modal("show");
+    	    	var modBtn = $("#modalModBtn");
     	    	modBtn.on("click", function() {
+	    		    var comBno = $("#hdInput").val(); // 숨겨진 commentBno값
+	    		    console.log("수정할 댓글번호 : " + comBno);
+	    		    //var content = $("#content").text; // 댓글 내용 가져오기
+	    		    var modContent = $('#modContent').val(); // textarea에서 댓글 텍스트 가져오기
+	    		    console.log("수정할 댓글내용 : " + modContent + "번");
+    		    	console.log(content);
     	    		// CSRF 토큰 가져오기
     		        var token = $("meta[name='_csrf']").attr("content");
     		        var header = $("meta[name='_csrf_header']").attr("content");
@@ -690,7 +689,7 @@ img {
     		            contentType: 'application/json', // JSON 형식으로 데이터 전송
     		            data: JSON.stringify({
     		                comBno: comBno,
-    		                content: content
+    		                content: modContent
     		            }),
     		            beforeSend: function(xhr) {
     		                xhr.setRequestHeader(header, token);

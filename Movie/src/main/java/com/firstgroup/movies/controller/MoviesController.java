@@ -62,28 +62,30 @@ public class MoviesController {
 	private Utility util;
 	
 
-   // 댓글 삭제
-   @DeleteMapping("/movies/deleteComment/{comBno}")
-   public String removeComment(@PathVariable Long comBno) {
-		/*
-		 * MoviesVO vo = new MoviesVO(); vo.setComment(null);
-		 */
-       log.info("삭제할 댓글의 번호 : " + comBno);
-       movService.removeComment(comBno);
+	// 댓글 삭제
+	   @DeleteMapping("/movies/deleteComment/{comBno}")
+	   public String removeComment(@PathVariable Long comBno) {
+			/*
+			 * MoviesVO vo = new MoviesVO(); vo.setComment(null);
+			 */
+	       log.info("삭제할 댓글의 번호 : " + comBno);
+	       movService.removeComment(comBno);
+	       
+	       return comBno.toString();
+	   }
 
-       return comBno.toString();
-   }
-
-   // 댓글 수정
-   @PostMapping("/movies/modifyComment/{comBno}")
-   public String updateComment(@PathVariable Long comBno) {
+	   // 댓글 수정
+	   @PostMapping("/movies/modifyComment/{comBno}")
+	   public String updateComment(@RequestBody MoviesCommentVO vo) {
+		   log.info("수정할 댓글 번호 : " + vo.getComBno());
+		   log.info("수정할 댓글 내용 : " + vo.getContent());
+		   
+		   
+		   movService.modifyComment(vo);
+		   
+		   return vo.toString();
+	   }
 	   
-	   log.info("수정할 댓글의 번호 : " + comBno);
-	   movService.modifyComment(comBno);
-	   
-	   return comBno.toString();
-   }
-   
 
 	@PostMapping(value = "/regComment") 
 	public ResponseEntity<String> insertComment(@RequestParam Map<String,String> formData) {
