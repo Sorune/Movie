@@ -10,7 +10,7 @@
     <head>
     	<link rel="shortcut icon" href="#">
         <meta charset="utf-8">
-        <title>Terapia - Physical Therapy Website Template</title>
+        <title>Watcha Pedia</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -55,7 +55,7 @@
         <div class="container-fluid position-relative p-0">
             <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
                 <a href="/home" class="navbar-brand p-0">
-                    <h1 class="text-primary m-0"><i class="fas fa-star-of-life me-3"></i>Watchar Peida</h1>
+                    <h1 class="text-primary m-0"><i class="fas fa-star-of-life me-3"></i>Watcha Peida</h1>
                     <!-- <img src="/resources/img/sources/logo.png" alt="Logo"> -->
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

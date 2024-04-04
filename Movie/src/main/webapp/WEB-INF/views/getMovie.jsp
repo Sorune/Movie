@@ -169,7 +169,7 @@ img {
 			<div class="col-lg-7 wow fadeInRight" data-wow-delay="0.4s">
 				<div class="section-title text-start mb-5">
 					<h4 class="sub-title pe-3 mb-0">Movie Info</h4>
-					<h1 class="display-3 mb-4"><c:out value="${movie.title }"/><c:out value="${movie.movBno }"/></h1>
+					<h1 class="display-3 mb-4"><c:out value="${movie.title }"/></h1>
 					<!-- 평균 별점 들어갈 곳 -->
 					<p class="mb-4"><c:out value="${movie.content }"/></p>
 					<div class="mb-4">

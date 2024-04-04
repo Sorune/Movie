@@ -175,8 +175,8 @@
 																<h5 class="card-title">
 																	<span>${director.dirName }</span>
 																</h5>
-																<p class="card-text">${director.dirAge }</p>
-																<p class="card-text">${actor.birDate }</p> 
+																<p class="card-text">${director.age }</p>
+																<p class="card-text">${director.dirBirth }</p> 
 																<span>(평점 4.5/5.0)</span>
 															</div>
 														</div>
