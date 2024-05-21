@@ -13,9 +13,15 @@
 	  <Root level="INFO" >
 	   <AppenderRef ref="console"/>  
 	  </Root>
-	  <Logger name="org.zerock" level="INFO" additivity="false">
+      <Logger name="java.sql" level="DEBUG" additivity="false">
+          <AppenderRef ref="console" />
+      </Logger>
+	  <Logger name="org.firstgroup" level="INFO" additivity="false">
 	   <AppenderRef ref="console"/>  
 	  </Logger>
+      <Logger name="jdbc.sqltiming" level="DEBUG" additivity="false">
+          <AppenderRef ref="console" />
+      </Logger>
 	  <Logger name="org.springframework" level="DEBUG" additivity="false">
 	   <AppenderRef ref="console"/>  
 	  </Logger>
